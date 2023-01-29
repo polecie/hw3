@@ -33,12 +33,14 @@ async def root():
 
 @app.on_event("startup")
 async def startup():
+    """"""
     redis = await aioredis.from_url("redis://localhost")
     cache.cache = redis_cache.CacheRedis(cache_instance=redis)
 
 
 @app.on_event("shutdown")
 async def shutdown():
+    """"""
     await cache.cache.close()
 
 

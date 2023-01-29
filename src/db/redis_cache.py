@@ -1,5 +1,3 @@
-from typing import Union
-
 from src.core import config
 from src.db.cache import AbstractCache
 
@@ -15,7 +13,7 @@ class CacheRedis(AbstractCache):
     async def set(
         self,
         key: str,
-        value: Union[bytes, str, bytearray],
+        value: bytes | str | bytearray,
         expire: int = config.cache_expire_in_seconds,
     ):
         """Устанавливает значение по ключу и время его истечения.

@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Union
 
 
 class AbstractCache(ABC):
@@ -12,7 +11,7 @@ class AbstractCache(ABC):
 
     @abstractmethod
     async def set(
-        self, key: str, value: Union[bytes, str, bytearray], expire: int = 0
+        self, key: str, value: bytes | str | bytearray, expire: int = 0
     ):
         raise NotImplementedError
 

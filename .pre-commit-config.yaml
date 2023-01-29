@@ -7,6 +7,9 @@ repos:
     -   id: end-of-file-fixer
     -   id: requirements-txt-fixer
     -   id: check-merge-conflict
+    -   id: check-yaml
+    -   id: check-case-conflict
+    -   id: check-added-large-files
 
 -   repo: https://github.com/pycqa/isort
     rev: 5.11.4
@@ -49,9 +52,3 @@ repos:
     hooks:
     -   id: pyupgrade
         args: [--py311]
-
-#-   repo: https://github.com/econchick/interrogate
-#    rev: 1.5.0
-#    hooks:
-#      - id: interrogate
-#        args: [--fail-under=80, --verbose]
