@@ -43,7 +43,7 @@ class MenuRepository(AbstractRepository):
                     response = await session.execute(statement)
                 except Exception:
                     pass
-        menu: Menu | None = response.all()  # type: ignore
+        menu: list[Menu] = response.all()  # type: ignore
         return menu
 
     async def get(self, menu_id: uuid.UUID) -> Menu | None:

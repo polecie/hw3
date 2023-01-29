@@ -1,11 +1,11 @@
-from typing import NoReturn, Optional, Union
+from typing import Union
 
 from src.core import config
 from src.db.cache import AbstractCache
 
 
 class CacheRedis(AbstractCache):
-    async def get(self, key: str) -> Optional[dict]:
+    async def get(self, key: str) -> dict:  # type: ignore
         """Получает значение по ключу.
 
         :param key: Ключ.
@@ -26,7 +26,7 @@ class CacheRedis(AbstractCache):
         """
         await self.cache.set(name=key, value=value, ex=expire)
 
-    async def close(self) -> NoReturn:
+    async def close(self):
         """Закрывает соединение."""
         await self.cache.close()
 

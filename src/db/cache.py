@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Union
 
 
 class AbstractCache(ABC):
@@ -6,22 +7,24 @@ class AbstractCache(ABC):
         self.cache = cache_instance
 
     @abstractmethod
-    async def get(self, *args, **kwargs) -> None:
+    async def get(self, key: str):  # type: ignore
         raise NotImplementedError
 
     @abstractmethod
-    async def set(self, *args, **kwargs) -> None:
+    async def set(
+        self, key: str, value: Union[bytes, str, bytearray], expire: int = 0
+    ):
         raise NotImplementedError
 
     @abstractmethod
-    async def close(self) -> None:
+    async def close(self):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, *args, **kwargs) -> None:
+    async def delete(self, key: str):
         raise NotImplementedError
 
-    async def flushall(self) -> None:
+    async def flushall(self):
         raise NotImplementedError
 
 
