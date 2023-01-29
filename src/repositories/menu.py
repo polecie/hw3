@@ -1,48 +1,43 @@
 import uuid
 
-from src.repositories.base import AbstractRepository
-from src.models.models import Menu, Submenu, Dish
+from sqlalchemy import distinct, func, select
+
 from src.api.v1.schemas.menu import MenuSchema
+from src.models.models import Dish, Menu, Submenu
+from src.repositories.base import AbstractRepository
 
-from sqlalchemy import func, select, distinct
-
-__all__ = ('MenuRepository',)
+__all__ = ("MenuRepository",)
 
 
 class MenuRepository(AbstractRepository):
     model: type[Menu] = Menu
 
-    async def list(self, ) -> list[Menu]:
+    async def list(
+        self,
+    ) -> list[Menu]:
         """
 
         :return:
         """
-        statement = select(
-        #     self.model.id,
-        #     self.model.title,
-        #     self.model.description,
-        #     func.count(distinct(self.model.submenus)).label('submenus_count'),
-        #     func.count(Submenu.dishes).label('dishes_count')
-        # ).outerjoin(
-        #     self.model.submenus
-        # ).outerjoin(
-        #     Submenu.dishes
-        # ).where(
-        #     self.model.id == Submenu.menu_id).group_by(  # type: ignore
-        #     self.model.id
-        # )
-
-            self.model.id,
-            self.model.title,
-            self.model.description,
-            func.count(distinct(self.model.submenus)).label('submenus_count'),
-            func.count(Submenu.dishes).label('dishes_count'),
-        ).outerjoin(
-            self.model.submenus,
-        ).outerjoin(
-            Dish,  ### Submenu
-            Dish.submenu_id == Submenu.id,  # type: ignore  ### Submenu
-        ).group_by(self.model.id)
+        statement = (
+            select(
+                self.model.id,
+                self.model.title,
+                self.model.description,
+                func.count(distinct(self.model.submenus)).label(
+                    "submenus_count"
+                ),
+                func.count(Submenu.dishes).label("dishes_count"),
+            )
+            .outerjoin(
+                self.model.submenus,
+            )
+            .outerjoin(
+                Dish,
+                Dish.submenu_id == Submenu.id,  # type: ignore
+            )
+            .group_by(self.model.id)
+        )
         async with self.session as session:
             async with session.begin():
                 try:
@@ -58,19 +53,20 @@ class MenuRepository(AbstractRepository):
         :param menu_id:
         :return:
         """
-        statement = select(
-            self.model.id,
-            self.model.title,
-            self.model.description,
-            func.count(distinct(self.model.submenus)).label('submenus_count'),
-            func.count(Submenu.dishes).label('dishes_count')   ### Submenu
-        ).outerjoin(
-            self.model.submenus
-        ).outerjoin(
-            Submenu.dishes ### Submenu
-        ).where(
-            self.model.id == menu_id).group_by(
-            self.model.id
+        statement = (
+            select(
+                self.model.id,
+                self.model.title,
+                self.model.description,
+                func.count(distinct(self.model.submenus)).label(
+                    "submenus_count"
+                ),
+                func.count(Submenu.dishes).label("dishes_count"),
+            )
+            .outerjoin(self.model.submenus)
+            .outerjoin(Submenu.dishes)
+            .where(self.model.id == menu_id)
+            .group_by(self.model.id)
         )
         async with self.session as session:
             async with session.begin():
@@ -110,7 +106,9 @@ class MenuRepository(AbstractRepository):
             await session.refresh(menu)
         return menu
 
-    async def update(self, menu_id: uuid.UUID, menu_content: MenuSchema) -> bool:
+    async def update(
+        self, menu_id: uuid.UUID, menu_content: MenuSchema
+    ) -> bool:
         """
 
         :param menu_id:

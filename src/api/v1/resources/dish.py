@@ -2,7 +2,7 @@ import uuid
 
 from fastapi import APIRouter, Depends
 
-from src.api.v1.schemas.dish import DishSchema, DishResponse
+from src.api.v1.schemas.dish import DishResponse, DishSchema
 from src.services.dish import DishService, get_dish_service
 
 router = APIRouter()
@@ -13,11 +13,12 @@ router = APIRouter()
     summary="Просмотр списка блюд",
     tags=["dish"],
     status_code=200,
-    response_model=list[DishResponse])
+    response_model=list[DishResponse],
+)
 async def get_dishes(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        dish_service: DishService = Depends(get_dish_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    dish_service: DishService = Depends(get_dish_service),
 ) -> list[DishResponse]:
     """
     Просмотреть список блюд
@@ -26,7 +27,9 @@ async def get_dishes(
     :param dish_service:
     :return:
     """
-    dishes: list[DishResponse] = await dish_service.get_dishes(menu_id, submenu_id)
+    dishes: list[DishResponse] = await dish_service.get_dishes(
+        menu_id, submenu_id
+    )
     return dishes
 
 
@@ -35,12 +38,13 @@ async def get_dishes(
     summary="Просмотр определенного блюда",
     tags=["dish"],
     status_code=200,
-    response_model=DishResponse)
+    response_model=DishResponse,
+)
 async def get_dish(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        dish_id: uuid.UUID,
-        dish_service: DishService = Depends(get_dish_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    dish_id: uuid.UUID,
+    dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """
     Просмотр определенного блюда
@@ -50,7 +54,9 @@ async def get_dish(
     :param dish_service:
     :return:
     """
-    dish: DishResponse = await dish_service.get_dish(menu_id, submenu_id, dish_id)
+    dish: DishResponse = await dish_service.get_dish(
+        menu_id, submenu_id, dish_id
+    )
     return dish
 
 
@@ -59,12 +65,13 @@ async def get_dish(
     summary="Создать блюдо",
     tags=["dish"],
     status_code=201,
-    response_model=DishResponse)
+    response_model=DishResponse,
+)
 async def create_dish(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        dish_content: DishSchema,
-        dish_service: DishService = Depends(get_dish_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    dish_content: DishSchema,
+    dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """
     Создать новое блюдо
@@ -74,7 +81,9 @@ async def create_dish(
     :param dish_service:
     :return:
     """
-    dish: DishResponse = await dish_service.create_dish(menu_id, submenu_id, dish_content)
+    dish: DishResponse = await dish_service.create_dish(
+        menu_id, submenu_id, dish_content
+    )
     return dish
 
 
@@ -83,13 +92,14 @@ async def create_dish(
     summary="Обновить блюдо",
     tags=["dish"],
     status_code=200,
-    response_model=DishResponse)
+    response_model=DishResponse,
+)
 async def patch_dish(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        dish_id: uuid.UUID,
-        dish_content: DishSchema,
-        dish_service: DishService = Depends(get_dish_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    dish_id: uuid.UUID,
+    dish_content: DishSchema,
+    dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """
     Обновить блюдо
@@ -100,20 +110,24 @@ async def patch_dish(
     :param dish_service:
     :return:
     """
-    dish: DishResponse = await dish_service.update_dish(menu_id, submenu_id, dish_id, dish_content)
+    dish: DishResponse = await dish_service.update_dish(
+        menu_id, submenu_id, dish_id, dish_content
+    )
     return dish
 
 
 @router.delete(
     path="/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}",
     summary="Удалить блюдо",
-    tags=["dish"], status_code=200,
-    response_model=dict)
+    tags=["dish"],
+    status_code=200,
+    response_model=dict,
+)
 async def delete_dish(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        dish_id: uuid.UUID,
-        dish_service: DishService = Depends(get_dish_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    dish_id: uuid.UUID,
+    dish_service: DishService = Depends(get_dish_service),
 ) -> dict:
     """
     Удалить блюдо

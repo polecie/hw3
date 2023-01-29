@@ -1,10 +1,10 @@
 import uuid
 
-from src.repositories.base import AbstractRepository
-from src.models.models import Dish
-from src.api.v1.schemas.dish import DishSchema
-
 from sqlalchemy import select
+
+from src.api.v1.schemas.dish import DishSchema
+from src.models.models import Dish
+from src.repositories.base import AbstractRepository
 
 
 class DishRepository(AbstractRepository):
@@ -20,7 +20,7 @@ class DishRepository(AbstractRepository):
             self.model.id,
             self.model.title,
             self.model.description,
-            self.model.price
+            self.model.price,
         ).where(self.model.submenu_id == submenu_id)
         async with self.session as session:
             async with session.begin():
@@ -41,7 +41,7 @@ class DishRepository(AbstractRepository):
             self.model.id,
             self.model.title,
             self.model.description,
-            self.model.price
+            self.model.price,
         ).where(self.model.id == dish_id)
         async with self.session as session:
             async with session.begin():
@@ -63,7 +63,9 @@ class DishRepository(AbstractRepository):
         dish: Dish | None = response.scalar_one_or_none()
         return dish
 
-    async def add(self, dish_content: DishSchema, submenu_id: uuid.UUID) -> Dish | None:
+    async def add(
+        self, dish_content: DishSchema, submenu_id: uuid.UUID
+    ) -> Dish | None:
         """
 
         :param dish_content:
@@ -84,7 +86,9 @@ class DishRepository(AbstractRepository):
             await session.refresh(dish)
         return dish
 
-    async def update(self, dish_id: uuid.UUID, dish_content: DishSchema) -> bool:
+    async def update(
+        self, dish_id: uuid.UUID, dish_content: DishSchema
+    ) -> bool:
         """
 
         :param dish_id:

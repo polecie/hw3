@@ -1,12 +1,12 @@
 import uuid
 
-from src.repositories.base import AbstractRepository
-from src.models.models import Submenu
-from src.api.v1.schemas.submenu import SubmenuSchema
-
 from sqlalchemy import func, select
 
-__all__ = ('SubmenuRepository',)
+from src.api.v1.schemas.submenu import SubmenuSchema
+from src.models.models import Submenu
+from src.repositories.base import AbstractRepository
+
+__all__ = ("SubmenuRepository",)
 
 
 class SubmenuRepository(AbstractRepository):
@@ -18,16 +18,17 @@ class SubmenuRepository(AbstractRepository):
         :param menu_id:
         :return:
         """
-        statement = select(
-            self.model.id,
-            self.model.title,
-            self.model.description,
-            func.count(self.model.dishes).label('dishes_count'),
-        ).outerjoin(
-            self.model.dishes
-        ).where(
-            self.model.menu_id == menu_id
-        ).group_by(self.model.id)
+        statement = (
+            select(
+                self.model.id,
+                self.model.title,
+                self.model.description,
+                func.count(self.model.dishes).label("dishes_count"),
+            )
+            .outerjoin(self.model.dishes)
+            .where(self.model.menu_id == menu_id)
+            .group_by(self.model.id)
+        )
         async with self.session as session:
             async with session.begin():
                 try:
@@ -43,16 +44,21 @@ class SubmenuRepository(AbstractRepository):
         :param submenu_id:
         :return:
         """
-        statement = select(
-            self.model.id,
-            self.model.title,
-            self.model.description,
-            func.count(self.model.dishes).label('dishes_count'),
-        ).outerjoin(
-            self.model.dishes,
-        ).where(
-            self.model.id == submenu_id,
-        ).group_by(self.model.id)
+        statement = (
+            select(
+                self.model.id,
+                self.model.title,
+                self.model.description,
+                func.count(self.model.dishes).label("dishes_count"),
+            )
+            .outerjoin(
+                self.model.dishes,
+            )
+            .where(
+                self.model.id == submenu_id,
+            )
+            .group_by(self.model.id)
+        )
         async with self.session as session:
             async with session.begin():
                 try:
@@ -73,7 +79,9 @@ class SubmenuRepository(AbstractRepository):
         submenu: Submenu | None = response.scalar_one_or_none()
         return submenu
 
-    async def add(self, submenu_content: SubmenuSchema, menu_id: uuid.UUID) -> Submenu | None:
+    async def add(
+        self, submenu_content: SubmenuSchema, menu_id: uuid.UUID
+    ) -> Submenu | None:
         """
 
         :param submenu_content:
@@ -94,7 +102,9 @@ class SubmenuRepository(AbstractRepository):
             await session.refresh(submenu)
         return submenu
 
-    async def update(self, submenu_id: uuid.UUID, submenu_content: SubmenuSchema) -> bool:
+    async def update(
+        self, submenu_id: uuid.UUID, submenu_content: SubmenuSchema
+    ) -> bool:
         """
 
         :param submenu_id:

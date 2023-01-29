@@ -1,10 +1,9 @@
 import uvicorn
-from redis import asyncio as aioredis
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-
+from redis import asyncio as aioredis
+from src.api.v1.resources import dish, menu, submenu
 from src.core import config
-from src.api.v1.resources import menu, submenu, dish
 from src.db import cache, redis_cache
 
 app = FastAPI(
@@ -17,25 +16,25 @@ app = FastAPI(
     # адрес документации в формате openapi
     openapi_url="/api/openapi.json",
     default_response_class=ORJSONResponse,
-    debug=config.app_debug
+    debug=config.app_debug,
 )
 
 
 @app.get("/", summary="Тестовая ручка")
 async def root():
-    """ Название и версия проекта """
+    """Название и версия проекта"""
     return {
         "service": config.app_name,
         "version": config.app_version,
-        "description": config.app_description
+        "description": config.app_description,
     }
 
 
 @app.on_event("startup")
 async def startup():
+    redis = await aioredis.from_url("redis://localhost")
     cache.cache = redis_cache.CacheRedis(
-        cache_instance=await aioredis.Redis(
-            host=config.redis_host, port=config.redis_port, max_connections=10))
+        cache_instance=redis)
 
 
 @app.on_event("shutdown")
@@ -49,8 +48,4 @@ app.include_router(router=dish.router, prefix="/api/v1/menus")
 
 
 if __name__ == "__main__":
-    uvicorn.run(
-        "main:app",
-        host=config.app_host,
-        port=config.app_port
-    )
+    uvicorn.run("main:app", host=config.app_host, port=config.app_port)

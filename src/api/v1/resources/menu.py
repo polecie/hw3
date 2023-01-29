@@ -2,8 +2,8 @@ import uuid
 
 from fastapi import APIRouter, Depends
 
-from src.api.v1.schemas.menu import MenuSchema, MenuResponse
-from src.services.menu import get_menu_service, MenuService
+from src.api.v1.schemas.menu import MenuResponse, MenuSchema
+from src.services.menu import MenuService, get_menu_service
 
 router = APIRouter()
 
@@ -13,9 +13,10 @@ router = APIRouter()
     summary="Просмотр списка меню",
     tags=["menu"],
     status_code=200,
-    response_model=list[MenuResponse])
+    response_model=list[MenuResponse],
+)
 async def get_menus(
-        menu_service: MenuService = Depends(get_menu_service)
+    menu_service: MenuService = Depends(get_menu_service),
 ) -> list[MenuResponse]:
     """
     Список всех меню
@@ -31,10 +32,10 @@ async def get_menus(
     summary="Просмотр определенного меню",
     tags=["menu"],
     status_code=200,
-    response_model=MenuResponse)
+    response_model=MenuResponse,
+)
 async def get_menu(
-        menu_id: uuid.UUID,
-        menu_service: MenuService = Depends(get_menu_service)
+    menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
 ) -> MenuResponse:
     """
     Просмотреть меню по его id
@@ -51,10 +52,11 @@ async def get_menu(
     summary="Создать меню",
     tags=["menu"],
     status_code=201,
-    response_model=MenuResponse)
+    response_model=MenuResponse,
+)
 async def create_menu(
-        menu_content: MenuSchema,
-        menu_service: MenuService = Depends(get_menu_service)
+    menu_content: MenuSchema,
+    menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """
     Создать меню
@@ -71,11 +73,12 @@ async def create_menu(
     summary="Обновить меню",
     tags=["menu"],
     status_code=200,
-    response_model=MenuResponse)
+    response_model=MenuResponse,
+)
 async def patch_menu(
-        menu_id: uuid.UUID,
-        menu_content: MenuSchema,
-        menu_service: MenuService = Depends(get_menu_service)
+    menu_id: uuid.UUID,
+    menu_content: MenuSchema,
+    menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """
     Изменить меню
@@ -93,10 +96,10 @@ async def patch_menu(
     summary="Удалить меню",
     tags=["menu"],
     status_code=200,
-    response_model=dict)
+    response_model=dict,
+)
 async def delete_menu(
-        menu_id: uuid.UUID,
-        menu_service: MenuService = Depends(get_menu_service)
+    menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
 ) -> dict:
     """
     Удалить меню по его id

@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
-__all__ = ('AbstractRepository',)
+__all__ = ("AbstractRepository",)
 
 
 @dataclass

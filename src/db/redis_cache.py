@@ -11,7 +11,7 @@ class CacheRedis(AbstractCache):
         :param key:
         :return:
         """
-        return self.cache.get(name=key)
+        return await self.cache.get(name=key)
 
     async def set(
         self,
@@ -42,3 +42,12 @@ class CacheRedis(AbstractCache):
         :return:
         """
         await self.cache.delete(key)
+
+    async def flushall(self):
+        """
+
+        :return:
+        """
+        keys = await self.cache.keys("*")
+        if keys:
+            await self.cache.delete(*keys)

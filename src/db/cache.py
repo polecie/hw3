@@ -8,19 +8,28 @@ class AbstractCache(ABC):
 
     @abstractmethod
     async def get(self, key: str) -> None:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
-    async def set(self, key: str, value: Any, expire: int = 0,) -> None:
-        pass
+    async def set(
+        self,
+        key: str,
+        value: Any,
+        expire: int = 0,
+    ) -> None:
+        # str, bytes or bytearray
+        raise NotImplementedError
 
     @abstractmethod
     async def close(self) -> None:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     async def delete(self, key: str) -> None:
-        pass
+        raise NotImplementedError
+
+    async def flushall(self) -> None:
+        raise NotImplementedError
 
 
 cache: AbstractCache | None = None

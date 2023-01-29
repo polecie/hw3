@@ -2,7 +2,7 @@ import uuid
 
 from fastapi import APIRouter, Depends
 
-from src.api.v1.schemas.submenu import SubmenuSchema, SubmenuResponse
+from src.api.v1.schemas.submenu import SubmenuResponse, SubmenuSchema
 from src.services.submenu import SubmenuService, get_submenu_service
 
 router = APIRouter()
@@ -13,10 +13,11 @@ router = APIRouter()
     summary="Просмотр списка подменю",
     tags=["submenu"],
     status_code=200,
-    response_model=list[SubmenuResponse])
+    response_model=list[SubmenuResponse],
+)
 async def get_submenus(
-        menu_id: uuid.UUID,
-        submenu_service: SubmenuService = Depends(get_submenu_service)
+    menu_id: uuid.UUID,
+    submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> list[SubmenuResponse]:
     """
     Список всех подменю
@@ -24,7 +25,9 @@ async def get_submenus(
     :param submenu_service:
     :return:
     """
-    submenus: list[SubmenuResponse] = await submenu_service.get_submenus(menu_id)
+    submenus: list[SubmenuResponse] = await submenu_service.get_submenus(
+        menu_id
+    )
     return submenus
 
 
@@ -33,11 +36,12 @@ async def get_submenus(
     summary="Просмотр определенного подменю",
     tags=["submenu"],
     status_code=200,
-    response_model=SubmenuResponse)
+    response_model=SubmenuResponse,
+)
 async def get_submenu(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        submenu_service: SubmenuService = Depends(get_submenu_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """
     Просмотреть подменю по его id
@@ -46,7 +50,9 @@ async def get_submenu(
     :param submenu_service:
     :return:
     """
-    submenu: SubmenuResponse = await submenu_service.get_submenu(submenu_id, menu_id)
+    submenu: SubmenuResponse = await submenu_service.get_submenu(
+        submenu_id, menu_id
+    )
     return submenu
 
 
@@ -55,11 +61,12 @@ async def get_submenu(
     summary="Создать подменю",
     tags=["submenu"],
     status_code=201,
-    response_model=SubmenuResponse)
+    response_model=SubmenuResponse,
+)
 async def create_submenu(
-        menu_id: uuid.UUID,
-        submenu_content: SubmenuSchema,
-        submenu_service: SubmenuService = Depends(get_submenu_service)
+    menu_id: uuid.UUID,
+    submenu_content: SubmenuSchema,
+    submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """
     Создать подменю
@@ -68,7 +75,9 @@ async def create_submenu(
     :param submenu_service:
     :return:
     """
-    submenu: SubmenuResponse = await submenu_service.create_submenu(submenu_content, menu_id)
+    submenu: SubmenuResponse = await submenu_service.create_submenu(
+        submenu_content, menu_id
+    )
     return submenu
 
 
@@ -77,12 +86,13 @@ async def create_submenu(
     summary="Обновить подменю",
     tags=["submenu"],
     status_code=200,
-    response_model=SubmenuResponse)
+    response_model=SubmenuResponse,
+)
 async def patch_submenu(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        submenu_content: SubmenuSchema,
-        submenu_service: SubmenuService = Depends(get_submenu_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    submenu_content: SubmenuSchema,
+    submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """
     Изменить подменю
@@ -92,8 +102,9 @@ async def patch_submenu(
     :param submenu_service:
     :return:
     """
-    submenu: SubmenuResponse = \
-        await submenu_service.update_submenu(submenu_id, submenu_content, menu_id)
+    submenu: SubmenuResponse = await submenu_service.update_submenu(
+        submenu_id, submenu_content, menu_id
+    )
     return submenu
 
 
@@ -102,11 +113,12 @@ async def patch_submenu(
     summary="Удалить подменю",
     tags=["submenu"],
     status_code=200,
-    response_model=dict)
+    response_model=dict,
+)
 async def delete_submenu(
-        menu_id: uuid.UUID,
-        submenu_id: uuid.UUID,
-        submenu_service: SubmenuService = Depends(get_submenu_service)
+    menu_id: uuid.UUID,
+    submenu_id: uuid.UUID,
+    submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> dict:
     """
     Удалить подменю
