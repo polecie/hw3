@@ -18,8 +18,8 @@ router = APIRouter()
 async def get_menus(
     menu_service: MenuService = Depends(get_menu_service),
 ) -> list[MenuResponse]:
-    """
-    Возвращает список всех меню.
+    """Возвращает список всех меню.
+
     :param menu_service: Сервис для работы с логикой.
     """
     menus: list[MenuResponse] = await menu_service.get_menus()
@@ -36,8 +36,8 @@ async def get_menus(
 async def get_menu(
     menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
 ) -> MenuResponse:
-    """
-    Возвращает меню по его `id`.
+    """Возвращает меню по его `id`.
+
     :param menu_id: Идентификатор подменю.
     :param menu_service: Сервис для работы с логикой.
     """
@@ -56,8 +56,8 @@ async def create_menu(
     menu_content: MenuSchema,
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
-    """
-    Создает новое меню,
+    """Создает новое меню,
+
     :param menu_content: Поля для создания меню.
     :param menu_service: Сервис для работы с логикой.
     """
@@ -77,8 +77,8 @@ async def patch_menu(
     menu_content: MenuSchema,
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
-    """
-    Изменяет меню.
+    """Изменяет меню.
+
     :param menu_id: Идентификатор меню.
     :param menu_content: Поля для обновления меню.
     :param menu_service: Сервис для работы с логикой.
@@ -97,8 +97,8 @@ async def patch_menu(
 async def delete_menu(
     menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
 ) -> dict:
-    """
-    Удаляет меню по его `id`.
+    """Удаляет меню по его `id`.
+
     :param menu_id: Идентификатор меню.
     :param menu_service: Сервис для работы с логикой.
     """

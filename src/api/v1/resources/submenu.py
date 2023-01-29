@@ -19,8 +19,8 @@ async def get_submenus(
     menu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> list[SubmenuResponse]:
-    """
-    Возвращает список всех подменю.
+    """Возвращает список всех подменю.
+
     :param menu_id: Идентификатор меню.
     :param submenu_service: Сервис для работы с логикой.
     """
@@ -42,8 +42,8 @@ async def get_submenu(
     submenu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """
-    Возвращает подменю по его `id`.
+    """Возвращает подменю по его `id`.
+
     :param menu_id: Идентификатор меню.
     :param submenu_id: Идентификатор подменю.
     :param submenu_service: Сервис для работы с логикой.
@@ -66,8 +66,8 @@ async def create_submenu(
     submenu_content: SubmenuSchema,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """
-    Создает новое подменю.
+    """Создает новое подменю.
+
     :param menu_id: Идентификатор меню.
     :param submenu_content: Поля для создания подменю.
     :param submenu_service: Сервис для работы с логикой.
@@ -91,8 +91,8 @@ async def patch_submenu(
     submenu_content: SubmenuSchema,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """
-    Изменияет подменю.
+    """Изменияет подменю.
+
     :param menu_id: Идентификатор меню.
     :param submenu_id: Идентификатор подменю.
     :param submenu_content: Поля для обновления подменю.
@@ -116,8 +116,8 @@ async def delete_submenu(
     submenu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> dict:
-    """
-    Удаляет подменю.
+    """Удаляет подменю.
+
     :param menu_id: Идентификатор подменю.
     :param submenu_id: Идентификатор подменю.
     :param submenu_service: Сервис для работы с логикой.

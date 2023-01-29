@@ -29,7 +29,5 @@ cache: AbstractCache | None = None
 
 
 async def get_cache() -> AbstractCache | None:
-    """
-    Функция необходима для внедрения зависимостей.
-    """
+    """Функция необходима для внедрения зависимостей."""
     return cache

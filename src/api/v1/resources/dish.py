@@ -20,8 +20,8 @@ async def get_dishes(
     submenu_id: uuid.UUID,
     dish_service: DishService = Depends(get_dish_service),
 ) -> list[DishResponse]:
-    """
-    Получить список всех блюд.
+    """Получить список всех блюд.
+
     :param menu_id: Идентификатор меню.
     :param submenu_id: Идентификатор подменю.
     :param dish_service: Сервис для работы с логикой.
@@ -45,8 +45,8 @@ async def get_dish(
     dish_id: uuid.UUID,
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
-    """
-    Просмотр определенного блюда по его `id`.
+    """Просмотр определенного блюда по его `id`.
+
     :param menu_id: Идентификатор меню.
     :param submenu_id: Идентификатор подменю.
     :param dish_id: Идентификатор блюда.
@@ -71,8 +71,8 @@ async def create_dish(
     dish_content: DishSchema,
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
-    """
-    Создать новое блюдо.
+    """Создать новое блюдо.
+
     :param menu_id: Идентификатор меню.
     :param submenu_id: Идентификатор подменю.
     :param dish_content: Поля для создания записи о блюде.
@@ -98,8 +98,8 @@ async def patch_dish(
     dish_content: DishSchema,
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
-    """
-    Обновить блюдо.
+    """Обновить блюдо.
+
     :param menu_id: Идентификатор меню.
     :param submenu_id: Идентификатор подменю.
     :param dish_id: Идентификатор блюда.
@@ -125,8 +125,8 @@ async def delete_dish(
     dish_id: uuid.UUID,
     dish_service: DishService = Depends(get_dish_service),
 ) -> dict:
-    """
-    Удалить блюдо.
+    """Удалить блюдо.
+
     :param menu_id: Идентификатор меню.
     :param submenu_id: Идентификатор подменю.
     :param dish_id: Идентификатор блюда.

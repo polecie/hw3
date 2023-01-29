@@ -23,7 +23,7 @@ app = FastAPI(
 
 @app.get("/", summary="Тестовая ручка")
 async def root():
-    """Название и версия проекта"""
+    """Название и версия проекта."""
     return {
         "service": config.app_name,
         "version": config.app_version,

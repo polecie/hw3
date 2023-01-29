@@ -19,9 +19,7 @@ __all__ = (
 
 class MenuService(ServiceMixin):
     async def get_menus(self) -> list[MenuResponse]:
-        """
-
-        """
+        """"""
 
         menus: list = await self.container.menu_repo.list()
         return menus
@@ -98,8 +96,8 @@ async def get_menu_service(
     cache: AbstractCache = Depends(get_cache),
     session: AsyncSession = Depends(get_async_session),
 ) -> MenuService:
-    """
-    Функция для внедрения зависимостей.
+    """Функция для внедрения зависимостей.
+
     :param cache: Кеш.
     :param session: Сессия с базой данных.
     """

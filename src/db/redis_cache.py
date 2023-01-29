@@ -6,8 +6,8 @@ from src.db.cache import AbstractCache
 
 class CacheRedis(AbstractCache):
     async def get(self, key: str) -> Optional[dict]:
-        """
-        Получает значение по ключу.
+        """Получает значение по ключу.
+
         :param key: Ключ.
         """
         return await self.cache.get(name=key)
@@ -18,8 +18,8 @@ class CacheRedis(AbstractCache):
         value: Union[bytes, str, bytearray],
         expire: int = config.cache_expire_in_seconds,
     ):
-        """
-        Устанавливает значение по ключу и время его истечения.
+        """Устанавливает значение по ключу и время его истечения.
+
         :param key: Ключ.
         :param value: Значение.
         :param expire: Время истечения в секундах.
@@ -27,22 +27,18 @@ class CacheRedis(AbstractCache):
         await self.cache.set(name=key, value=value, ex=expire)
 
     async def close(self) -> NoReturn:
-        """
-        Закрывает соединение.
-        """
+        """Закрывает соединение."""
         await self.cache.close()
 
     async def delete(self, key: str):
-        """
-        Удаляет значение по ключу.
+        """Удаляет значение по ключу.
+
         :param key: Ключ.
         """
         await self.cache.delete(key)
 
     async def flushall(self):
-        """
-        Удаляет все ключи.
-        """
+        """Удаляет все ключи."""
         keys = await self.cache.keys("*")
         if keys:
             await self.cache.delete(*keys)

@@ -10,14 +10,13 @@ __all__ = ("SubmenuRepository",)
 
 
 class SubmenuRepository(AbstractRepository):
-    """
-    Репозиторий для работы с сущностью подменю.
-    """
+    """Репозиторий для работы с сущностью подменю."""
+
     model: type[Submenu] = Submenu
 
     async def list(self, menu_id: uuid.UUID) -> list[Submenu]:
-        """
-        Возвращает список всех записей подменю из базы данных.
+        """Возвращает список всех записей подменю из базы данных.
+
         :param menu_id: Идентификатор меню.
         """
         statement = (
@@ -41,8 +40,8 @@ class SubmenuRepository(AbstractRepository):
         return submenus
 
     async def get(self, submenu_id: uuid.UUID) -> Submenu | None:
-        """
-        Возвращает запись подменю из базы данных.
+        """Возвращает запись подменю из базы данных.
+
         :param submenu_id: Идентификатор подменю.
         """
         statement = (
@@ -83,8 +82,8 @@ class SubmenuRepository(AbstractRepository):
     async def add(
         self, submenu_content: SubmenuSchema, menu_id: uuid.UUID
     ) -> Submenu | None:
-        """
-        Добавляет новую запись подменю в базу данных.
+        """Добавляет новую запись подменю в базу данных.
+
         :param submenu_content: Поля подменю для добавления.
         :param menu_id: Идентификатор меню.
         """
@@ -105,8 +104,8 @@ class SubmenuRepository(AbstractRepository):
     async def update(
         self, submenu_id: uuid.UUID, submenu_content: SubmenuSchema
     ) -> bool:
-        """
-        Обновляет запись подменю в базе данных.
+        """Обновляет запись подменю в базе данных.
+
         :param submenu_id: Идентификатор подменю.
         :param submenu_content: Поля для обновления подменю.
         """
@@ -126,8 +125,8 @@ class SubmenuRepository(AbstractRepository):
         return submenu_status
 
     async def delete(self, submenu_id: uuid.UUID) -> bool:
-        """
-        Удаляет запись подменю из базы данных по его `id`.
+        """Удаляет запись подменю из базы данных по его `id`.
+
         :param submenu_id: Идентификатор подменю.
         """
         submenu_status = False
