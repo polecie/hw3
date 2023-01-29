@@ -1,5 +1,5 @@
-import uuid
 import json
+import uuid
 
 from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
@@ -37,7 +37,9 @@ class MenuService(ServiceMixin):
             return json.loads(cached_menu)  # type: ignore
         if menu := await self.container.menu_repo.get(menu_id=menu_id):
             menu = MenuResponse.from_orm(menu)
-            await self.cache.set(key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu)))
+            await self.cache.set(
+                key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu))
+            )
             return menu
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="menu not found"
@@ -69,7 +71,9 @@ class MenuService(ServiceMixin):
             if await self.cache.get(key=f"{menu_id}"):
                 await self.cache.delete(f"{menu_id}")
             menu = MenuResponse.from_orm(menu)
-            await self.cache.set(key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu)))
+            await self.cache.set(
+                key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu))
+            )
             return menu
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="menu not found"
@@ -88,7 +92,8 @@ class MenuService(ServiceMixin):
             await self.cache.flushall()
             return {
                 "status": menu_status,
-                "message": "The menu has been deleted",}
+                "message": "The menu has been deleted",
+            }
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="menu not found"
         )

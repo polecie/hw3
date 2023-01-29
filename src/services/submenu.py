@@ -1,5 +1,5 @@
-import uuid
 import json
+import uuid
 
 from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
@@ -26,11 +26,12 @@ class SubmenuService(ServiceMixin):
         """
         # проверить меню
         submenus: list = await self.container.submenu_repo.list(
-            menu_id=menu_id)
+            menu_id=menu_id
+        )
         return submenus
 
     async def get_submenu(
-            self, submenu_id: uuid.UUID, menu_id: uuid.UUID
+        self, submenu_id: uuid.UUID, menu_id: uuid.UUID
     ) -> SubmenuResponse:
         """
 
@@ -42,16 +43,20 @@ class SubmenuService(ServiceMixin):
         if cached_submenu := await self.cache.get(key=f"{submenu_id}"):
             return json.loads(cached_submenu)  # type: ignore
         if submenu := await self.container.submenu_repo.get(
-                submenu_id=submenu_id):
+            submenu_id=submenu_id
+        ):
             submenu = SubmenuResponse.from_orm(submenu)
-            await self.cache.set(key=f"{submenu_id}", value=json.dumps(jsonable_encoder(submenu)))
+            await self.cache.set(
+                key=f"{submenu_id}",
+                value=json.dumps(jsonable_encoder(submenu)),
+            )
             return submenu
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found"
         )
 
     async def create_submenu(
-            self, submenu_content: SubmenuSchema, menu_id: uuid.UUID
+        self, submenu_content: SubmenuSchema, menu_id: uuid.UUID
     ) -> SubmenuResponse:
         """
 
@@ -61,14 +66,15 @@ class SubmenuService(ServiceMixin):
         """
         # проверяем меню на существование
         submenu = await self.container.submenu_repo.add(
-            submenu_content=submenu_content, menu_id=menu_id)
+            submenu_content=submenu_content, menu_id=menu_id
+        )
         return SubmenuResponse.from_orm(submenu)
 
     async def update_submenu(
-            self,
-            submenu_id: uuid.UUID,
-            submenu_content: SubmenuSchema,
-            menu_id: uuid.UUID,
+        self,
+        submenu_id: uuid.UUID,
+        submenu_content: SubmenuSchema,
+        menu_id: uuid.UUID,
     ) -> SubmenuResponse:
         """
 
@@ -86,14 +92,17 @@ class SubmenuService(ServiceMixin):
             if await self.cache.get(key=f"{submenu_id}"):
                 await self.cache.delete(f"{submenu_id}")
             submenu = SubmenuResponse.from_orm(submenu)
-            await self.cache.set(key=f"{submenu_id}", value=json.dumps(jsonable_encoder(submenu)))
+            await self.cache.set(
+                key=f"{submenu_id}",
+                value=json.dumps(jsonable_encoder(submenu)),
+            )
             return submenu
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found"
         )
 
     async def delete_submenu(
-            self, submenu_id: uuid.UUID, menu_id: uuid.UUID
+        self, submenu_id: uuid.UUID, menu_id: uuid.UUID
     ) -> dict:
         """
 
@@ -117,8 +126,8 @@ class SubmenuService(ServiceMixin):
 
 
 async def get_submenu_service(
-        cache: AbstractCache = Depends(get_cache),
-        session: AsyncSession = Depends(get_async_session),
+    cache: AbstractCache = Depends(get_cache),
+    session: AsyncSession = Depends(get_async_session),
 ) -> SubmenuService:
     container = RepositoriesContainer(session=session)
     return SubmenuService(container=container, cache=cache)

@@ -1,5 +1,5 @@
-import uuid
 import json
+import uuid
 
 from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
@@ -46,7 +46,9 @@ class DishService(ServiceMixin):
             return json.loads(cached_dish)  # type: ignore
         if dish := await self.container.dish_repo.get(dish_id=dish_id):
             dish = DishResponse.from_orm(dish)
-            await self.cache.set(key=f"{dish_id}", value=json.dumps(jsonable_encoder(dish)))
+            await self.cache.set(
+                key=f"{dish_id}", value=json.dumps(jsonable_encoder(dish))
+            )
             return dish
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="dish not found"
@@ -95,7 +97,9 @@ class DishService(ServiceMixin):
                 await self.cache.delete(f"{dish_id}")
             dish = await self.container.dish_repo.get(dish_id)
             dish = DishResponse.from_orm(dish)
-            await self.cache.set(key=f"{dish_id}", value=json.dumps(jsonable_encoder(dish)))
+            await self.cache.set(
+                key=f"{dish_id}", value=json.dumps(jsonable_encoder(dish))
+            )
             return dish
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="dish not found"
