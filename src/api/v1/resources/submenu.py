@@ -1,17 +1,20 @@
 import uuid
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Body, Depends
 
-from src.api.v1.schemas.submenu import SubmenuResponse, SubmenuSchema
+from src.api.v1.schemas.submenu import (
+    SubmenuCreate,
+    SubmenuResponse,
+    SubmenuUpdate,
+)
 from src.services.submenu import SubmenuService, get_submenu_service
 
-router = APIRouter()
+router = APIRouter(tags=["submenu"])
 
 
 @router.get(
     path="/{menu_id}/submenus",
     summary="Просмотр списка подменю",
-    tags=["submenu"],
     status_code=200,
     response_model=list[SubmenuResponse],
 )
@@ -33,7 +36,6 @@ async def get_submenus(
 @router.get(
     path="/{menu_id}/submenus/{submenu_id}",
     summary="Просмотр определенного подменю",
-    tags=["submenu"],
     status_code=200,
     response_model=SubmenuResponse,
 )
@@ -57,13 +59,14 @@ async def get_submenu(
 @router.post(
     path="/{menu_id}/submenus",
     summary="Создать подменю",
-    tags=["submenu"],
     status_code=201,
     response_model=SubmenuResponse,
 )
 async def create_submenu(
     menu_id: uuid.UUID,
-    submenu_content: SubmenuSchema,
+    submenu_content: SubmenuCreate = Body(
+        None, examples=SubmenuCreate.Config.schema_extra["examples"]
+    ),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """Создает новое подменю.
@@ -81,14 +84,15 @@ async def create_submenu(
 @router.patch(
     path="/{menu_id}/submenus/{submenu_id}",
     summary="Обновить подменю",
-    tags=["submenu"],
     status_code=200,
     response_model=SubmenuResponse,
 )
 async def patch_submenu(
     menu_id: uuid.UUID,
     submenu_id: uuid.UUID,
-    submenu_content: SubmenuSchema,
+    submenu_content: SubmenuUpdate = Body(
+        None, examples=SubmenuUpdate.Config.schema_extra["examples"]
+    ),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """Изменияет подменю.
@@ -107,7 +111,6 @@ async def patch_submenu(
 @router.delete(
     path="/{menu_id}/submenus/{submenu_id}",
     summary="Удалить подменю",
-    tags=["submenu"],
     status_code=200,
     response_model=dict,
 )

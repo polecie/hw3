@@ -1,17 +1,16 @@
 import uuid
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Body, Depends
 
-from src.api.v1.schemas.menu import MenuResponse, MenuSchema
+from src.api.v1.schemas.menu import MenuCreate, MenuResponse, MenuUpdate
 from src.services.menu import MenuService, get_menu_service
 
-router = APIRouter()
+router = APIRouter(tags=["menu"])
 
 
 @router.get(
     path="/",
     summary="Просмотр списка меню",
-    tags=["menu"],
     status_code=200,
     response_model=list[MenuResponse],
 )
@@ -29,7 +28,6 @@ async def get_menus(
 @router.get(
     path="/{menu_id}",
     summary="Просмотр определенного меню",
-    tags=["menu"],
     status_code=200,
     response_model=MenuResponse,
 )
@@ -48,12 +46,13 @@ async def get_menu(
 @router.post(
     path="/",
     summary="Создать меню",
-    tags=["menu"],
     status_code=201,
     response_model=MenuResponse,
 )
 async def create_menu(
-    menu_content: MenuSchema,
+    menu_content: MenuCreate = Body(
+        None, examples=MenuCreate.Config.schema_extra["examples"]
+    ),
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """Создает новое меню,
@@ -68,13 +67,14 @@ async def create_menu(
 @router.patch(
     path="/{menu_id}",
     summary="Обновить меню",
-    tags=["menu"],
     status_code=200,
     response_model=MenuResponse,
 )
 async def patch_menu(
     menu_id: uuid.UUID,
-    menu_content: MenuSchema,
+    menu_content: MenuUpdate = Body(
+        None, examples=MenuUpdate.Config.schema_extra["examples"]
+    ),
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """Изменяет меню.
@@ -90,7 +90,6 @@ async def patch_menu(
 @router.delete(
     path="/{menu_id}",
     summary="Удалить меню",
-    tags=["menu"],
     status_code=200,
     response_model=dict,
 )

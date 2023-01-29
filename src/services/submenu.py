@@ -5,7 +5,11 @@ from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.v1.schemas.submenu import SubmenuResponse, SubmenuSchema
+from src.api.v1.schemas.submenu import (
+    SubmenuCreate,
+    SubmenuResponse,
+    SubmenuUpdate,
+)
 from src.db.cache import AbstractCache, get_cache
 from src.db.db import get_async_session
 from src.repositories.container import RepositoriesContainer
@@ -54,7 +58,7 @@ class SubmenuService(ServiceMixin):
         )
 
     async def create_submenu(
-        self, submenu_content: SubmenuSchema, menu_id: uuid.UUID
+        self, submenu_content: SubmenuCreate, menu_id: uuid.UUID
     ) -> SubmenuResponse:
         """
 
@@ -70,7 +74,7 @@ class SubmenuService(ServiceMixin):
     async def update_submenu(
         self,
         submenu_id: uuid.UUID,
-        submenu_content: SubmenuSchema,
+        submenu_content: SubmenuUpdate,
         menu_id: uuid.UUID,
     ) -> SubmenuResponse:
         """

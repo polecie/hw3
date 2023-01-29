@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.v1.schemas.menu import MenuResponse, MenuSchema
+from src.api.v1.schemas.menu import MenuCreate, MenuResponse, MenuUpdate
 from src.db.cache import AbstractCache, get_cache
 from src.db.db import get_async_session
 from src.repositories.container import RepositoriesContainer
@@ -20,13 +20,11 @@ __all__ = (
 class MenuService(ServiceMixin):
     async def get_menus(self) -> list[MenuResponse]:
         """"""
-
         menus: list = await self.container.menu_repo.list()
         return menus
 
     async def get_menu(self, menu_id: uuid.UUID) -> MenuResponse:
         """
-
         :param menu_id: Идентификатор меню.
         """
         if cached_menu := await self.cache.get(key=f"{menu_id}"):
@@ -41,19 +39,17 @@ class MenuService(ServiceMixin):
             status_code=status.HTTP_404_NOT_FOUND, detail="menu not found"
         )
 
-    async def create_menu(self, menu_content: MenuSchema) -> MenuResponse:
+    async def create_menu(self, menu_content: MenuCreate) -> MenuResponse:
         """
-
         :param menu_content: Поля для создания меню.
         """
         menu = await self.container.menu_repo.add(menu_content=menu_content)
         return MenuResponse.from_orm(menu)
 
     async def update_menu(
-        self, menu_id: uuid.UUID, menu_content: MenuSchema
+        self, menu_id: uuid.UUID, menu_content: MenuUpdate
     ) -> MenuResponse:
         """
-
         :param menu_id: Идентификатор меню.
         :param menu_content: Поля для обновления меню.
         """
@@ -75,7 +71,6 @@ class MenuService(ServiceMixin):
 
     async def delete_menu(self, menu_id: uuid.UUID) -> dict:
         """
-
         :param menu_id: Идентификатор меню.
         """
         menu_status: bool = await self.container.menu_repo.delete(

@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.v1.schemas.dish import DishResponse, DishSchema
+from src.api.v1.schemas.dish import DishCreate, DishResponse, DishUpdate
 from src.db.cache import AbstractCache, get_cache
 from src.db.db import get_async_session
 from src.repositories.container import RepositoriesContainer
@@ -56,7 +56,7 @@ class DishService(ServiceMixin):
         self,
         menu_id: uuid.UUID,
         submenu_id: uuid.UUID,
-        dish_content: DishSchema,
+        dish_content: DishCreate,
     ) -> DishResponse:
         """
 
@@ -75,7 +75,7 @@ class DishService(ServiceMixin):
         menu_id: uuid.UUID,
         submenu_id: uuid.UUID,
         dish_id: uuid.UUID,
-        dish_content: DishSchema,
+        dish_content: DishUpdate,
     ) -> DishResponse:
         """
 

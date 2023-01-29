@@ -1,8 +1,4 @@
-import uuid
-
-from pydantic import BaseModel
-
-from src.api.v1.schemas.base import BaseSchema
+from src.api.v1.schemas.base import BaseMenu, BaseSchema
 
 
 class MenuBase(BaseSchema):
@@ -23,14 +19,8 @@ class MenuSchema(MenuBase):
         }
 
 
-class MenuResponse(BaseModel):
-    """Схема меню ответа."""
-
-    id: uuid.UUID
-    title: str
-    description: str
-    submenus_count: int = 0
-    dishes_count: int = 0
+class MenuResponse(BaseMenu):
+    """Схема меню для ответа."""
 
     class Config:
         """Пример схемы меню для документации."""
@@ -46,3 +36,51 @@ class MenuResponse(BaseModel):
         }
 
         orm_mode = True
+
+
+class MenuCreate(MenuBase):
+    class Config:
+        schema_extra = {
+            "examples": {
+                "valid": {
+                    "summary": "Верный формат запроса",
+                    "description": "Ожидаемый формат данных для успешного ответа",
+                    "value": {
+                        "title": "My new menu",
+                        "description": "Super cool menu for my restaurant",
+                    },
+                },
+                "invalid": {
+                    "summary": "Неверный формат запроса",
+                    "description": "Невалидные данные, которые приведут к ошибке валидации",
+                    "value": {
+                        "name": "",
+                        "description": "My new menu description",
+                    },
+                },
+            }
+        }
+
+
+class MenuUpdate(MenuBase):
+    class Config:
+        schema_extra = {
+            "examples": {
+                "valid": {
+                    "summary": "Верный формат запроса",
+                    "description": "Ожидаемый формат данных для успешного ответа",
+                    "value": {
+                        "title": "My updated menu",
+                        "description": "My updated cool menu",
+                    },
+                },
+                "invalid": {
+                    "summary": "Неверный формат запроса",
+                    "description": "Невалидные данные, которые приведут к ошибке валидации",
+                    "value": {
+                        "title": "F",
+                        "description": "F",
+                    },
+                },
+            }
+        }

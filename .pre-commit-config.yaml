@@ -11,17 +11,18 @@ repos:
     -   id: check-case-conflict
     -   id: check-added-large-files
 
--   repo: https://github.com/pycqa/isort
-    rev: 5.11.4
-    hooks:
-    -   id: isort
-        exclude: __init__.py
-        args: [ --profile, black, --filter-files ]
+#-   repo: https://github.com/pycqa/isort
+#    rev: 5.11.4
+#    hooks:
+#    -   id: isort
+#        exclude: __init__.py
+#        args: [ --profile, black, --filter-files ]
 
 -   repo: https://github.com/pycqa/flake8
     rev: 6.0.0
     hooks:
     -   id: flake8
+        args: ["--ignore=E501"]
         exclude: src/migrations
 
 -   repo: https://github.com/psf/black

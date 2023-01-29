@@ -1,8 +1,4 @@
-import uuid
-
-from pydantic import BaseModel, validator
-
-from src.api.v1.schemas.base import BaseSchema
+from src.api.v1.schemas.base import BaseDish, BaseSchema
 
 
 class DishBase(BaseSchema):
@@ -14,33 +10,61 @@ class DishSchema(DishBase):
 
     price: float
 
-    class Config:
-        """Пример схемы для документации."""
 
+class DishUpdate(DishSchema):
+    class Config:
         schema_extra = {
-            "example": {
-                "title": "Блюдо",
-                "description": "Описание блюда",
-                "price": "14.51456",
+            "examples": {
+                "valid": {
+                    "summary": "Верный формат запроса",
+                    "description": "Ожидаемый формат данных для успешного ответа",
+                    "value": {
+                        "title": "My new dish",
+                        "description": "Super cool menu for my restaurant",
+                        "price": 3456.3456,
+                    },
+                },
+                "invalid": {
+                    "summary": "Неверный формат запроса",
+                    "description": "Невалидные данные, которые приведут к ошибке валидации",
+                    "value": {
+                        "name": "",
+                        "description": "My new dish description",
+                        "amount": 345,
+                    },
+                },
             }
         }
 
 
-def set_price(cost: float) -> str:
-    """Возвращает строковое представление цены блюда с двумя знаками после
-    запятой."""
-    return f"{cost:.2f}"
+class DishCreate(DishSchema):
+    class Config:
+        schema_extra = {
+            "examples": {
+                "valid": {
+                    "summary": "Верный формат запроса",
+                    "description": "Ожидаемый формат данных для успешного ответа",
+                    "value": {
+                        "title": "My new dish",
+                        "description": "Super cool dish for my restaurant",
+                        "price": 3456.3456,
+                    },
+                },
+                "invalid": {
+                    "summary": "Неверный формат запроса",
+                    "description": "Невалидные данные, которые приведут к ошибке валидации",
+                    "value": {
+                        "name": "",
+                        "description": "My new dish description",
+                        "amount": 345,
+                    },
+                },
+            }
+        }
 
 
-class DishResponse(BaseModel):
+class DishResponse(BaseDish):
     """Схема блюда для ответа."""
-
-    id: uuid.UUID
-    title: str
-    description: str
-    price: float
-
-    _price = validator("price", allow_reuse=True)(set_price)
 
     class Config:
         """Пример схемы для документации."""
