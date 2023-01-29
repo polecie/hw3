@@ -10,14 +10,16 @@ __all__ = ("MenuRepository",)
 
 
 class MenuRepository(AbstractRepository):
+    """
+    Репозиторий для работы с сущностью меню.
+    """
     model: type[Menu] = Menu
 
     async def list(
         self,
     ) -> list[Menu]:
         """
-
-        :return:
+        Возвращает записи всех меню, содержащиеся в базе данных.
         """
         statement = (
             select(
@@ -49,9 +51,8 @@ class MenuRepository(AbstractRepository):
 
     async def get(self, menu_id: uuid.UUID) -> Menu | None:
         """
-
-        :param menu_id:
-        :return:
+        Возвращает запись меню по его `id`.
+        :param menu_id: Идентификатор меню.
         """
         statement = (
             select(
@@ -90,9 +91,8 @@ class MenuRepository(AbstractRepository):
 
     async def add(self, menu_content: MenuSchema) -> Menu | None:
         """
-
-        :param menu_content:
-        :return:
+        Добавляет в базу данных новую запись меню.
+        :param menu_content: Поля меню для добавления.
         """
         menu: Menu = Menu(**menu_content.dict())
         async with self.session as session:
@@ -110,10 +110,9 @@ class MenuRepository(AbstractRepository):
         self, menu_id: uuid.UUID, menu_content: MenuSchema
     ) -> bool:
         """
-
-        :param menu_id:
-        :param menu_content:
-        :return:
+        Обновляет запись меню по его `id`.
+        :param menu_id: Идентификатор меню.
+        :param menu_content: Поля меню, которые необходимо обновить.
         """
         menu_status = False
         if menu := await self.__get(menu_id=menu_id):
@@ -132,9 +131,8 @@ class MenuRepository(AbstractRepository):
 
     async def delete(self, menu_id: uuid.UUID) -> bool:
         """
-
-        :param menu_id:
-        :return:
+        Удаляет запись меню из базы данных по его `id`.
+        :param menu_id: Идентификатор меню.
         """
         menu_status = False
         if menu := await self.__get(menu_id=menu_id):

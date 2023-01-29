@@ -8,7 +8,7 @@ from src.db.db import base
 
 
 class Menu(base):
-    """Модель меню"""
+    """Модель меню."""
 
     __tablename__ = "menus"
 
@@ -24,7 +24,7 @@ class Menu(base):
 
 
 class Submenu(base):
-    """Модель подменю"""
+    """Модель подменю."""
 
     __tablename__ = "submenus"
 
@@ -44,7 +44,7 @@ class Submenu(base):
 
 
 class Dish(base):
-    """Модель блюда"""
+    """Модель блюда."""
 
     __tablename__ = "dishes"
 

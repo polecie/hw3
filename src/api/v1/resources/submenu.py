@@ -20,10 +20,9 @@ async def get_submenus(
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> list[SubmenuResponse]:
     """
-    Список всех подменю
-    :param menu_id:
-    :param submenu_service:
-    :return:
+    Возвращает список всех подменю.
+    :param menu_id: Идентификатор меню.
+    :param submenu_service: Сервис для работы с логикой.
     """
     submenus: list[SubmenuResponse] = await submenu_service.get_submenus(
         menu_id
@@ -44,11 +43,10 @@ async def get_submenu(
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """
-    Просмотреть подменю по его id
-    :param menu_id:
-    :param submenu_id:
-    :param submenu_service:
-    :return:
+    Возвращает подменю по его `id`.
+    :param menu_id: Идентификатор меню.
+    :param submenu_id: Идентификатор подменю.
+    :param submenu_service: Сервис для работы с логикой.
     """
     submenu: SubmenuResponse = await submenu_service.get_submenu(
         submenu_id, menu_id
@@ -69,11 +67,10 @@ async def create_submenu(
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """
-    Создать подменю
-    :param menu_id:
-    :param submenu_content:
-    :param submenu_service:
-    :return:
+    Создает новое подменю.
+    :param menu_id: Идентификатор меню.
+    :param submenu_content: Поля для создания подменю.
+    :param submenu_service: Сервис для работы с логикой.
     """
     submenu: SubmenuResponse = await submenu_service.create_submenu(
         submenu_content, menu_id
@@ -95,12 +92,11 @@ async def patch_submenu(
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """
-    Изменить подменю
-    :param menu_id:
-    :param submenu_id:
-    :param submenu_content:
-    :param submenu_service:
-    :return:
+    Изменияет подменю.
+    :param menu_id: Идентификатор меню.
+    :param submenu_id: Идентификатор подменю.
+    :param submenu_content: Поля для обновления подменю.
+    :param submenu_service: Сервис для работы с логикой.
     """
     submenu: SubmenuResponse = await submenu_service.update_submenu(
         submenu_id, submenu_content, menu_id
@@ -121,11 +117,10 @@ async def delete_submenu(
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> dict:
     """
-    Удалить подменю
-    :param menu_id:
-    :param submenu_id:
-    :param submenu_service:
-    :return:
+    Удаляет подменю.
+    :param menu_id: Идентификатор подменю.
+    :param submenu_id: Идентификатор подменю.
+    :param submenu_service: Сервис для работы с логикой.
     """
     submenu: dict = await submenu_service.delete_submenu(submenu_id, menu_id)
     return submenu

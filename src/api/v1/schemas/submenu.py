@@ -6,14 +6,14 @@ from src.api.v1.schemas.base import BaseSchema
 
 
 class SubmenuBase(BaseSchema):
-    """Базовая схема подменю"""
+    """Базовая схема подменю."""
 
 
 class SubmenuSchema(SubmenuBase):
-    """Схема подменю"""
+    """Схема подменю."""
 
     class Config:
-        """Пример схемы для документации"""
+        """Пример схемы для документации."""
 
         schema_extra = {
             "example": {
@@ -24,7 +24,7 @@ class SubmenuSchema(SubmenuBase):
 
 
 class SubmenuResponse(BaseModel):
-    """Схема подменю для ответа"""
+    """Схема подменю для ответа."""
 
     id: uuid.UUID
     title: str
@@ -32,7 +32,7 @@ class SubmenuResponse(BaseModel):
     dishes_count: int = 0
 
     class Config:
-        """Пример схемы подменю для документации"""
+        """Пример схемы подменю для документации."""
 
         schema_extra = {
             "example": {

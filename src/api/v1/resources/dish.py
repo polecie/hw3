@@ -21,11 +21,10 @@ async def get_dishes(
     dish_service: DishService = Depends(get_dish_service),
 ) -> list[DishResponse]:
     """
-    Просмотреть список блюд
-    :param menu_id:
-    :param submenu_id:
-    :param dish_service:
-    :return:
+    Получить список всех блюд.
+    :param menu_id: Идентификатор меню.
+    :param submenu_id: Идентификатор подменю.
+    :param dish_service: Сервис для работы с логикой.
     """
     dishes: list[DishResponse] = await dish_service.get_dishes(
         menu_id, submenu_id
@@ -47,12 +46,11 @@ async def get_dish(
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """
-    Просмотр определенного блюда
-    :param menu_id:
-    :param submenu_id:
-    :param dish_id:
-    :param dish_service:
-    :return:
+    Просмотр определенного блюда по его `id`.
+    :param menu_id: Идентификатор меню.
+    :param submenu_id: Идентификатор подменю.
+    :param dish_id: Идентификатор блюда.
+    :param dish_service: Сервис для работы с логикой.
     """
     dish: DishResponse = await dish_service.get_dish(
         menu_id, submenu_id, dish_id
@@ -74,12 +72,11 @@ async def create_dish(
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """
-    Создать новое блюдо
-    :param menu_id:
-    :param submenu_id:
-    :param dish_content:
-    :param dish_service:
-    :return:
+    Создать новое блюдо.
+    :param menu_id: Идентификатор меню.
+    :param submenu_id: Идентификатор подменю.
+    :param dish_content: Поля для создания записи о блюде.
+    :param dish_service: Сервис для работы с логикой.
     """
     dish: DishResponse = await dish_service.create_dish(
         menu_id, submenu_id, dish_content
@@ -102,13 +99,12 @@ async def patch_dish(
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """
-    Обновить блюдо
-    :param menu_id:
-    :param submenu_id:
-    :param dish_id:
-    :param dish_content:
-    :param dish_service:
-    :return:
+    Обновить блюдо.
+    :param menu_id: Идентификатор меню.
+    :param submenu_id: Идентификатор подменю.
+    :param dish_id: Идентификатор блюда.
+    :param dish_content: Поля для обновления блюда.
+    :param dish_service: Сервис для работы с логикой.
     """
     dish: DishResponse = await dish_service.update_dish(
         menu_id, submenu_id, dish_id, dish_content
@@ -130,12 +126,11 @@ async def delete_dish(
     dish_service: DishService = Depends(get_dish_service),
 ) -> dict:
     """
-    Удалить блюдо
-    :param menu_id:
-    :param submenu_id:
-    :param dish_id:
-    :param dish_service:
-    :return:
+    Удалить блюдо.
+    :param menu_id: Идентификатор меню.
+    :param submenu_id: Идентификатор подменю.
+    :param dish_id: Идентификатор блюда.
+    :param dish_service: Сервис для работы с логикой.
     """
     dish: dict = await dish_service.delete_dish(menu_id, submenu_id, dish_id)
     return dish

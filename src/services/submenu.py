@@ -21,8 +21,7 @@ class SubmenuService(ServiceMixin):
     async def get_submenus(self, menu_id: uuid.UUID) -> list[SubmenuResponse]:
         """
 
-        :param menu_id:
-        :return:
+        :param menu_id: Идентификатор меню.
         """
         # проверить меню
         submenus: list = await self.container.submenu_repo.list(
@@ -35,9 +34,8 @@ class SubmenuService(ServiceMixin):
     ) -> SubmenuResponse:
         """
 
-        :param submenu_id:
-        :param menu_id:
-        :return:
+        :param submenu_id: Идентификатор подменю.
+        :param menu_id: Идентификатор меню.
         """
         # проверить меню
         if cached_submenu := await self.cache.get(key=f"{submenu_id}"):
@@ -60,9 +58,8 @@ class SubmenuService(ServiceMixin):
     ) -> SubmenuResponse:
         """
 
-        :param submenu_content:
-        :param menu_id:
-        :return:
+        :param submenu_content: Поля для создания подменю.
+        :param menu_id: Идентификатор меню.
         """
         # проверяем меню на существование
         submenu = await self.container.submenu_repo.add(
@@ -78,10 +75,9 @@ class SubmenuService(ServiceMixin):
     ) -> SubmenuResponse:
         """
 
-        :param submenu_id:
-        :param submenu_content:
-        :param menu_id:
-        :return:
+        :param submenu_id: Идентификатор подменю.
+        :param submenu_content: Поля для обновления подменю.
+        :param menu_id: Идентификатор меню.
         """
         # проверяем меню
         submenu_status: bool = await self.container.submenu_repo.update(
@@ -106,9 +102,8 @@ class SubmenuService(ServiceMixin):
     ) -> dict:
         """
 
-        :param submenu_id:
-        :param menu_id:
-        :return:
+        :param submenu_id: Идентификатор подменю.
+        :param menu_id: Идентификатор меню.
         """
         # проверить меню
         submenu_status: bool = await self.container.submenu_repo.delete(
@@ -129,5 +124,10 @@ async def get_submenu_service(
     cache: AbstractCache = Depends(get_cache),
     session: AsyncSession = Depends(get_async_session),
 ) -> SubmenuService:
+    """
+    Функция для внедрения зависимостей.
+    :param cache: Кеш.
+    :param session: Сессия с базой данных.
+    """
     container = RepositoriesContainer(session=session)
     return SubmenuService(container=container, cache=cache)

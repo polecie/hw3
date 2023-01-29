@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Any
 
 
 class AbstractCache(ABC):
@@ -7,17 +6,11 @@ class AbstractCache(ABC):
         self.cache = cache_instance
 
     @abstractmethod
-    async def get(self, key: str) -> None:
+    async def get(self, *args, **kwargs) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    async def set(
-        self,
-        key: str,
-        value: Any,
-        expire: int = 0,
-    ) -> None:
-        # str, bytes or bytearray
+    async def set(self, *args, **kwargs) -> None:
         raise NotImplementedError
 
     @abstractmethod
@@ -25,7 +18,7 @@ class AbstractCache(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, key: str) -> None:
+    async def delete(self, *args, **kwargs) -> None:
         raise NotImplementedError
 
     async def flushall(self) -> None:
@@ -36,4 +29,7 @@ cache: AbstractCache | None = None
 
 
 async def get_cache() -> AbstractCache | None:
+    """
+    Функция необходима для внедрения зависимостей.
+    """
     return cache

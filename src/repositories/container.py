@@ -15,6 +15,9 @@ class AbstractRepositoriesContainer(ABC):
 
 
 class RepositoriesContainer(AbstractRepositoriesContainer):
+    """
+    Контейнер для хранения всех репозиториев и сессии для работы с ними.
+    """
     def __init__(self, session: AsyncSession):
         self.session = session
         self.menu_repo: MenuRepository = MenuRepository(session=self.session)

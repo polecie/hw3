@@ -19,9 +19,8 @@ async def get_menus(
     menu_service: MenuService = Depends(get_menu_service),
 ) -> list[MenuResponse]:
     """
-    Список всех меню
-    :param menu_service:
-    :return:
+    Возвращает список всех меню.
+    :param menu_service: Сервис для работы с логикой.
     """
     menus: list[MenuResponse] = await menu_service.get_menus()
     return menus
@@ -38,10 +37,9 @@ async def get_menu(
     menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
 ) -> MenuResponse:
     """
-    Просмотреть меню по его id
-    :param menu_id:
-    :param menu_service:
-    :return:
+    Возвращает меню по его `id`.
+    :param menu_id: Идентификатор подменю.
+    :param menu_service: Сервис для работы с логикой.
     """
     menu: MenuResponse = await menu_service.get_menu(menu_id)
     return menu
@@ -59,10 +57,9 @@ async def create_menu(
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """
-    Создать меню
-    :param menu_content:
-    :param menu_service:
-    :return:
+    Создает новое меню,
+    :param menu_content: Поля для создания меню.
+    :param menu_service: Сервис для работы с логикой.
     """
     menu: MenuResponse = await menu_service.create_menu(menu_content)
     return menu
@@ -81,11 +78,10 @@ async def patch_menu(
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """
-    Изменить меню
-    :param menu_id:
-    :param menu_content:
-    :param menu_service:
-    :return:
+    Изменяет меню.
+    :param menu_id: Идентификатор меню.
+    :param menu_content: Поля для обновления меню.
+    :param menu_service: Сервис для работы с логикой.
     """
     menu: MenuResponse = await menu_service.update_menu(menu_id, menu_content)
     return menu
@@ -102,10 +98,9 @@ async def delete_menu(
     menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
 ) -> dict:
     """
-    Удалить меню по его id
-    :param menu_id:
-    :param menu_service:
-    :return:
+    Удаляет меню по его `id`.
+    :param menu_id: Идентификатор меню.
+    :param menu_service: Сервис для работы с логикой.
     """
     menu: dict = await menu_service.delete_menu(menu_id)
     return menu

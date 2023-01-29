@@ -8,13 +8,16 @@ from src.repositories.base import AbstractRepository
 
 
 class DishRepository(AbstractRepository):
+    """
+    Репозиторий для работы с сущностью блюда.
+    """
     model: type[Dish] = Dish
 
     async def list(self, submenu_id: uuid.UUID) -> list[Dish]:
         """
-
-        :param submenu_id:
-        :return:
+        Возвращает список всех записей блюд из базы данных
+        по связанному с ними `id` подменю.
+        :param submenu_id: Идентификатор подменю.
         """
         statement = select(
             self.model.id,
@@ -33,9 +36,8 @@ class DishRepository(AbstractRepository):
 
     async def get(self, dish_id: uuid.UUID) -> Dish | None:
         """
-
-        :param dish_id:
-        :return:
+        Возвращает модель блюда из базы данных по его `id`.
+        :param dish_id: Идентификатор блюда.
         """
         statement = select(
             self.model.id,
@@ -67,10 +69,9 @@ class DishRepository(AbstractRepository):
         self, dish_content: DishSchema, submenu_id: uuid.UUID
     ) -> Dish | None:
         """
-
-        :param dish_content:
-        :param submenu_id:
-        :return:
+        Добавляет в базу данных новую запись блюда.
+        :param dish_content: Поля для добавления.
+        :param submenu_id: Идентификатор подменю.
         """
         new_dish = dish_content.dict(exclude_unset=True)
         new_dish["submenu_id"] = submenu_id
@@ -90,10 +91,9 @@ class DishRepository(AbstractRepository):
         self, dish_id: uuid.UUID, dish_content: DishSchema
     ) -> bool:
         """
-
-        :param dish_id:
-        :param dish_content:
-        :return:
+        Обновляет запись блюда в базе данных.
+        :param dish_id: Идентификатор блюда.
+        :param dish_content: Поля блюда, которые необходимо обновить.
         """
         dish_status = False
         if dish := await self.__get(dish_id=dish_id):
@@ -112,9 +112,8 @@ class DishRepository(AbstractRepository):
 
     async def delete(self, dish_id: uuid.UUID) -> bool:
         """
-
-        :param dish_id:
-        :return:
+        Удаляет запись блюда из базы данных.
+        :param dish_id: Идентификатор блюда.
         """
         dish_status = False
         if dish := await self.__get(dish_id=dish_id):

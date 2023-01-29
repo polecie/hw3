@@ -10,13 +10,15 @@ __all__ = ("SubmenuRepository",)
 
 
 class SubmenuRepository(AbstractRepository):
+    """
+    Репозиторий для работы с сущностью подменю.
+    """
     model: type[Submenu] = Submenu
 
     async def list(self, menu_id: uuid.UUID) -> list[Submenu]:
         """
-
-        :param menu_id:
-        :return:
+        Возвращает список всех записей подменю из базы данных.
+        :param menu_id: Идентификатор меню.
         """
         statement = (
             select(
@@ -40,9 +42,8 @@ class SubmenuRepository(AbstractRepository):
 
     async def get(self, submenu_id: uuid.UUID) -> Submenu | None:
         """
-
-        :param submenu_id:
-        :return:
+        Возвращает запись подменю из базы данных.
+        :param submenu_id: Идентификатор подменю.
         """
         statement = (
             select(
@@ -83,10 +84,9 @@ class SubmenuRepository(AbstractRepository):
         self, submenu_content: SubmenuSchema, menu_id: uuid.UUID
     ) -> Submenu | None:
         """
-
-        :param submenu_content:
-        :param menu_id:
-        :return:
+        Добавляет новую запись подменю в базу данных.
+        :param submenu_content: Поля подменю для добавления.
+        :param menu_id: Идентификатор меню.
         """
         new_submenu = submenu_content.dict(exclude_unset=True)
         new_submenu["menu_id"] = menu_id
@@ -106,10 +106,9 @@ class SubmenuRepository(AbstractRepository):
         self, submenu_id: uuid.UUID, submenu_content: SubmenuSchema
     ) -> bool:
         """
-
-        :param submenu_id:
-        :param submenu_content:
-        :return:
+        Обновляет запись подменю в базе данных.
+        :param submenu_id: Идентификатор подменю.
+        :param submenu_content: Поля для обновления подменю.
         """
         submenu_status = False
         if submenu := await self.__get(submenu_id=submenu_id):
@@ -128,9 +127,8 @@ class SubmenuRepository(AbstractRepository):
 
     async def delete(self, submenu_id: uuid.UUID) -> bool:
         """
-
-        :param submenu_id:
-        :return:
+        Удаляет запись подменю из базы данных по его `id`.
+        :param submenu_id: Идентификатор подменю.
         """
         submenu_status = False
         if submenu := await self.__get(submenu_id=submenu_id):

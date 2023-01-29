@@ -18,9 +18,8 @@ class DishService(ServiceMixin):
     ) -> list[DishResponse]:
         """
 
-        :param menu_id:
-        :param submenu_id:
-        :return:
+        :param menu_id: Идентификатор меню.
+        :param submenu_id: Идентификатор подменю.
         """
         # проверить меню подменю
         # if cached_dishes := await self.cache.get(key="dishes"):
@@ -36,10 +35,9 @@ class DishService(ServiceMixin):
     ) -> DishResponse:
         """
 
-        :param menu_id:
-        :param submenu_id:
-        :param dish_id:
-        :return:
+        :param menu_id: Идентификатор меню.
+        :param submenu_id: Идентификатор подменю.
+        :param dish_id: Идентификатор блюда.
         """
         # проверить меню подменю
         if cached_dish := await self.cache.get(key=f"{dish_id}"):
@@ -62,10 +60,9 @@ class DishService(ServiceMixin):
     ) -> DishResponse:
         """
 
-        :param menu_id:
-        :param submenu_id:
-        :param dish_content:
-        :return:
+        :param menu_id: Идентификатор меню.
+        :param submenu_id: Идентификатор подменю.
+        :param dish_content: Поля для создания блюда.
         """
         # проверяем меню и подменю на существование
         dish = await self.container.dish_repo.add(
@@ -82,11 +79,10 @@ class DishService(ServiceMixin):
     ) -> DishResponse:
         """
 
-        :param menu_id:
-        :param submenu_id:
-        :param dish_id:
-        :param dish_content:
-        :return:
+        :param menu_id: Идентификатор меню.
+        :param submenu_id: Идентификатор подменю.
+        :param dish_id: Идентификатор блюда.
+        :param dish_content: Поля для обновления блюда.
         """
         # проверяем меню и подменю
         dish_status: bool = await self.container.dish_repo.update(
@@ -110,10 +106,9 @@ class DishService(ServiceMixin):
     ) -> dict:
         """
 
-        :param menu_id:
-        :param submenu_id:
-        :param dish_id:
-        :return:
+        :param menu_id: Идентификатор меню.
+        :param submenu_id: Идентификатор подменю.
+        :param dish_id: Идентификатор блюда.
         """
         # проверить меню и подменю
         dish_status: bool = await self.container.dish_repo.delete(
@@ -134,5 +129,10 @@ async def get_dish_service(
     cache: AbstractCache = Depends(get_cache),
     session: AsyncSession = Depends(get_async_session),
 ) -> DishService:
+    """
+    Функция для внедрения зависимостей.
+    :param cache: Кеш.
+    :param session: Сессия с базой данных.
+    """
     container = RepositoriesContainer(session=session)
     return DishService(container=container, cache=cache)

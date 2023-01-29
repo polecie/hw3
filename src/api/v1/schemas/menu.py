@@ -6,14 +6,14 @@ from src.api.v1.schemas.base import BaseSchema
 
 
 class MenuBase(BaseSchema):
-    """Базовая схема меню"""
+    """Базовая схема меню."""
 
 
 class MenuSchema(MenuBase):
-    """Схема меню"""
+    """Схема меню."""
 
     class Config:
-        """Пример схемы меню для документации"""
+        """Пример схемы меню для документации."""
 
         schema_extra = {
             "example": {
@@ -24,7 +24,7 @@ class MenuSchema(MenuBase):
 
 
 class MenuResponse(BaseModel):
-    """Схема меню ответа"""
+    """Схема меню ответа."""
 
     id: uuid.UUID
     title: str
@@ -33,7 +33,7 @@ class MenuResponse(BaseModel):
     dishes_count: int = 0
 
     class Config:
-        """Пример схемы меню для документации"""
+        """Пример схемы меню для документации."""
 
         schema_extra = {
             "example": {

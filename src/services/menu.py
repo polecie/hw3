@@ -21,7 +21,6 @@ class MenuService(ServiceMixin):
     async def get_menus(self) -> list[MenuResponse]:
         """
 
-        :return:
         """
 
         menus: list = await self.container.menu_repo.list()
@@ -30,8 +29,7 @@ class MenuService(ServiceMixin):
     async def get_menu(self, menu_id: uuid.UUID) -> MenuResponse:
         """
 
-        :param menu_id:
-        :return:
+        :param menu_id: Идентификатор меню.
         """
         if cached_menu := await self.cache.get(key=f"{menu_id}"):
             return json.loads(cached_menu)  # type: ignore
@@ -48,8 +46,7 @@ class MenuService(ServiceMixin):
     async def create_menu(self, menu_content: MenuSchema) -> MenuResponse:
         """
 
-        :param menu_content:
-        :return:
+        :param menu_content: Поля для создания меню.
         """
         menu = await self.container.menu_repo.add(menu_content=menu_content)
         return MenuResponse.from_orm(menu)
@@ -59,9 +56,8 @@ class MenuService(ServiceMixin):
     ) -> MenuResponse:
         """
 
-        :param menu_id:
-        :param menu_content:
-        :return:
+        :param menu_id: Идентификатор меню.
+        :param menu_content: Поля для обновления меню.
         """
         menu_status: bool = await self.container.menu_repo.update(
             menu_id=menu_id, menu_content=menu_content
@@ -82,8 +78,7 @@ class MenuService(ServiceMixin):
     async def delete_menu(self, menu_id: uuid.UUID) -> dict:
         """
 
-        :param menu_id:
-        :return:
+        :param menu_id: Идентификатор меню.
         """
         menu_status: bool = await self.container.menu_repo.delete(
             menu_id=menu_id
@@ -103,5 +98,10 @@ async def get_menu_service(
     cache: AbstractCache = Depends(get_cache),
     session: AsyncSession = Depends(get_async_session),
 ) -> MenuService:
+    """
+    Функция для внедрения зависимостей.
+    :param cache: Кеш.
+    :param session: Сессия с базой данных.
+    """
     container = RepositoriesContainer(session=session)
     return MenuService(container=container, cache=cache)
