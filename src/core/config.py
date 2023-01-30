@@ -24,7 +24,14 @@ postgres_port: int = os.getenv("POSTGRES_PORT", 5432)  # type: ignore
 postgres_db: str = os.getenv("POSTGRES_DB", "postgres")
 postgres_user: str = os.getenv("POSTGRES_USER", "postgres")
 postgres_password: str = os.getenv("POSTGRES_PASSWORD", "postgres")
-# database_url = "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
 database_url: str = f"postgresql+asyncpg://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}"
+
+test_pgdb_host: str = os.getenv("TEST_DB_HOST", "localhost")
+test_pgdb_port: int = os.getenv("TEST_DB_PORT", 5432)  # type: ignore
+test_pgdb_user: str = os.getenv("TEST_DB_USER", "ylab")
+test_pgdb_password: str = os.getenv("TEST_DB_PASSWORD", "ylab")
+test_pgdb_db: str = os.getenv("TEST_DB", "ylab")
+test_pgdb_url: str = f"postgresql+asyncpg://{test_pgdb_user}:{test_pgdb_password}@{test_pgdb_host}:{test_pgdb_port}/{test_pgdb_db}"
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
