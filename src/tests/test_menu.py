@@ -49,8 +49,10 @@ async def test_get_menu_by_id(client: AsyncClient, session: AsyncSession):
 async def test_update_menu(client: AsyncClient, session: AsyncSession):
     Menu.title = "My updated menu 1"
     Menu.description = "My updated menu description 1"
-    response = await client.patch(f"api/v1/menus/{Menu.menu_id}",
-                                  json={"title": Menu.title, "description": Menu.description})
+    response = await client.patch(
+        f"api/v1/menus/{Menu.menu_id}",
+        json={"title": Menu.title, "description": Menu.description},
+    )
     data = response.json()
     assert response.status_code == 200
     assert "id" in data
@@ -71,7 +73,8 @@ async def test_updated_menu(client: AsyncClient, session: AsyncSession):
 async def test_create_menu(client: AsyncClient):
     response = await client.post(
         "api/v1/menus/",
-        json={"title": Menu.title, "description": Menu.description})
+        json={"title": Menu.title, "description": Menu.description},
+    )
     data = response.json()
     assert response.status_code == 201
     assert data["title"] == Menu.title
@@ -100,7 +103,7 @@ async def test_delete_menu(client: AsyncClient, session: AsyncSession):
     response = await client.delete(f"api/v1/menus/{uid}")
     assert response.status_code == 200
     data = response.json()
-    assert data == {'status': True, 'message': Menu.message}
+    assert data == {"status": True, "message": Menu.message}
 
 
 async def test_check_deleted_menu(client: AsyncClient):

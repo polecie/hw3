@@ -33,5 +33,8 @@ test_pgdb_password: str = os.getenv("TEST_DB_PASSWORD", "ylab")
 test_pgdb_db: str = os.getenv("TEST_DB", "ylab")
 test_pgdb_url: str = f"postgresql+asyncpg://{test_pgdb_user}:{test_pgdb_password}@{test_pgdb_host}:{test_pgdb_port}/{test_pgdb_db}"
 
+test_redis_host: str = os.getenv("TEST_REDIS_HOST", "localhost")
+test_redis_port: str = os.getenv("TEST_REDIS_PORT", 6379)  # type: ignore
+test_redis_url: str = f"redis://{test_redis_host}:{test_redis_port}"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
