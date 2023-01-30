@@ -19,12 +19,13 @@ __all__ = (
 
 class MenuService(ServiceMixin):
     async def get_menus(self) -> list[MenuResponse]:
-        """"""
+        """Возвращает список всех меню."""
         menus: list = await self.container.menu_repo.list()
         return menus
 
     async def get_menu(self, menu_id: uuid.UUID) -> MenuResponse:
-        """
+        """Возвращает меню по его `id`.
+
         :param menu_id: Идентификатор меню.
         """
         if cached_menu := await self.cache.get(key=f"{menu_id}"):
@@ -40,7 +41,8 @@ class MenuService(ServiceMixin):
         )
 
     async def create_menu(self, menu_content: MenuCreate) -> MenuResponse:
-        """
+        """Создает новое меню.
+
         :param menu_content: Поля для создания меню.
         """
         menu = await self.container.menu_repo.add(menu_content=menu_content)
@@ -49,7 +51,8 @@ class MenuService(ServiceMixin):
     async def update_menu(
         self, menu_id: uuid.UUID, menu_content: MenuUpdate
     ) -> MenuResponse:
-        """
+        """Обновляет меню.
+
         :param menu_id: Идентификатор меню.
         :param menu_content: Поля для обновления меню.
         """
@@ -70,7 +73,8 @@ class MenuService(ServiceMixin):
         )
 
     async def delete_menu(self, menu_id: uuid.UUID) -> dict:
-        """
+        """Удаляет меню по его `id`.
+
         :param menu_id: Идентификатор меню.
         """
         menu_status: bool = await self.container.menu_repo.delete(

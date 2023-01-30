@@ -1,26 +1,12 @@
 from src.api.v1.schemas.base import BaseSchema, BaseSubmenu
 
 
-class SubmenuBase(BaseSchema):
-    """Базовая схема подменю."""
-
-
-class SubmenuSchema(SubmenuBase):
-    """Схема подменю."""
-
-    class Config:
-        """Пример схемы для документации."""
-
-        schema_extra = {
-            "example": {
-                "title": "Подменю",
-                "description": "Описание подменю",
-            }
-        }
+class SubmenuSchema(BaseSchema):
+    """Схема подменю для обновления данных."""
 
 
 class SubmenuResponse(BaseSubmenu):
-    """Схема подменю для ответа."""
+    """Схема подменю для успешного ответа."""
 
     class Config:
         """Пример схемы подменю для документации."""
@@ -37,48 +23,56 @@ class SubmenuResponse(BaseSubmenu):
         orm_mode = True
 
 
-class SubmenuCreate(SubmenuBase):
+class SubmenuCreate(SubmenuSchema):
+    """Схема подменю для создания нового подменю."""
+
     class Config:
+        """Пример схемы подменю для документации."""
+
         schema_extra = {
             "examples": {
                 "valid": {
                     "summary": "Верный формат запроса",
                     "description": "Ожидаемый формат данных для успешного ответа",
                     "value": {
-                        "title": "My new menu",
-                        "description": "Super cool menu for my restaurant",
+                        "title": "Новое подменю",
+                        "description": "Описание нового подменю",
                     },
                 },
                 "invalid": {
                     "summary": "Неверный формат запроса",
                     "description": "Невалидные данные, которые приведут к ошибке валидации",
                     "value": {
-                        "name": "",
-                        "description": "My new menu description",
+                        "title": "Но",
+                        "description": "Описание нового подменю",
                     },
                 },
             }
         }
 
 
-class SubmenuUpdate(SubmenuBase):
+class SubmenuUpdate(SubmenuSchema):
+    """Схема подменю для обновления данных."""
+
     class Config:
+        """Пример схемы подменю для документации."""
+
         schema_extra = {
             "examples": {
                 "valid": {
                     "summary": "Верный формат запроса",
                     "description": "Ожидаемый формат данных для успешного ответа",
                     "value": {
-                        "title": "My updated submenu",
-                        "description": "My updated cool submenu",
+                        "title": "Новое название",
+                        "description": "Обновленное описание подменю",
                     },
                 },
                 "invalid": {
                     "summary": "Неверный формат запроса",
                     "description": "Невалидные данные, которые приведут к ошибке валидации",
                     "value": {
-                        "title": "F",
-                        "description": "F",
+                        "name": "Новое название",
+                        "description": "Обновленное описание подменю",
                     },
                 },
             }

@@ -23,7 +23,7 @@ __all__ = (
 
 class SubmenuService(ServiceMixin):
     async def get_submenus(self, menu_id: uuid.UUID) -> list[SubmenuResponse]:
-        """
+        """Возвращает список всех подменю, принадлежащих меню по `id` меню.
 
         :param menu_id: Идентификатор меню.
         """
@@ -36,7 +36,7 @@ class SubmenuService(ServiceMixin):
     async def get_submenu(
         self, submenu_id: uuid.UUID, menu_id: uuid.UUID
     ) -> SubmenuResponse:
-        """
+        """Возвращает подменю по его `id`.
 
         :param submenu_id: Идентификатор подменю.
         :param menu_id: Идентификатор меню.
@@ -60,7 +60,7 @@ class SubmenuService(ServiceMixin):
     async def create_submenu(
         self, submenu_content: SubmenuCreate, menu_id: uuid.UUID
     ) -> SubmenuResponse:
-        """
+        """Создает новое подменю.
 
         :param submenu_content: Поля для создания подменю.
         :param menu_id: Идентификатор меню.
@@ -77,7 +77,7 @@ class SubmenuService(ServiceMixin):
         submenu_content: SubmenuUpdate,
         menu_id: uuid.UUID,
     ) -> SubmenuResponse:
-        """
+        """Обновляет подменю.
 
         :param submenu_id: Идентификатор подменю.
         :param submenu_content: Поля для обновления подменю.
@@ -104,7 +104,7 @@ class SubmenuService(ServiceMixin):
     async def delete_submenu(
         self, submenu_id: uuid.UUID, menu_id: uuid.UUID
     ) -> dict:
-        """
+        """Удаляет подменю по его `id`.
 
         :param submenu_id: Идентификатор подменю.
         :param menu_id: Идентификатор меню.

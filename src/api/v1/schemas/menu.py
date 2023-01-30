@@ -1,26 +1,12 @@
 from src.api.v1.schemas.base import BaseMenu, BaseSchema
 
 
-class MenuBase(BaseSchema):
-    """Базовая схема меню."""
-
-
-class MenuSchema(MenuBase):
-    """Схема меню."""
-
-    class Config:
-        """Пример схемы меню для документации."""
-
-        schema_extra = {
-            "example": {
-                "title": "Меню",
-                "description": "Описание меню",
-            }
-        }
+class MenuSchema(BaseSchema):
+    """Схема меню для обновления данных."""
 
 
 class MenuResponse(BaseMenu):
-    """Схема меню для ответа."""
+    """Схема меню для успешного ответа."""
 
     class Config:
         """Пример схемы меню для документации."""
@@ -38,40 +24,48 @@ class MenuResponse(BaseMenu):
         orm_mode = True
 
 
-class MenuCreate(MenuBase):
+class MenuCreate(MenuSchema):
+    """Схема для создания нового меню."""
+
     class Config:
+        """Пример схемы меню для документации."""
+
         schema_extra = {
             "examples": {
                 "valid": {
                     "summary": "Верный формат запроса",
                     "description": "Ожидаемый формат данных для успешного ответа",
                     "value": {
-                        "title": "My new menu",
-                        "description": "Super cool menu for my restaurant",
+                        "title": "Название меню",
+                        "description": "Описание нового меню",
                     },
                 },
                 "invalid": {
                     "summary": "Неверный формат запроса",
                     "description": "Невалидные данные, которые приведут к ошибке валидации",
                     "value": {
-                        "name": "",
-                        "description": "My new menu description",
+                        "name": "Новое меню",
+                        "description": "Описание нового меню",
                     },
                 },
             }
         }
 
 
-class MenuUpdate(MenuBase):
+class MenuUpdate(MenuSchema):
+    """Схема для изменения меню."""
+
     class Config:
+        """Пример схемы меню для документации."""
+
         schema_extra = {
             "examples": {
                 "valid": {
                     "summary": "Верный формат запроса",
                     "description": "Ожидаемый формат данных для успешного ответа",
                     "value": {
-                        "title": "My updated menu",
-                        "description": "My updated cool menu",
+                        "title": "Новое название",
+                        "description": "Обновленное описание меню",
                     },
                 },
                 "invalid": {
@@ -79,7 +73,7 @@ class MenuUpdate(MenuBase):
                     "description": "Невалидные данные, которые приведут к ошибке валидации",
                     "value": {
                         "title": "F",
-                        "description": "F",
+                        "description": "Обновленное описание меню",
                     },
                 },
             }

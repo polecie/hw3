@@ -16,14 +16,12 @@ class DishService(ServiceMixin):
     async def get_dishes(
         self, menu_id: uuid.UUID, submenu_id: uuid.UUID
     ) -> list[DishResponse]:
-        """
+        """Возвращает список всех блюд, принадлежащих подменю по `id` подменю.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
         """
         # проверить меню подменю
-        # if cached_dishes := await self.cache.get(key="dishes"):
-        #     return json.loads(cached_dishes)  # type: ignore
         dishes: list = await self.container.dish_repo.list(
             submenu_id=submenu_id
         )
@@ -33,7 +31,7 @@ class DishService(ServiceMixin):
     async def get_dish(
         self, menu_id: uuid.UUID, submenu_id: uuid.UUID, dish_id: uuid.UUID
     ) -> DishResponse:
-        """
+        """Возвращает блюдо по его `id`.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
@@ -58,7 +56,7 @@ class DishService(ServiceMixin):
         submenu_id: uuid.UUID,
         dish_content: DishCreate,
     ) -> DishResponse:
-        """
+        """Создает новое блюдо.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
@@ -77,7 +75,7 @@ class DishService(ServiceMixin):
         dish_id: uuid.UUID,
         dish_content: DishUpdate,
     ) -> DishResponse:
-        """
+        """Обновляет блюдо.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
@@ -104,7 +102,7 @@ class DishService(ServiceMixin):
     async def delete_dish(
         self, menu_id: uuid.UUID, submenu_id: uuid.UUID, dish_id: uuid.UUID
     ) -> dict:
-        """
+        """Удаляет блюдо по его `id`.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.

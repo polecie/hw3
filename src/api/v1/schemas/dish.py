@@ -1,26 +1,26 @@
 from src.api.v1.schemas.base import BaseDish, BaseSchema
 
 
-class DishBase(BaseSchema):
-    """Базовая схема блюда."""
-
-
-class DishSchema(DishBase):
-    """Схема блюда."""
+class DishSchema(BaseSchema):
+    """Схема блюда для обновления данных."""
 
     price: float
 
 
 class DishUpdate(DishSchema):
+    """Схема для обновлен нового блюда."""
+
     class Config:
+        """Пример схемы для документации."""
+
         schema_extra = {
             "examples": {
                 "valid": {
                     "summary": "Верный формат запроса",
                     "description": "Ожидаемый формат данных для успешного ответа",
                     "value": {
-                        "title": "My new dish",
-                        "description": "Super cool menu for my restaurant",
+                        "title": "Измененное название",
+                        "description": "Новое описание",
                         "price": 3456.3456,
                     },
                 },
@@ -28,9 +28,9 @@ class DishUpdate(DishSchema):
                     "summary": "Неверный формат запроса",
                     "description": "Невалидные данные, которые приведут к ошибке валидации",
                     "value": {
-                        "name": "",
-                        "description": "My new dish description",
-                        "amount": 345,
+                        "title": "Новое название",
+                        "description": "Измененное описание",
+                        "price": "Сто",
                     },
                 },
             }
@@ -38,15 +38,19 @@ class DishUpdate(DishSchema):
 
 
 class DishCreate(DishSchema):
+    """Схема для создания нового блюда."""
+
     class Config:
+        """Пример схемы для документации."""
+
         schema_extra = {
             "examples": {
                 "valid": {
                     "summary": "Верный формат запроса",
                     "description": "Ожидаемый формат данных для успешного ответа",
                     "value": {
-                        "title": "My new dish",
-                        "description": "Super cool dish for my restaurant",
+                        "title": "Новое блюдо",
+                        "description": "Описание нового блюда",
                         "price": 3456.3456,
                     },
                 },
@@ -54,9 +58,9 @@ class DishCreate(DishSchema):
                     "summary": "Неверный формат запроса",
                     "description": "Невалидные данные, которые приведут к ошибке валидации",
                     "value": {
-                        "name": "",
-                        "description": "My new dish description",
-                        "amount": 345,
+                        "title": "",
+                        "description": "Описание нового блюда",
+                        "amount": 345.45,
                     },
                 },
             }
@@ -64,7 +68,7 @@ class DishCreate(DishSchema):
 
 
 class DishResponse(BaseDish):
-    """Схема блюда для ответа."""
+    """Схема блюда для успешного ответа."""
 
     class Config:
         """Пример схемы для документации."""
