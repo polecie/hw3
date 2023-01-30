@@ -27,7 +27,6 @@ class SubmenuService(ServiceMixin):
 
         :param menu_id: Идентификатор меню.
         """
-        # проверить меню
         submenus: list = await self.container.submenu_repo.list(
             menu_id=menu_id
         )
@@ -41,7 +40,6 @@ class SubmenuService(ServiceMixin):
         :param submenu_id: Идентификатор подменю.
         :param menu_id: Идентификатор меню.
         """
-        # проверить меню
         if cached_submenu := await self.cache.get(key=f"{submenu_id}"):
             return json.loads(cached_submenu)  # type: ignore
         if submenu := await self.container.submenu_repo.get(
@@ -65,7 +63,6 @@ class SubmenuService(ServiceMixin):
         :param submenu_content: Поля для создания подменю.
         :param menu_id: Идентификатор меню.
         """
-        # проверяем меню на существование
         submenu = await self.container.submenu_repo.add(
             submenu_content=submenu_content, menu_id=menu_id
         )
@@ -83,7 +80,6 @@ class SubmenuService(ServiceMixin):
         :param submenu_content: Поля для обновления подменю.
         :param menu_id: Идентификатор меню.
         """
-        # проверяем меню
         submenu_status: bool = await self.container.submenu_repo.update(
             submenu_id=submenu_id, submenu_content=submenu_content
         )
@@ -109,7 +105,6 @@ class SubmenuService(ServiceMixin):
         :param submenu_id: Идентификатор подменю.
         :param menu_id: Идентификатор меню.
         """
-        # проверить меню
         submenu_status: bool = await self.container.submenu_repo.delete(
             submenu_id=submenu_id
         )

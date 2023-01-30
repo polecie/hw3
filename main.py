@@ -34,7 +34,7 @@ async def root():
 @app.on_event("startup")
 async def startup():
     """"""
-    redis = await aioredis.from_url("redis://localhost")
+    redis = await aioredis.from_url(config.redis_url)
     cache.cache = redis_cache.CacheRedis(cache_instance=redis)
 
 
@@ -50,4 +50,4 @@ app.include_router(router=dish.router, prefix="/api/v1/menus")
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=config.app_host, port=config.app_port)
+    uvicorn.run("main:app", host="127.0.0.1", port=8000)

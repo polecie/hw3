@@ -21,7 +21,6 @@ class DishService(ServiceMixin):
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
         """
-        # проверить меню подменю
         dishes: list = await self.container.dish_repo.list(
             submenu_id=submenu_id
         )
@@ -37,7 +36,6 @@ class DishService(ServiceMixin):
         :param submenu_id: Идентификатор подменю.
         :param dish_id: Идентификатор блюда.
         """
-        # проверить меню подменю
         if cached_dish := await self.cache.get(key=f"{dish_id}"):
             return json.loads(cached_dish)  # type: ignore
         if dish := await self.container.dish_repo.get(dish_id=dish_id):
@@ -62,7 +60,6 @@ class DishService(ServiceMixin):
         :param submenu_id: Идентификатор подменю.
         :param dish_content: Поля для создания блюда.
         """
-        # проверяем меню и подменю на существование
         dish = await self.container.dish_repo.add(
             dish_content=dish_content, submenu_id=submenu_id
         )
@@ -82,7 +79,6 @@ class DishService(ServiceMixin):
         :param dish_id: Идентификатор блюда.
         :param dish_content: Поля для обновления блюда.
         """
-        # проверяем меню и подменю
         dish_status: bool = await self.container.dish_repo.update(
             dish_id=dish_id, dish_content=dish_content
         )
@@ -108,7 +104,6 @@ class DishService(ServiceMixin):
         :param submenu_id: Идентификатор подменю.
         :param dish_id: Идентификатор блюда.
         """
-        # проверить меню и подменю
         dish_status: bool = await self.container.dish_repo.delete(
             dish_id=dish_id
         )
