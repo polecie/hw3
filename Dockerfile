@@ -12,6 +12,6 @@ ENV TZ="Europe/Moscow"
 
 COPY requirements.txt .
 
-RUN pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir
+RUN pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir && pip install pytest-asyncio
 
 COPY . .

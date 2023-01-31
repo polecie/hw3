@@ -2,7 +2,14 @@ import uuid
 
 from fastapi import APIRouter, Body, Depends
 
-from src.api.v1.schemas.menu import MenuCreate, MenuResponse, MenuUpdate
+from src.api.v1.schemas.menu import (
+    MenuCreate,
+    MenuResponse,
+    MenuUpdate,
+    menu_not_found_schema,
+    delete_menu_schema,
+    get_menus_schema,
+)
 from src.services.menu import MenuService, get_menu_service
 
 router = APIRouter(tags=["menu"])
@@ -13,6 +20,7 @@ router = APIRouter(tags=["menu"])
     summary="Просмотр списка меню",
     status_code=200,
     response_model=list[MenuResponse],
+    responses=get_menus_schema,
 )
 async def get_menus(
     menu_service: MenuService = Depends(get_menu_service),
@@ -30,6 +38,7 @@ async def get_menus(
     summary="Просмотр определенного меню",
     status_code=200,
     response_model=MenuResponse,
+    responses=menu_not_found_schema,
 )
 async def get_menu(
     menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
@@ -69,6 +78,7 @@ async def create_menu(
     summary="Обновить меню",
     status_code=200,
     response_model=MenuResponse,
+    responses=menu_not_found_schema,
 )
 async def patch_menu(
     menu_id: uuid.UUID,
@@ -92,6 +102,7 @@ async def patch_menu(
     summary="Удалить меню",
     status_code=200,
     response_model=dict,
+    responses=delete_menu_schema,
 )
 async def delete_menu(
     menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)

@@ -77,3 +77,69 @@ class SubmenuUpdate(SubmenuSchema):
                 },
             }
         }
+
+
+submenu_not_found_schema = {
+    404: {
+        "description": "Not Found",
+        "content": {
+            "application/json": {"example": {"detail": "submenu not found"}}
+        },
+    }
+}
+
+delete_submenu_schema = {
+    200: {
+        "description": "Successful Response",
+        "content": {
+            "application/json": {
+                "example": {
+                    "status": True,
+                    "message": "The submenu has been deleted",
+                }
+            }
+        },
+    },
+    404: {
+        "description": "Not Found",
+        "content": {
+            "application/json": {"example": {"detail": "submenu not found"}}
+        },
+    },
+}
+
+get_submenus_schema = {
+    200: {
+        "description": "Successful Response",
+        "content": {
+            "application/json": {
+                "examples": {
+                    "empty": {"summary": "Пустой список подменю", "value": []},
+                    "full": {
+                        "summary": "В списке содержатся записи",
+                        "value": [
+                            {
+                                "id": "9202923d-afd2-4b4d-acb9-7d4c4f9bcc3a",
+                                "title": "Подменю 1",
+                                "description": "Описание подменю 1",
+                                "dishes_count": 1,
+                            },
+                            {
+                                "id": "779254bb-f0bd-4899-804e-0cb925d88621",
+                                "title": "Подменю 2",
+                                "description": "Описание подменю 2",
+                                "dishes_count": 0,
+                            },
+                            {
+                                "id": "781f9966-587a-49ed-a095-d10f5fe6ecf6",
+                                "title": "Подменю 3",
+                                "description": "Описание подменю 3",
+                                "dishes_count": 9,
+                            },
+                        ],
+                    },
+                }
+            }
+        },
+    }
+}

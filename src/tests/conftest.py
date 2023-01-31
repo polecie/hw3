@@ -23,13 +23,13 @@ def event_loop():
 
 @pytest.fixture(scope="session", name="engine", autouse=True)
 async def engine():
-    async_engine = create_async_engine(config.test_pgdb_url)
-    redis = await aioredis.from_url(config.test_redis_url)  # cache
+    async_engine = create_async_engine(config.database_url)
+    redis = await aioredis.from_url(config.redis_url)  # cache
     cache.cache = redis_cache.CacheRedis(
         cache_instance=redis
     )  # initializing cache
-    async with async_engine.begin() as conn:
-        await conn.run_sync(base.metadata.create_all)
+    # async with async_engine.begin() as conn:
+    #     await conn.run_sync(base.metadata.create_all)
     with open("src/tests/mock_data.sql") as file:
         statements = re.split(r";\s*$", file.read(), flags=re.MULTILINE)
         for statement in statements:

@@ -6,6 +6,9 @@ from src.api.v1.schemas.submenu import (
     SubmenuCreate,
     SubmenuResponse,
     SubmenuUpdate,
+    submenu_not_found_schema,
+    delete_submenu_schema,
+    get_submenus_schema,
 )
 from src.services.submenu import SubmenuService, get_submenu_service
 
@@ -17,6 +20,7 @@ router = APIRouter(tags=["submenu"])
     summary="Просмотр списка подменю",
     status_code=200,
     response_model=list[SubmenuResponse],
+    responses=get_submenus_schema,
 )
 async def get_submenus(
     menu_id: uuid.UUID,
@@ -38,6 +42,7 @@ async def get_submenus(
     summary="Просмотр определенного подменю",
     status_code=200,
     response_model=SubmenuResponse,
+    responses=submenu_not_found_schema,
 )
 async def get_submenu(
     menu_id: uuid.UUID,
@@ -86,6 +91,7 @@ async def create_submenu(
     summary="Обновить подменю",
     status_code=200,
     response_model=SubmenuResponse,
+    responses=submenu_not_found_schema,
 )
 async def patch_submenu(
     menu_id: uuid.UUID,
@@ -113,6 +119,7 @@ async def patch_submenu(
     summary="Удалить подменю",
     status_code=200,
     response_model=dict,
+    responses=delete_submenu_schema,
 )
 async def delete_submenu(
     menu_id: uuid.UUID,

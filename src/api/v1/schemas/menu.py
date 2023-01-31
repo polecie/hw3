@@ -78,3 +78,72 @@ class MenuUpdate(MenuSchema):
                 },
             }
         }
+
+
+menu_not_found_schema = {
+    404: {
+        "description": "Not Found",
+        "content": {
+            "application/json": {"example": {"detail": "menu not found"}}
+        },
+    }
+}
+
+delete_menu_schema = {
+    200: {
+        "description": "Successful Response",
+        "content": {
+            "application/json": {
+                "example": {
+                    "status": True,
+                    "message": "The menu has been deleted",
+                }
+            }
+        },
+    },
+    404: {
+        "description": "Not Found",
+        "content": {
+            "application/json": {"example": {"detail": "menu not found"}}
+        },
+    },
+}
+
+get_menus_schema = {
+    200: {
+        "description": "Successful Response",
+        "content": {
+            "application/json": {
+                "examples": {
+                    "empty": {"summary": "Пустой список меню", "value": []},
+                    "full": {
+                        "summary": "В списке содержатся записи",
+                        "value": [
+                            {
+                                "id": "9202923d-afd2-4b4d-acb9-7d4c4f9bcc3a",
+                                "title": "Меню 1",
+                                "description": "Описание меню 1",
+                                "submenus_count": 4,
+                                "dishes_count": 1,
+                            },
+                            {
+                                "id": "779254bb-f0bd-4899-804e-0cb925d88621",
+                                "title": "Меню 2",
+                                "description": "Описание меню 2",
+                                "submenus_count": 0,
+                                "dishes_count": 0,
+                            },
+                            {
+                                "id": "781f9966-587a-49ed-a095-d10f5fe6ecf6",
+                                "title": "Меню 3",
+                                "description": "Описание меню 3",
+                                "submenus_count": 6,
+                                "dishes_count": 9,
+                            },
+                        ],
+                    },
+                }
+            }
+        },
+    }
+}

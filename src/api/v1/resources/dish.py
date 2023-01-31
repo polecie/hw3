@@ -2,7 +2,14 @@ import uuid
 
 from fastapi import APIRouter, Body, Depends
 
-from src.api.v1.schemas.dish import DishCreate, DishResponse, DishUpdate
+from src.api.v1.schemas.dish import (
+    DishCreate,
+    DishResponse,
+    DishUpdate,
+    delete_dish_schema,
+    dish_not_found_schema,
+    get_dishes_schema,
+)
 from src.services.dish import DishService, get_dish_service
 
 router = APIRouter(tags=["dish"])
@@ -13,6 +20,7 @@ router = APIRouter(tags=["dish"])
     summary="Просмотр списка блюд",
     status_code=200,
     response_model=list[DishResponse],
+    responses=get_dishes_schema,
 )
 async def get_dishes(
     menu_id: uuid.UUID,
@@ -36,6 +44,7 @@ async def get_dishes(
     summary="Просмотр определенного блюда",
     status_code=200,
     response_model=DishResponse,
+    responses=dish_not_found_schema,
 )
 async def get_dish(
     menu_id: uuid.UUID,
@@ -88,6 +97,7 @@ async def create_dish(
     summary="Обновить блюдо",
     status_code=200,
     response_model=DishResponse,
+    responses=dish_not_found_schema,
 )
 async def patch_dish(
     menu_id: uuid.UUID,
@@ -117,6 +127,7 @@ async def patch_dish(
     summary="Удалить блюдо",
     status_code=200,
     response_model=dict,
+    responses=delete_dish_schema,
 )
 async def delete_dish(
     menu_id: uuid.UUID,

@@ -8,7 +8,9 @@ services:
       dockerfile: Dockerfile
     restart: always
     env_file:
-      - .env
+      - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     entrypoint: >
       sh -c "
       echo 'Starting application..' &&
@@ -29,6 +31,8 @@ services:
   hw_redis:
     container_name: hw_redis_cont
     image: redis:latest
+    environment:
+      CONFIG_FILE: ".env"
     expose:
       - 6379
     ports:
@@ -47,7 +51,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .env
+      - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     expose:
       - 5432
     ports:

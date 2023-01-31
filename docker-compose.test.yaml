@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  hw_test_app:
+    container_name: hw_app_cont_test
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - "test.env"
+    environment:
+      CONFIG_FILE: "test.env"
+    entrypoint: >
+      sh -c "
+      alembic -c src/alembic.ini upgrade head &&
+      pytest -vv
+      "
+    networks:
+      - hw_test_ylab
+    depends_on:
+      hw_test_postgres:
+        condition: service_healthy
+      hw_test_redis:
+        condition: service_healthy
+
+  hw_test_redis:
+    container_name: hw_redis_cont_test
+    image: redis:latest
+    expose:
+      - 6379
+    env_file:
+      - "test.env"
+    environment:
+      CONFIG_FILE: "test.env"
+    networks:
+      - hw_test_ylab
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 3s
+      timeout: 20s
+      retries: 10
+
+  hw_test_postgres:
+    container_name: hw_pgdb_cont_test
+    image: postgres:15.1-alpine
+    env_file:
+      - "test.env"
+    environment:
+      CONFIG_FILE: "test.env"
+    expose:
+      - 5432
+    networks:
+      - hw_test_ylab
+    volumes:
+      - postgres_data_test:/var/lib/postgresql_tests/data/
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+      interval: 5s
+      timeout: 20s
+      retries: 100
+
+networks:
+  hw_test_ylab:
+    name: hw_test_ylab
+
+volumes:
+  postgres_data_test:
+

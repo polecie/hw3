@@ -83,3 +83,69 @@ class DishResponse(BaseDish):
         }
 
         orm_mode = True
+
+
+dish_not_found_schema = {
+    404: {
+        "description": "Not Found",
+        "content": {
+            "application/json": {"example": {"detail": "dish not found"}}
+        },
+    }
+}
+
+delete_dish_schema = {
+    200: {
+        "description": "Successful Response",
+        "content": {
+            "application/json": {
+                "example": {
+                    "status": True,
+                    "message": "The dish has been deleted",
+                }
+            }
+        },
+    },
+    404: {
+        "description": "Not Found",
+        "content": {
+            "application/json": {"example": {"detail": "dish not found"}}
+        },
+    },
+}
+
+get_dishes_schema = {
+    200: {
+        "description": "Successful Response",
+        "content": {
+            "application/json": {
+                "examples": {
+                    "empty": {"summary": "Пустой список блюд", "value": []},
+                    "full": {
+                        "summary": "В списке содержатся записи",
+                        "value": [
+                            {
+                                "id": "9202923d-afd2-4b4d-acb9-7d4c4f9bcc3a",
+                                "title": "Блюдо 1",
+                                "description": "Описание блюда 1",
+                                "price": "1.34",
+                            },
+                            {
+                                "id": "779254bb-f0bd-4899-804e-0cb925d88621",
+                                "title": "Блюдо 2",
+                                "description": "Описание блюда 2",
+                                "price": "23.12",
+                            },
+                            {
+                                "id": "781f9966-587a-49ed-a095-d10f5fe6ecf6",
+                                "title": "Блюдо 3",
+                                "description": "Описание блюда 3",
+                                "price": "9.34",
+                            },
+                        ],
+                    },
+                }
+            }
+        },
+    }
+}
