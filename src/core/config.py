@@ -2,9 +2,10 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-CONFIG_FILE = os.getenv("CONFIG_FILE")
-load_dotenv(CONFIG_FILE)
+# CONFIG_FILE = os.getenv("CONFIG_FILE")
+# load_dotenv(CONFIG_FILE)
 
+load_dotenv()
 # application settings
 app_name: str = "test"  # type: ignore
 app_version: str = "0.1.0"  # type: ignore
@@ -29,6 +30,6 @@ database_url: str = (
     f"@{postgres_host}:{postgres_port}/{postgres_db}"
 )  # type: ignore
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-print(CONFIG_FILE)
+# print(CONFIG_FILE)
