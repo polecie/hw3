@@ -12,17 +12,17 @@ app_version: str = "0.1.0"  # type: ignore
 app_description: str = "test"  # type: ignore
 app_debug: bool = os.getenv("APP_DEBUG", False)  # type: ignore
 
-redis_host: str = os.getenv("REDIS_HOST")  # type: ignore
-redis_port: int = os.getenv("REDIS_PORT")  # type: ignore
+redis_host: str = os.getenv("REDIS_HOST", "localhost")  # type: ignore
+redis_port: int = os.getenv("REDIS_PORT", 6379)  # type: ignore
 cache_expire_in_seconds: int = 60 * 5  # type: ignore
 redis_url: str = f"redis://{redis_host}:{redis_port}"  # type: ignore
 
 # postgres settings
-postgres_host: str = os.getenv("POSTGRES_HOST")  # type: ignore
-postgres_port: int = os.getenv("POSTGRES_PORT")  # type: ignore
-postgres_db: str = os.getenv("POSTGRES_DB")  # type: ignore
-postgres_user: str = os.getenv("POSTGRES_USER")  # type: ignore
-postgres_password: str = os.getenv("POSTGRES_PASSWORD")  # type: ignore
+postgres_host: str = os.getenv("POSTGRES_HOST", "localhost")  # type: ignore
+postgres_port: int = os.getenv("POSTGRES_PORT", 5432)  # type: ignore
+postgres_db: str = os.getenv("POSTGRES_DB", "postgres")  # type: ignore
+postgres_user: str = os.getenv("POSTGRES_USER", "postgres")  # type: ignore
+postgres_password: str = os.getenv("POSTGRES_PASSWORD", "postgres")  # type: ignore
 # type: ignore
 database_url: str = (
     f"postgresql+asyncpg:"
