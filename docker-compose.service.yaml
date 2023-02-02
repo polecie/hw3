@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - ".env.service"
+    entrypoint: >
+      sh -c "
+      echo 'Starting application..' &&
+      echo 'Running migrations..' &&
+      alembic -c src/alembic.ini upgrade head &&
+      uvicorn main:app --host 0.0.0.0 --port 8000
+      "
+    networks:
+      - ylab
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbit:
+        condition: service_healthy
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    env_file:
+      - ".env.service"
+    expose:
+      - 6379
+    ports:
+      - "9000:6379"
+    networks:
+      - ylab
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 3s
+      timeout: 20s
+      retries: 10
+
+  postgres:
+    container_name: postgres
+    image: postgres:15.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ".env.service"
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - ylab
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}'" ]
+      interval: 5s
+      timeout: 20s
+      retries: 100
+
+  rabbit:
+    hostname: rabbitmq
+    image: rabbitmq:3.11-management
+    container_name: rabbit
+    command: rabbitmq-server
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: on-failure
+    expose:
+      - 5672
+    env_file:
+      - ".env.service"
+    networks:
+      - ylab
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'rabbitmq-diagnostics -q ping'"]
+      interval: 5s
+      timeout: 30s
+      retries: 3
+
+  celery:
+    build: .
+    container_name: celery
+    env_file:
+      - ".env.service"
+    command: celery -A src.tasks.worker:celery worker --loglevel=INFO
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    networks:
+      - ylab
+
+  flower:
+    container_name: flower
+    build: .
+    command: celery -A src.tasks.worker:celery flower --loglevel=INFO
+    ports:
+      - "5555:5555"
+    expose:
+      - 5555
+    networks:
+      - ylab
+    env_file:
+      - ".env.service"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      celery:
+        condition: service_started
+
+networks:
+  ylab:
+    name: ylab
+    driver: bridge
+
+volumes:
+  postgres_data:
+# прокинуть вольюм c реббитом или селери?

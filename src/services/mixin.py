@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.cache import AbstractCache
 from src.repositories.container import AbstractRepositoriesContainer
@@ -9,6 +10,7 @@ class ServiceMixin:
     cache: AbstractCache
     container: AbstractRepositoriesContainer
 
-    # def __post_init__(self):
-    #     if self.cache is None:
-    #         self.cache =
+
+@dataclass
+class Service:
+    session: AsyncSession

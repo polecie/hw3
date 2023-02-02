@@ -18,6 +18,7 @@ router = APIRouter(tags=["dish"])
 @router.get(
     path="/{menu_id}/submenus/{submenu_id}/dishes",
     summary="Просмотр списка блюд",
+    description="Просмотр списка блюд",
     status_code=200,
     response_model=list[DishResponse],
     responses=get_dishes_schema,
@@ -42,6 +43,7 @@ async def get_dishes(
 @router.get(
     path="/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}",
     summary="Просмотр определенного блюда",
+    description="Просмотр определенного блюда",
     status_code=200,
     response_model=DishResponse,
     responses=dish_not_found_schema,
@@ -68,6 +70,7 @@ async def get_dish(
 @router.post(
     path="/{menu_id}/submenus/{submenu_id}/dishes",
     summary="Создать блюдо",
+    description="Создать блюдо",
     status_code=201,
     response_model=DishResponse,
 )
@@ -95,6 +98,7 @@ async def create_dish(
 @router.patch(
     path="/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}",
     summary="Обновить блюдо",
+    description="Обновить блюдо",
     status_code=200,
     response_model=DishResponse,
     responses=dish_not_found_schema,
@@ -125,6 +129,7 @@ async def patch_dish(
 @router.delete(
     path="/{menu_id}/submenus/{submenu_id}/dishes/{dish_id}",
     summary="Удалить блюдо",
+    description="Удалить блюдо",
     status_code=200,
     response_model=dict,
     responses=delete_dish_schema,

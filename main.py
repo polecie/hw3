@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from redis import asyncio as aioredis
 
-from src.api.v1.resources import dish, menu, submenu
+from src.api.v1.resources import dish, menu, submenu, report, data
 from src.core import config
 from src.db import cache, redis_cache
 
@@ -47,7 +47,8 @@ async def shutdown():
 app.include_router(router=menu.router, prefix="/api/v1/menus")
 app.include_router(router=submenu.router, prefix="/api/v1/menus")
 app.include_router(router=dish.router, prefix="/api/v1/menus")
-
+app.include_router(router=report.router, prefix="/api/v1/report")
+app.include_router(router=data.router, prefix="/api/v1/test")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000)

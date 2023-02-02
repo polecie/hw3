@@ -18,6 +18,7 @@ router = APIRouter(tags=["menu"])
 @router.get(
     path="/",
     summary="Просмотр списка меню",
+    description="Просмотр списка меню",
     status_code=200,
     response_model=list[MenuResponse],
     responses=get_menus_schema,
@@ -36,6 +37,7 @@ async def get_menus(
 @router.get(
     path="/{menu_id}",
     summary="Просмотр определенного меню",
+    description="Просмотр определенного меню",
     status_code=200,
     response_model=MenuResponse,
     responses=menu_not_found_schema,
@@ -55,6 +57,7 @@ async def get_menu(
 @router.post(
     path="/",
     summary="Создать меню",
+    description="Создать меню",
     status_code=201,
     response_model=MenuResponse,
 )
@@ -76,6 +79,7 @@ async def create_menu(
 @router.patch(
     path="/{menu_id}",
     summary="Обновить меню",
+    description="Обновить меню",
     status_code=200,
     response_model=MenuResponse,
     responses=menu_not_found_schema,
@@ -100,6 +104,7 @@ async def patch_menu(
 @router.delete(
     path="/{menu_id}",
     summary="Удалить меню",
+    description="Удалить меню",
     status_code=200,
     response_model=dict,
     responses=delete_menu_schema,
