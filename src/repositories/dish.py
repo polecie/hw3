@@ -64,9 +64,7 @@ class DishRepository(AbstractRepository):
         dish: Dish | None = response.scalar_one_or_none()
         return dish
 
-    async def add(
-        self, dish_content: DishSchema, submenu_id: uuid.UUID
-    ) -> Dish | None:
+    async def add(self, dish_content: DishSchema, submenu_id: uuid.UUID) -> Dish | None:
         """Добавляет в базу данных новую запись блюда.
 
         :param dish_content: Поля для добавления.
@@ -86,9 +84,7 @@ class DishRepository(AbstractRepository):
             await session.refresh(dish)
         return dish
 
-    async def update(
-        self, dish_id: uuid.UUID, dish_content: DishSchema
-    ) -> bool:
+    async def update(self, dish_id: uuid.UUID, dish_content: DishSchema) -> bool:
         """Обновляет запись блюда в базе данных.
 
         :param dish_id: Идентификатор блюда.

@@ -79,9 +79,7 @@ class SubmenuRepository(AbstractRepository):
         submenu: Submenu | None = response.scalar_one_or_none()
         return submenu
 
-    async def add(
-        self, submenu_content: SubmenuSchema, menu_id: uuid.UUID
-    ) -> Submenu | None:
+    async def add(self, submenu_content: SubmenuSchema, menu_id: uuid.UUID) -> Submenu | None:
         """Добавляет новую запись подменю в базу данных.
 
         :param submenu_content: Поля подменю для добавления.
@@ -101,9 +99,7 @@ class SubmenuRepository(AbstractRepository):
             await session.refresh(submenu)
         return submenu
 
-    async def update(
-        self, submenu_id: uuid.UUID, submenu_content: SubmenuSchema
-    ) -> bool:
+    async def update(self, submenu_id: uuid.UUID, submenu_content: SubmenuSchema) -> bool:
         """Обновляет запись подменю в базе данных.
 
         :param submenu_id: Идентификатор подменю.

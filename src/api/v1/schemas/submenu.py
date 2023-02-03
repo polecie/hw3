@@ -82,9 +82,7 @@ class SubmenuUpdate(SubmenuSchema):
 submenu_not_found_schema = {
     404: {
         "description": "Not Found",
-        "content": {
-            "application/json": {"example": {"detail": "submenu not found"}}
-        },
+        "content": {"application/json": {"example": {"detail": "submenu not found"}}},
     }
 }
 
@@ -102,9 +100,7 @@ delete_submenu_schema = {
     },
     404: {
         "description": "Not Found",
-        "content": {
-            "application/json": {"example": {"detail": "submenu not found"}}
-        },
+        "content": {"application/json": {"example": {"detail": "submenu not found"}}},
     },
 }
 

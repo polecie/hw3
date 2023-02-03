@@ -83,9 +83,7 @@ class MenuUpdate(MenuSchema):
 menu_not_found_schema = {
     404: {
         "description": "Not Found",
-        "content": {
-            "application/json": {"example": {"detail": "menu not found"}}
-        },
+        "content": {"application/json": {"example": {"detail": "menu not found"}}},
     }
 }
 
@@ -103,9 +101,7 @@ delete_menu_schema = {
     },
     404: {
         "description": "Not Found",
-        "content": {
-            "application/json": {"example": {"detail": "menu not found"}}
-        },
+        "content": {"application/json": {"example": {"detail": "menu not found"}}},
     },
 }
 

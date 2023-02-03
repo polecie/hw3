@@ -1,13 +1,12 @@
 import uuid
-import json
+
 from celery.result import AsyncResult
 from fastapi import APIRouter, Depends
-from fastapi.encoders import jsonable_encoder
 from starlette.responses import FileResponse
 
-from src.tasks.task import save_menu
-from src.services.report import ReportService, get_report_service
 from src.api.v1.schemas.report import data_schema, report_schema
+from src.services.report import ReportService, get_report_service
+from src.tasks.task import save_menu
 
 router = APIRouter(tags=["report"])
 
@@ -49,7 +48,7 @@ async def get_report(task_id: uuid.UUID):
     """
     report_name = AsyncResult(str(task_id), app=save_menu)
     report: str = report_name.get()
-    return FileResponse(path=f'{report}', filename=report, media_type='multipart/form-data')
+    return FileResponse(path=f"{report}", filename=report, media_type="multipart/form-data")
 
 
 @router.get(

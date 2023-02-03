@@ -6,9 +6,9 @@ from src.api.v1.schemas.menu import (
     MenuCreate,
     MenuResponse,
     MenuUpdate,
-    menu_not_found_schema,
     delete_menu_schema,
     get_menus_schema,
+    menu_not_found_schema,
 )
 from src.services.menu import MenuService, get_menu_service
 
@@ -42,9 +42,7 @@ async def get_menus(
     response_model=MenuResponse,
     responses=menu_not_found_schema,
 )
-async def get_menu(
-    menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
-) -> MenuResponse:
+async def get_menu(menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)) -> MenuResponse:
     """Возвращает меню по его `id`.
 
     :param menu_id: Идентификатор подменю.
@@ -62,9 +60,7 @@ async def get_menu(
     response_model=MenuResponse,
 )
 async def create_menu(
-    menu_content: MenuCreate = Body(
-        None, examples=MenuCreate.Config.schema_extra["examples"]
-    ),
+    menu_content: MenuCreate = Body(None, examples=MenuCreate.Config.schema_extra["examples"]),
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """Создает новое меню,
@@ -86,9 +82,7 @@ async def create_menu(
 )
 async def patch_menu(
     menu_id: uuid.UUID,
-    menu_content: MenuUpdate = Body(
-        None, examples=MenuUpdate.Config.schema_extra["examples"]
-    ),
+    menu_content: MenuUpdate = Body(None, examples=MenuUpdate.Config.schema_extra["examples"]),
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
     """Изменяет меню.
@@ -109,9 +103,7 @@ async def patch_menu(
     response_model=dict,
     responses=delete_menu_schema,
 )
-async def delete_menu(
-    menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)
-) -> dict:
+async def delete_menu(menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)) -> dict:
     """Удаляет меню по его `id`.
 
     :param menu_id: Идентификатор меню.

@@ -23,9 +23,7 @@ class MenuRepository(AbstractRepository):
                 self.model.id,
                 self.model.title,
                 self.model.description,
-                func.count(distinct(self.model.submenus)).label(
-                    "submenus_count"
-                ),
+                func.count(distinct(self.model.submenus)).label("submenus_count"),
                 func.count(Submenu.dishes).label("dishes_count"),
             )
             .outerjoin(
@@ -56,9 +54,7 @@ class MenuRepository(AbstractRepository):
                 self.model.id,
                 self.model.title,
                 self.model.description,
-                func.count(distinct(self.model.submenus)).label(
-                    "submenus_count"
-                ),
+                func.count(distinct(self.model.submenus)).label("submenus_count"),
                 func.count(Submenu.dishes).label("dishes_count"),
             )
             .outerjoin(self.model.submenus)
@@ -103,9 +99,7 @@ class MenuRepository(AbstractRepository):
             await session.refresh(menu)
         return menu
 
-    async def update(
-        self, menu_id: uuid.UUID, menu_content: MenuSchema
-    ) -> bool:
+    async def update(self, menu_id: uuid.UUID, menu_content: MenuSchema) -> bool:
         """Обновляет запись меню по его `id`.
 
         :param menu_id: Идентификатор меню.

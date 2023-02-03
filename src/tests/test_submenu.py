@@ -1,9 +1,10 @@
 import dataclasses
 import random
+
 import pytest
 from httpx import AsyncClient
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.models import Submenu as submenu_m
 
@@ -37,9 +38,7 @@ async def test_get_menu(client: AsyncClient):
 
 
 async def test_get_submenu_by_id(client: AsyncClient, session: AsyncSession):
-    response = await client.get(
-        f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}"
-    )
+    response = await client.get(f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}")
     data = response.json()
     assert response.status_code == 200
     statement = select(submenu_m).where(submenu_m.id == Submenu.submenu_id)
@@ -62,16 +61,10 @@ async def test_update_submenu(client: AsyncClient, session: AsyncSession):
 
 
 async def test_updated_submenu(client: AsyncClient, session: AsyncSession):
-    response = await client.get(
-        f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}"
-    )
+    response = await client.get(f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}")
     data = response.json()
     assert response.status_code == 200
-    statement = (
-        select(submenu_m)
-        .where(submenu_m.id == Submenu.submenu_id)
-        .where(submenu_m.menu_id == Submenu.menu_id)
-    )
+    statement = select(submenu_m).where(submenu_m.id == Submenu.submenu_id).where(submenu_m.menu_id == Submenu.menu_id)
     submenu = (await session.execute(statement)).scalars().first()
     assert submenu.title == data["title"]
     assert Submenu.title == data["title"]
@@ -92,9 +85,7 @@ async def test_create_submenu(client: AsyncClient):
 
 
 async def test_get_created_submenu(client: AsyncClient, session: AsyncSession):
-    response = await client.get(
-        f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}"
-    )
+    response = await client.get(f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}")
     assert response.status_code == 200
     data = response.json()
     assert data["title"] == Submenu.title
@@ -112,18 +103,14 @@ async def test_delete_submenu(client: AsyncClient, session: AsyncSession):
     assert response.status_code == 200
     data = response.json()
     Submenu.submenu_id = data[1]["id"]
-    response = await client.delete(
-        f"api/v1/menus/{uid}/submenus/{Submenu.submenu_id}"
-    )
+    response = await client.delete(f"api/v1/menus/{uid}/submenus/{Submenu.submenu_id}")
     assert response.status_code == 200
     data = response.json()
     assert data == {"status": True, "message": Submenu.message}
 
 
 async def test_check_deleted_submenu(client: AsyncClient):
-    response = await client.get(
-        f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}"
-    )
+    response = await client.get(f"api/v1/menus/{Submenu.menu_id}/submenus/{Submenu.submenu_id}")
     assert response.status_code == 404
     data = response.json()
     assert data == {"detail": "submenu not found"}

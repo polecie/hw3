@@ -32,13 +32,9 @@ class MenuService(ServiceMixin):
             return json.loads(cached_menu)  # type: ignore
         if menu := await self.container.menu_repo.get(menu_id=menu_id):
             menu = MenuResponse.from_orm(menu)
-            await self.cache.set(
-                key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu))
-            )
+            await self.cache.set(key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu)))
             return menu
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="menu not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
 
     async def create_menu(self, menu_content: MenuCreate) -> MenuResponse:
         """Создает новое меню.
@@ -48,47 +44,35 @@ class MenuService(ServiceMixin):
         menu = await self.container.menu_repo.add(menu_content=menu_content)
         return MenuResponse.from_orm(menu)
 
-    async def update_menu(
-        self, menu_id: uuid.UUID, menu_content: MenuUpdate
-    ) -> MenuResponse:
+    async def update_menu(self, menu_id: uuid.UUID, menu_content: MenuUpdate) -> MenuResponse:
         """Обновляет меню.
 
         :param menu_id: Идентификатор меню.
         :param menu_content: Поля для обновления меню.
         """
-        menu_status: bool = await self.container.menu_repo.update(
-            menu_id=menu_id, menu_content=menu_content
-        )
+        menu_status: bool = await self.container.menu_repo.update(menu_id=menu_id, menu_content=menu_content)
         if menu_status is True:
             menu = await self.container.menu_repo.get(menu_id)
             if await self.cache.get(key=f"{menu_id}"):
                 await self.cache.delete(f"{menu_id}")
             menu = MenuResponse.from_orm(menu)
-            await self.cache.set(
-                key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu))
-            )
+            await self.cache.set(key=f"{menu_id}", value=json.dumps(jsonable_encoder(menu)))
             return menu
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="menu not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
 
     async def delete_menu(self, menu_id: uuid.UUID) -> dict:
         """Удаляет меню по его `id`.
 
         :param menu_id: Идентификатор меню.
         """
-        menu_status: bool = await self.container.menu_repo.delete(
-            menu_id=menu_id
-        )
+        menu_status: bool = await self.container.menu_repo.delete(menu_id=menu_id)
         if menu_status is True:
             await self.cache.flushall()
             return {
                 "status": menu_status,
                 "message": "The menu has been deleted",
             }
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="menu not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
 
 
 async def get_menu_service(

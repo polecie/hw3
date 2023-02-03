@@ -10,9 +10,7 @@ class AbstractCache(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def set(
-        self, key: str, value: bytes | str | bytearray, expire: int = 0
-    ):
+    async def set(self, key: str, value: bytes | str | bytearray, expire: int = 0):
         raise NotImplementedError
 
     @abstractmethod

@@ -26,4 +26,3 @@ report_schema = {
         },
     },
 }
-

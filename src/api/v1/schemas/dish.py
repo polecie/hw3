@@ -88,9 +88,7 @@ class DishResponse(BaseDish):
 dish_not_found_schema = {
     404: {
         "description": "Not Found",
-        "content": {
-            "application/json": {"example": {"detail": "dish not found"}}
-        },
+        "content": {"application/json": {"example": {"detail": "dish not found"}}},
     }
 }
 
@@ -108,9 +106,7 @@ delete_dish_schema = {
     },
     404: {
         "description": "Not Found",
-        "content": {
-            "application/json": {"example": {"detail": "dish not found"}}
-        },
+        "content": {"application/json": {"example": {"detail": "dish not found"}}},
     },
 }
 

@@ -14,13 +14,21 @@ repos:
     -   id: check-merge-conflict  # проверяет файлы, содержащие конфликтные строки слияния.
 #    -   id: double-quote-string-fixer  # заменяет " на '
 
+# Форматирует код под PEP8 c помощью black
+-   repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+    -   id: black
+        args: [--line-length=120]
+        language_version: python3.11
+
 # Отсортировывает импорты в проекте
-#-   repo: https://github.com/pycqa/isort
-#    rev: 5.10.1
-#    hooks:
-#    -   id: isort
-#        exclude: __init__.py
-#        args: [ --profile, black, --filter-files ]
+-   repo: https://github.com/pycqa/isort
+    rev: 5.12.0  # версия 10 крашилась с поетри
+    hooks:
+      - id: isort
+        exclude: __init__.py
+        args: [ --profile, black, --filter-files ]
 
 # Добавляет пропущенные запятые
 #-   repo: https://github.com/asottile/add-trailing-comma
@@ -34,16 +42,8 @@ repos:
     rev: 6.0.0
     hooks:
     -   id: flake8
-        args: ["--ignore=E501", "--max-line-length=120" ]
+        args: ["--ignore=E501", "--ignore=F821", "--max-line-length=120" ]
         exclude: src/migrations
-
-# Форматирует код под PEP8 c помощью black
--   repo: https://github.com/psf/black
-    rev: 22.12.0
-    hooks:
-    -   id: black
-        args: [--line-length=79]
-        language_version: python3.11
 
 # Форматирует docstring
 -   repo: https://github.com/PyCQA/docformatter
@@ -57,6 +57,7 @@ repos:
     rev: v2.0.1
     hooks:
     -   id: autopep8
+        args: [--in-place, --max-line-length=120]
 
 # Проверка статических типов с помощью mypy
 -   repo: https://github.com/pre-commit/mirrors-mypy

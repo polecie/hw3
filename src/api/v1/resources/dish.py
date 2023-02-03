@@ -34,9 +34,7 @@ async def get_dishes(
     :param submenu_id: Идентификатор подменю.
     :param dish_service: Сервис для работы с логикой.
     """
-    dishes: list[DishResponse] = await dish_service.get_dishes(
-        menu_id, submenu_id
-    )
+    dishes: list[DishResponse] = await dish_service.get_dishes(menu_id, submenu_id)
     return dishes
 
 
@@ -61,9 +59,7 @@ async def get_dish(
     :param dish_id: Идентификатор блюда.
     :param dish_service: Сервис для работы с логикой.
     """
-    dish: DishResponse = await dish_service.get_dish(
-        menu_id, submenu_id, dish_id
-    )
+    dish: DishResponse = await dish_service.get_dish(menu_id, submenu_id, dish_id)
     return dish
 
 
@@ -77,9 +73,7 @@ async def get_dish(
 async def create_dish(
     menu_id: uuid.UUID,
     submenu_id: uuid.UUID,
-    dish_content: DishCreate = Body(
-        None, examples=DishCreate.Config.schema_extra["examples"]
-    ),
+    dish_content: DishCreate = Body(None, examples=DishCreate.Config.schema_extra["examples"]),
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """Создать новое блюдо.
@@ -89,9 +83,7 @@ async def create_dish(
     :param dish_content: Поля для создания записи о блюде.
     :param dish_service: Сервис для работы с логикой.
     """
-    dish: DishResponse = await dish_service.create_dish(
-        menu_id, submenu_id, dish_content
-    )
+    dish: DishResponse = await dish_service.create_dish(menu_id, submenu_id, dish_content)
     return dish
 
 
@@ -107,9 +99,7 @@ async def patch_dish(
     menu_id: uuid.UUID,
     submenu_id: uuid.UUID,
     dish_id: uuid.UUID,
-    dish_content: DishUpdate = Body(
-        None, examples=DishUpdate.Config.schema_extra["examples"]
-    ),
+    dish_content: DishUpdate = Body(None, examples=DishUpdate.Config.schema_extra["examples"]),
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
     """Обновить блюдо.
@@ -120,9 +110,7 @@ async def patch_dish(
     :param dish_content: Поля для обновления блюда.
     :param dish_service: Сервис для работы с логикой.
     """
-    dish: DishResponse = await dish_service.update_dish(
-        menu_id, submenu_id, dish_id, dish_content
-    )
+    dish: DishResponse = await dish_service.update_dish(menu_id, submenu_id, dish_id, dish_content)
     return dish
 
 

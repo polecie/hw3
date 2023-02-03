@@ -5,11 +5,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.api.v1.schemas.submenu import (
-    SubmenuCreate,
-    SubmenuResponse,
-    SubmenuUpdate,
-)
+from src.api.v1.schemas.submenu import SubmenuCreate, SubmenuResponse, SubmenuUpdate
 from src.db.cache import AbstractCache, get_cache
 from src.db.db import get_async_session
 from src.repositories.container import RepositoriesContainer
@@ -27,14 +23,10 @@ class SubmenuService(ServiceMixin):
 
         :param menu_id: Идентификатор меню.
         """
-        submenus: list = await self.container.submenu_repo.list(
-            menu_id=menu_id
-        )
+        submenus: list = await self.container.submenu_repo.list(menu_id=menu_id)
         return submenus
 
-    async def get_submenu(
-        self, submenu_id: uuid.UUID, menu_id: uuid.UUID
-    ) -> SubmenuResponse:
+    async def get_submenu(self, submenu_id: uuid.UUID, menu_id: uuid.UUID) -> SubmenuResponse:
         """Возвращает подменю по его `id`.
 
         :param submenu_id: Идентификатор подменю.
@@ -42,30 +34,22 @@ class SubmenuService(ServiceMixin):
         """
         if cached_submenu := await self.cache.get(key=f"{submenu_id}"):
             return json.loads(cached_submenu)  # type: ignore
-        if submenu := await self.container.submenu_repo.get(
-            submenu_id=submenu_id
-        ):
+        if submenu := await self.container.submenu_repo.get(submenu_id=submenu_id):
             submenu = SubmenuResponse.from_orm(submenu)
             await self.cache.set(
                 key=f"{submenu_id}",
                 value=json.dumps(jsonable_encoder(submenu)),
             )
             return submenu
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found")
 
-    async def create_submenu(
-        self, submenu_content: SubmenuCreate, menu_id: uuid.UUID
-    ) -> SubmenuResponse:
+    async def create_submenu(self, submenu_content: SubmenuCreate, menu_id: uuid.UUID) -> SubmenuResponse:
         """Создает новое подменю.
 
         :param submenu_content: Поля для создания подменю.
         :param menu_id: Идентификатор меню.
         """
-        submenu = await self.container.submenu_repo.add(
-            submenu_content=submenu_content, menu_id=menu_id
-        )
+        submenu = await self.container.submenu_repo.add(submenu_content=submenu_content, menu_id=menu_id)
         return SubmenuResponse.from_orm(submenu)
 
     async def update_submenu(
@@ -93,30 +77,22 @@ class SubmenuService(ServiceMixin):
                 value=json.dumps(jsonable_encoder(submenu)),
             )
             return submenu
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found")
 
-    async def delete_submenu(
-        self, submenu_id: uuid.UUID, menu_id: uuid.UUID
-    ) -> dict:
+    async def delete_submenu(self, submenu_id: uuid.UUID, menu_id: uuid.UUID) -> dict:
         """Удаляет подменю по его `id`.
 
         :param submenu_id: Идентификатор подменю.
         :param menu_id: Идентификатор меню.
         """
-        submenu_status: bool = await self.container.submenu_repo.delete(
-            submenu_id=submenu_id
-        )
+        submenu_status: bool = await self.container.submenu_repo.delete(submenu_id=submenu_id)
         if submenu_status is True:
             await self.cache.flushall()
             return {
                 "status": submenu_status,
                 "message": "The submenu has been deleted",
             }
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found"
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found")
 
 
 async def get_submenu_service(

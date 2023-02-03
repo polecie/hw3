@@ -6,9 +6,9 @@ from src.api.v1.schemas.submenu import (
     SubmenuCreate,
     SubmenuResponse,
     SubmenuUpdate,
-    submenu_not_found_schema,
     delete_submenu_schema,
     get_submenus_schema,
+    submenu_not_found_schema,
 )
 from src.services.submenu import SubmenuService, get_submenu_service
 
@@ -32,9 +32,7 @@ async def get_submenus(
     :param menu_id: Идентификатор меню.
     :param submenu_service: Сервис для работы с логикой.
     """
-    submenus: list[SubmenuResponse] = await submenu_service.get_submenus(
-        menu_id
-    )
+    submenus: list[SubmenuResponse] = await submenu_service.get_submenus(menu_id)
     return submenus
 
 
@@ -57,9 +55,7 @@ async def get_submenu(
     :param submenu_id: Идентификатор подменю.
     :param submenu_service: Сервис для работы с логикой.
     """
-    submenu: SubmenuResponse = await submenu_service.get_submenu(
-        submenu_id, menu_id
-    )
+    submenu: SubmenuResponse = await submenu_service.get_submenu(submenu_id, menu_id)
     return submenu
 
 
@@ -72,9 +68,7 @@ async def get_submenu(
 )
 async def create_submenu(
     menu_id: uuid.UUID,
-    submenu_content: SubmenuCreate = Body(
-        None, examples=SubmenuCreate.Config.schema_extra["examples"]
-    ),
+    submenu_content: SubmenuCreate = Body(None, examples=SubmenuCreate.Config.schema_extra["examples"]),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """Создает новое подменю.
@@ -83,9 +77,7 @@ async def create_submenu(
     :param submenu_content: Поля для создания подменю.
     :param submenu_service: Сервис для работы с логикой.
     """
-    submenu: SubmenuResponse = await submenu_service.create_submenu(
-        submenu_content, menu_id
-    )
+    submenu: SubmenuResponse = await submenu_service.create_submenu(submenu_content, menu_id)
     return submenu
 
 
@@ -100,9 +92,7 @@ async def create_submenu(
 async def patch_submenu(
     menu_id: uuid.UUID,
     submenu_id: uuid.UUID,
-    submenu_content: SubmenuUpdate = Body(
-        None, examples=SubmenuUpdate.Config.schema_extra["examples"]
-    ),
+    submenu_content: SubmenuUpdate = Body(None, examples=SubmenuUpdate.Config.schema_extra["examples"]),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
     """Изменияет подменю.
@@ -112,9 +102,7 @@ async def patch_submenu(
     :param submenu_content: Поля для обновления подменю.
     :param submenu_service: Сервис для работы с логикой.
     """
-    submenu: SubmenuResponse = await submenu_service.update_submenu(
-        submenu_id, submenu_content, menu_id
-    )
+    submenu: SubmenuResponse = await submenu_service.update_submenu(submenu_id, submenu_content, menu_id)
     return submenu
 
 

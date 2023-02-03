@@ -1,10 +1,14 @@
 import json
-from fastapi import Depends, HTTPException, status as response_status
+
+from fastapi import Depends, HTTPException
+from fastapi import status as response_status
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.services.mixin import Service
+
 from src.db.db import get_async_session
 from src.repositories.container import RepositoriesContainer
+from src.services.mixin import Service
+
 
 class ReportService(Service):
     async def put(self) -> dict:
@@ -13,7 +17,8 @@ class ReportService(Service):
         if status is True:
             return {"status": status, "message": "The data has been added"}
         raise HTTPException(
-            status_code=response_status.HTTP_400_BAD_REQUEST, detail="cannot add data to database"
+            status_code=response_status.HTTP_400_BAD_REQUEST,
+            detail="cannot add data to database",
         )
 
     async def get(self) -> str:

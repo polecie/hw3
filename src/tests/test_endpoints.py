@@ -1,5 +1,6 @@
-import pytest
 import uuid
+
+import pytest
 from httpx import AsyncClient
 
 pytestmark = pytest.mark.asyncio
@@ -58,24 +59,18 @@ async def test_get_dish(client: AsyncClient):
 
 
 async def test_get_dish_by_id(client: AsyncClient):
-    response = await client.get(
-        f"api/v1/menus/{uid}/submenus/{uid}/dishes/{uid}"
-    )
+    response = await client.get(f"api/v1/menus/{uid}/submenus/{uid}/dishes/{uid}")
     assert response.status_code == 404
     assert response.json() == {"detail": "dish not found"}
 
 
 async def test_delete_dish(client: AsyncClient):
-    response = await client.delete(
-        f"api/v1/menus/{uid}/submenus/{uid}/dishes/{uid}"
-    )
+    response = await client.delete(f"api/v1/menus/{uid}/submenus/{uid}/dishes/{uid}")
     assert response.status_code == 404
     assert response.json() == {"detail": "dish not found"}
 
 
 async def test_patch_dish(client: AsyncClient):
-    response = await client.delete(
-        f"api/v1/menus/{uid}/submenus/{uid}/dishes/{uid}"
-    )
+    response = await client.delete(f"api/v1/menus/{uid}/submenus/{uid}/dishes/{uid}")
     assert response.status_code == 404
     assert response.json() == {"detail": "dish not found"}

@@ -1,9 +1,10 @@
 import dataclasses
 import random
+
 import pytest
 from httpx import AsyncClient
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.models import Menu as menu_m
 

@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from redis import asyncio as aioredis
 
-from src.api.v1.resources import dish, menu, submenu, report
+from src.api.v1.resources import dish, menu, report, submenu
 from src.core import config
 from src.db import cache, redis_cache
 
