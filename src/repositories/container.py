@@ -2,16 +2,18 @@ from abc import ABC
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.repositories.base import AbstractRepository
+from src.repositories.base import AbstractRepository, AbstractReport
 from src.repositories.dish import DishRepository
 from src.repositories.menu import MenuRepository
 from src.repositories.submenu import SubmenuRepository
+from src.repositories.report import ReportRepository
 
 
 class AbstractRepositoriesContainer(ABC):
     menu_repo: AbstractRepository
     submenu_repo: AbstractRepository
     dish_repo: AbstractRepository
+    report_repo: AbstractReport
 
 
 class RepositoriesContainer(AbstractRepositoriesContainer):
@@ -24,3 +26,6 @@ class RepositoriesContainer(AbstractRepositoriesContainer):
             session=self.session
         )
         self.dish_repo: DishRepository = DishRepository(session=self.session)
+        self.report_repo: ReportRepository = ReportRepository(
+            session=self.session
+        )
