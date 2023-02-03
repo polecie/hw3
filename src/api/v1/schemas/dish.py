@@ -1,3 +1,6 @@
+import uuid
+import random
+
 from src.api.v1.schemas.base import BaseDish, BaseSchema
 
 
@@ -21,7 +24,7 @@ class DishUpdate(DishSchema):
                     "value": {
                         "title": "Измененное название",
                         "description": "Новое описание",
-                        "price": 3456.3456,
+                        "price": random.uniform(0.0, 100.0),
                     },
                 },
                 "invalid": {
@@ -51,7 +54,7 @@ class DishCreate(DishSchema):
                     "value": {
                         "title": "Новое блюдо",
                         "description": "Описание нового блюда",
-                        "price": 3456.3456,
+                        "price": random.uniform(0.0, 100.0),
                     },
                 },
                 "invalid": {
@@ -60,7 +63,7 @@ class DishCreate(DishSchema):
                     "value": {
                         "title": "",
                         "description": "Описание нового блюда",
-                        "amount": 345.45,
+                        "amount": random.uniform(0.0, 100.0),
                     },
                 },
             }
@@ -75,10 +78,10 @@ class DishResponse(BaseDish):
 
         schema_extra = {
             "example": {
-                "id": "602033b3-0462-4de1-a2f8-d8494795e0c0",
+                "id": uuid.uuid4(),
                 "title": "Блюдо",
                 "description": "Описание блюда",
-                "price": "14.51",
+                "price": str(round(random.uniform(0.0, 100.0), 2)),
             }
         }
 
@@ -121,22 +124,22 @@ get_dishes_schema = {
                         "summary": "В списке содержатся записи",
                         "value": [
                             {
-                                "id": "9202923d-afd2-4b4d-acb9-7d4c4f9bcc3a",
+                                "id": uuid.uuid4(),
                                 "title": "Блюдо 1",
                                 "description": "Описание блюда 1",
-                                "price": "1.34",
+                                "price": str(round(random.uniform(0.0, 100.0), 2)),
                             },
                             {
-                                "id": "779254bb-f0bd-4899-804e-0cb925d88621",
+                                "id": uuid.uuid4(),
                                 "title": "Блюдо 2",
                                 "description": "Описание блюда 2",
-                                "price": "23.12",
+                                "price": str(round(random.uniform(0.0, 100.0), 2)),
                             },
                             {
-                                "id": "781f9966-587a-49ed-a095-d10f5fe6ecf6",
+                                "id": uuid.uuid4(),
                                 "title": "Блюдо 3",
                                 "description": "Описание блюда 3",
-                                "price": "9.34",
+                                "price": str(round(random.uniform(0.0, 100.0), 2)),
                             },
                         ],
                     },

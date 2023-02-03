@@ -1,3 +1,6 @@
+import uuid
+import random
+
 from src.api.v1.schemas.base import BaseSchema, BaseSubmenu
 
 
@@ -13,10 +16,10 @@ class SubmenuResponse(BaseSubmenu):
 
         schema_extra = {
             "example": {
-                "id": "f2f48e47-49dd-45a9-9f8d-a04af3b0cc19",
+                "id": uuid.uuid4(),
                 "title": "Подменю",
                 "description": "Описание подменю",
-                "dishes_count": 5,
+                "dishes_count": random.randint(0, 10),
             }
         }
 
@@ -115,22 +118,22 @@ get_submenus_schema = {
                         "summary": "В списке содержатся записи",
                         "value": [
                             {
-                                "id": "9202923d-afd2-4b4d-acb9-7d4c4f9bcc3a",
+                                "id": uuid.uuid4(),
                                 "title": "Подменю 1",
                                 "description": "Описание подменю 1",
-                                "dishes_count": 1,
+                                "dishes_count":  random.randint(0, 10),
                             },
                             {
-                                "id": "779254bb-f0bd-4899-804e-0cb925d88621",
+                                "id": uuid.uuid4(),
                                 "title": "Подменю 2",
                                 "description": "Описание подменю 2",
-                                "dishes_count": 0,
+                                "dishes_count":  random.randint(0, 10),
                             },
                             {
-                                "id": "781f9966-587a-49ed-a095-d10f5fe6ecf6",
+                                "id": uuid.uuid4(),
                                 "title": "Подменю 3",
                                 "description": "Описание подменю 3",
-                                "dishes_count": 9,
+                                "dishes_count":  random.randint(0, 10),
                             },
                         ],
                     },

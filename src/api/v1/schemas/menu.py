@@ -1,3 +1,6 @@
+import uuid
+import random
+
 from src.api.v1.schemas.base import BaseMenu, BaseSchema
 
 
@@ -13,11 +16,11 @@ class MenuResponse(BaseMenu):
 
         schema_extra = {
             "example": {
-                "id": "9202923d-afd2-4b4d-acb9-7d4c4f9bcc3a",
+                "id": uuid.uuid4(),
                 "title": "Меню",
                 "description": "Описание меню",
-                "submenus_count": 3,
-                "dishes_count": 0,
+                "submenus_count": random.randint(0, 10),
+                "dishes_count": random.randint(0, 10),
             }
         }
 
@@ -116,25 +119,25 @@ get_menus_schema = {
                         "summary": "В списке содержатся записи",
                         "value": [
                             {
-                                "id": "9202923d-afd2-4b4d-acb9-7d4c4f9bcc3a",
+                                "id": uuid.uuid4(),
                                 "title": "Меню 1",
                                 "description": "Описание меню 1",
-                                "submenus_count": 4,
-                                "dishes_count": 1,
+                                "submenus_count": random.randint(0, 10),
+                                "dishes_count": random.randint(0, 10),
                             },
                             {
-                                "id": "779254bb-f0bd-4899-804e-0cb925d88621",
+                                "id": uuid.uuid4(),
                                 "title": "Меню 2",
                                 "description": "Описание меню 2",
-                                "submenus_count": 0,
-                                "dishes_count": 0,
+                                "submenus_count": random.randint(0, 10),
+                                "dishes_count": random.randint(0, 10),
                             },
                             {
-                                "id": "781f9966-587a-49ed-a095-d10f5fe6ecf6",
+                                "id": uuid.uuid4(),
                                 "title": "Меню 3",
                                 "description": "Описание меню 3",
-                                "submenus_count": 6,
-                                "dishes_count": 9,
+                                "submenus_count": random.randint(0, 10),
+                                "dishes_count": random.randint(0, 10),
                             },
                         ],
                     },
