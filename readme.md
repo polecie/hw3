@@ -10,9 +10,9 @@
 
 </div>
 
-## Реализация
+## Технологии
 
-Используемые технологии
+*Основные*
   
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -21,7 +21,7 @@
 ![Celery](https://img.shields.io/badge/celery-88CE02?style=for-the-badge&logo=celery&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-Дополнительно
+*Дополнительно*
 
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 
@@ -79,3 +79,5 @@
 ### Зависимости
 * У меню есть подменю, которые к нему привязаны
 * У подменю есть блюда
+
+## Реализация
