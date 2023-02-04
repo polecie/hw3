@@ -18,7 +18,6 @@ router = APIRouter()
 @router.get(
     path="/{menu_id}/submenus",
     summary="Просмотр списка подменю",
-    description="Просмотр списка подменю",
     status_code=200,
     response_model=list[SubmenuResponse],
     responses=get_submenus_schema,
@@ -27,10 +26,7 @@ async def get_submenus(
     menu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> list[SubmenuResponse]:
-    """Возвращает список всех подменю.
-
-    :param menu_id: Идентификатор меню.
-    :param submenu_service: Сервис для работы с логикой.
+    """Возвращает список всех подменю, связанных с меню.
     """
     submenus: list[SubmenuResponse] = await submenu_service.get_submenus(menu_id)
     return submenus
@@ -39,7 +35,6 @@ async def get_submenus(
 @router.get(
     path="/{menu_id}/submenus/{submenu_id}",
     summary="Просмотр определенного подменю",
-    description="Просмотр определенного подменю",
     status_code=200,
     response_model=SubmenuResponse,
     responses=submenu_not_found_schema,
@@ -49,11 +44,7 @@ async def get_submenu(
     submenu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """Возвращает подменю по его `id`.
-
-    :param menu_id: Идентификатор меню.
-    :param submenu_id: Идентификатор подменю.
-    :param submenu_service: Сервис для работы с логикой.
+    """Возвращает подменю по его **id** в меню.
     """
     submenu: SubmenuResponse = await submenu_service.get_submenu(submenu_id, menu_id)
     return submenu
@@ -63,7 +54,6 @@ async def get_submenu(
     path="/{menu_id}/submenus",
     summary="Создать подменю",
     status_code=201,
-    description="Создать подменю",
     response_model=SubmenuResponse,
 )
 async def create_submenu(
@@ -71,11 +61,7 @@ async def create_submenu(
     submenu_content: SubmenuCreate = Body(None, examples=SubmenuCreate.Config.schema_extra["examples"]),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """Создает новое подменю.
-
-    :param menu_id: Идентификатор меню.
-    :param submenu_content: Поля для создания подменю.
-    :param submenu_service: Сервис для работы с логикой.
+    """Создает новое подменю в меню. Принимает аргументы для создания подменю - **title** (название подменю), **description** (описание подменю).
     """
     submenu: SubmenuResponse = await submenu_service.create_submenu(submenu_content, menu_id)
     return submenu
@@ -84,7 +70,6 @@ async def create_submenu(
 @router.patch(
     path="/{menu_id}/submenus/{submenu_id}",
     summary="Обновить подменю",
-    description="Обновить подменю",
     status_code=200,
     response_model=SubmenuResponse,
     responses=submenu_not_found_schema,
@@ -95,12 +80,7 @@ async def patch_submenu(
     submenu_content: SubmenuUpdate = Body(None, examples=SubmenuUpdate.Config.schema_extra["examples"]),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """Изменияет подменю.
-
-    :param menu_id: Идентификатор меню.
-    :param submenu_id: Идентификатор подменю.
-    :param submenu_content: Поля для обновления подменю.
-    :param submenu_service: Сервис для работы с логикой.
+    """Изменяет подменю в меню. В качестве аргументов для изменения принимает **title** (название подменю), **description** (описание подменю).
     """
     submenu: SubmenuResponse = await submenu_service.update_submenu(submenu_id, submenu_content, menu_id)
     return submenu
@@ -109,7 +89,6 @@ async def patch_submenu(
 @router.delete(
     path="/{menu_id}/submenus/{submenu_id}",
     summary="Удалить подменю",
-    description="Удалить подменю",
     status_code=200,
     response_model=dict,
     responses=delete_submenu_schema,
@@ -119,11 +98,7 @@ async def delete_submenu(
     submenu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> dict:
-    """Удаляет подменю.
-
-    :param menu_id: Идентификатор подменю.
-    :param submenu_id: Идентификатор подменю.
-    :param submenu_service: Сервис для работы с логикой.
+    """Каскадно удаляет подменю в меню по его **id**.
     """
     submenu: dict = await submenu_service.delete_submenu(submenu_id, menu_id)
     return submenu
