@@ -19,7 +19,7 @@ class ReportRepository(AbstractReport):
         menus = [ReportSchema.from_orm(menu) for menu in response.unique()]
         return menus
 
-    async def put(self) -> bool:
+    async def add(self) -> bool:
         status = False
         with open("src/tasks/menu.sql") as file:
             statements = re.split(r";\s*$", file.read(), flags=re.MULTILINE)

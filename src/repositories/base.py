@@ -40,5 +40,5 @@ class AbstractReport(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def put(self):
+    async def add(self):
         raise NotImplementedError

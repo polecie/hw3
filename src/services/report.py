@@ -22,7 +22,7 @@ __all__ = (
 class ReportService(ServiceMixin):
     async def put(self) -> dict:
         """Заполняет базу данных тестовыми данными."""
-        report_status: bool = await self.container.report_repo.put()
+        report_status: bool = await self.container.report_repo.add()
         if report_status is True:
             return {"status": report_status, "message": "The data has been added"}
         raise HTTPException(

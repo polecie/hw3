@@ -24,8 +24,8 @@ def event_loop():
 @pytest.fixture(scope="session", name="engine", autouse=True)
 async def engine():
     async_engine = create_async_engine(config.database_url)
-    redis = await aioredis.from_url(config.redis_url)  # cache
-    cache.cache = redis_cache.CacheRedis(cache_instance=redis)  # initializing cache
+    redis_db2 = await aioredis.from_url(config.redis_db2)  # cache
+    cache.cache = redis_cache.CacheRedis(cache_instance=redis_db2)  # initializing cache
     # async with async_engine.begin() as conn:
     #     await conn.run_sync(base.metadata.create_all)
     with open("src/tests/mock_data.sql") as file:

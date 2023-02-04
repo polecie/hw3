@@ -19,6 +19,7 @@ class Config(BaseSettings):
 
     redis_url: str = f"redis://{redis_host}:{redis_port}/0"
     redis_report_url: str = f"redis://{redis_host}:{redis_port}/1"
+    redis_db2: str = f"redis://{redis_host}:{redis_port}/2"  # кеш для тестов
 
     postgres_host: str = "localhost"
     postgres_port: int = 5432

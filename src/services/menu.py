@@ -20,7 +20,11 @@ __all__ = (
 class MenuService(ServiceMixin):
     async def get_menus(self) -> list[MenuResponse]:
         """Возвращает список всех меню."""
+        if cached_menus := await self.cache.get(key="menus"):
+            return json.loads(cached_menus)  # type: ignore
         menus: list = await self.container.menu_repo.list()
+        cache = [MenuResponse.from_orm(menu) for menu in menus]
+        await self.cache.set(key="menus", value=json.dumps(jsonable_encoder(cache)))
         return menus
 
     async def get_menu(self, menu_id: uuid.UUID) -> MenuResponse:
@@ -41,6 +45,9 @@ class MenuService(ServiceMixin):
 
         :param menu_content: Поля для создания меню.
         """
+        cached_menus = await self.cache.get(key="menus")
+        if cached_menus:
+            await self.cache.delete(key="menus")
         menu = await self.container.menu_repo.add(menu_content=menu_content)
         return MenuResponse.from_orm(menu)
 
@@ -52,6 +59,9 @@ class MenuService(ServiceMixin):
         """
         menu_status: bool = await self.container.menu_repo.update(menu_id=menu_id, menu_content=menu_content)
         if menu_status is True:
+            cached_menus = await self.cache.get(key="menus")
+            if cached_menus:
+                await self.cache.delete(key="menus")
             menu = await self.container.menu_repo.get(menu_id)
             if await self.cache.get(key=f"{menu_id}"):
                 await self.cache.delete(f"{menu_id}")
