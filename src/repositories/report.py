@@ -11,7 +11,10 @@ __all__ = ("ReportRepository",)
 
 
 class ReportRepository(AbstractReport):
+    """"""
+
     async def get(self):
+        """"""
         statement = select(Menu).options(joinedload(Menu.submenus).joinedload(Submenu.dishes))
         async with self.session as session:
             async with session.begin():
@@ -20,6 +23,7 @@ class ReportRepository(AbstractReport):
         return menus
 
     async def add(self) -> bool:
+        """"""
         status = False
         with open("src/tasks/menu.sql") as file:
             statements = re.split(r";\s*$", file.read(), flags=re.MULTILINE)

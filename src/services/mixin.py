@@ -8,8 +8,3 @@ from src.repositories.container import AbstractRepositoriesContainer
 class ServiceMixin:
     cache: AbstractCache
     container: AbstractRepositoriesContainer
-
-
-# @dataclass
-# class Service:
-#     container: AbstractRepositoriesContainer

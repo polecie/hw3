@@ -9,6 +9,8 @@ services:
     restart: always
     env_file:
       - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     entrypoint: >
       sh -c "
       echo 'Starting application..' &&
@@ -35,6 +37,8 @@ services:
     image: redis:latest
     env_file:
       - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     expose:
       - 6379
     ports:
@@ -54,6 +58,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     expose:
       - 5432
     ports:
@@ -80,6 +86,8 @@ services:
       - 5672
     env_file:
       - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     networks:
       - ylab
     healthcheck:
@@ -95,6 +103,8 @@ services:
       - menus:/var/lib/data/menus
     env_file:
       - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     command: celery -A src.tasks.worker:celery worker --loglevel=INFO
     depends_on:
       rabbit:
@@ -114,6 +124,8 @@ services:
       - ylab
     env_file:
       - ".env"
+    environment:
+      CONFIG_FILE: ".env"
     depends_on:
       rabbit:
         condition: service_healthy
