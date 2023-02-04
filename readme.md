@@ -1,5 +1,7 @@
 <div align="center">
 
+![pre-commit](https://github.com/polecie/hw3/actions/workflows/pre-commit.yml/badge.svg)
+
 `документация доступна по адресу` [`http://0.0.0.0:8000/api/openapi`](http://0.0.0.0:8000/api/openapi)
 
 `rabbitmq админка` [`http://0.0.0.0:15672/`](http://0.0.0.0:15672/)
