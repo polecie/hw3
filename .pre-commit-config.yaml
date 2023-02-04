@@ -12,7 +12,6 @@ repos:
     -   id: check-json  # проверяет синтаксис .json файлов
     -   id: check-case-conflict  # проверяет файлы, которые могут конфликтовать в файловых системах без учета регистра.
     -   id: check-merge-conflict  # проверяет файлы, содержащие конфликтные строки слияния.
-#    -   id: double-quote-string-fixer  # заменяет " на '
 
 # Форматирует код под PEP8 c помощью black
 -   repo: https://github.com/psf/black

@@ -1,34 +1,54 @@
-import os
+# import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+from pydantic import BaseSettings
 
-load_dotenv()
+env = load_dotenv()
 
-app_name: str = "test"  # type: ignore
-app_version: str = "0.1.0"  # type: ignore
-app_description: str = "test"  # type: ignore
-app_debug: bool = os.getenv("APP_DEBUG", False)  # type: ignore
 
-redis_host: str = os.getenv("REDIS_HOST", "localhost")  # type: ignore
-redis_port: int = os.getenv("REDIS_PORT", 6379)  # type: ignore
-cache_expire_in_seconds: int = 60 * 5  # type: ignore
-redis_url: str = f"redis://{redis_host}:{redis_port}"  # type: ignore
+class Config(BaseSettings):
+    app_name: str = "test"
+    app_version: str = "0.1.0"
+    app_description: str = "test"
+    app_debug: bool = False
 
-postgres_host: str = os.getenv("POSTGRES_HOST", "localhost")  # type: ignore
-postgres_port: int = os.getenv("POSTGRES_PORT", 5432)  # type: ignore
-postgres_db: str = os.getenv("POSTGRES_DB", "postgres")  # type: ignore
-postgres_user: str = os.getenv("POSTGRES_USER", "postgres")  # type: ignore
-postgres_password: str = os.getenv("POSTGRES_PASSWORD", "postgres")  # type: ignore
+    redis_host: str = "localhost"
+    redis_port: int = 6379
+    cache_expire_in_seconds: int = 60 * 5
 
-database_url: str = (
-    f"postgresql+asyncpg:" f"//{postgres_user}:{postgres_password}" f"@{postgres_host}:{postgres_port}/{postgres_db}"
-)  # type: ignore
+    redis_url: str = f"redis://{redis_host}:{redis_port}/0"
+    redis_report_url: str = f"redis://{redis_host}:{redis_port}/1"
 
-rabbit_host: str = os.getenv("RABBITMQ_HOST", "localhost")  # type: ignore
-rabbit_port: int = os.getenv("RABBITMQ_PORT", 5672)  # type: ignore
-rabit_user: str = os.getenv("RABBITMQ_DEFAULT_USER", "guest")
-rabbit_password: str = os.getenv("RABBITMQ_DEFAULT_PASS", "guest")
-celery_broker_url: str = f"amqp://{rabit_user}:{rabbit_password}@{rabbit_host}:{rabbit_port}//"
+    postgres_host: str = "localhost"
+    postgres_port: int = 5432
+    postgres_db: str = "postgres"
+    postgres_user: str = "postgres"
+    postgres_password: str = "postgres"
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+    database_url: str = (
+        f"postgresql+asyncpg://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}"
+    )
+
+    rabbitmq_host: str = "localhost"
+    rabbitmq_port: int = 5672
+    rabbitmq_default_user: str = "guest"
+    rabbitmq_default_pass: str = "guest"
+    celery_broker_url: str = f"amqp://{rabbitmq_default_user}:{rabbitmq_default_pass}@{rabbitmq_host}:{rabbitmq_port}//"
+
+
+config = Config(
+    # _env_file=env or ".env",
+    # _env_file=".env",
+    # _env_file_encoding="utf-8"
+)
+
+# config.redis_url = f"redis://{config.redis_host}:{config.redis_port}"
+# config.database_url = f"postgresql+asyncpg://
+# {config.postgres_user}:{config.postgres_password}@
+# {config.postgres_host}:{config.postgres_port}/{config.postgres_db}"
+# config.celery_broker_url = f"amqp://
+# {config.rabbitmq_default_user}:{config.rabbitmq_default_pass}@
+# {config.rabbitmq_host}:{config.rabbitmq_port}//"
+
+BASE_DIR = Path(__file__).resolve().parent

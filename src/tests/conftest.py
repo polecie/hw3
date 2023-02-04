@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
 from main import app
-from src.core import config
+from src.core.config import config
 from src.db import cache, redis_cache
 from src.db.db import base, get_async_session
 

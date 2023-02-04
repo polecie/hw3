@@ -1,12 +1,14 @@
 import uuid
 
-from celery.result import AsyncResult
 from fastapi import APIRouter, Depends
 from starlette.responses import FileResponse
 
-from src.api.v1.schemas.report import data_schema, report_schema
+from src.api.v1.schemas.report import (
+    create_report_schema,
+    get_report_schema,
+    put_data_schema,
+)
 from src.services.report import ReportService, get_report_service
-from src.tasks.task import save_menu
 
 router = APIRouter(tags=["report"])
 
@@ -17,7 +19,7 @@ router = APIRouter(tags=["report"])
     description="Создать отчет",
     status_code=202,
     response_model=dict,
-    responses=report_schema,
+    responses=create_report_schema,
 )
 async def create_report(
     report_service: ReportService = Depends(get_report_service),
@@ -27,10 +29,7 @@ async def create_report(
 
     :param report_service: Сервис для работы с логикой.
     """
-    menu: str = await report_service.get()
-    response: AsyncResult = save_menu.delay(menu)
-    if response:
-        return {"id": response.id}
+    return await report_service.create()
 
 
 @router.get(
@@ -38,17 +37,17 @@ async def create_report(
     summary="Получить отчет",
     description="Получить отчет",
     status_code=200,
-    response_model=dict,
+    # response_model=dict,
+    responses=get_report_schema,
     response_class=FileResponse,
 )
-async def get_report(task_id: uuid.UUID):
+async def get_report(report_id: uuid.UUID, report_service: ReportService = Depends(get_report_service)):
     """Возвращает результат задачи в виде ссылки на скачивание excel-файла.
 
-    :param task_id: Идентификатор задачи.
+    :param report_id: Идентификатор задачи.
+    :param report_service: Сервис для работы с логикой.
     """
-    report_name = AsyncResult(str(task_id), app=save_menu)
-    report: str = report_name.get()
-    return FileResponse(path=f"{report}", filename=report, media_type="multipart/form-data")
+    return await report_service.get(report_id)
 
 
 @router.get(
@@ -57,7 +56,7 @@ async def get_report(task_id: uuid.UUID):
     description="Заполнить базу данных тестовыми данными",
     status_code=200,
     response_model=dict,
-    responses=data_schema,
+    responses=put_data_schema,
 )
 async def create_data(
     report_service: ReportService = Depends(get_report_service),

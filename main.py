@@ -4,7 +4,7 @@ from fastapi.responses import ORJSONResponse
 from redis import asyncio as aioredis
 
 from src.api.v1.resources import dish, menu, report, submenu
-from src.core import config
+from src.core.config import config
 from src.db import cache, redis_cache
 
 app = FastAPI(
@@ -34,14 +34,17 @@ async def root():
 @app.on_event("startup")
 async def startup():
     """"""
-    redis = await aioredis.from_url(config.redis_url)
-    cache.cache = redis_cache.CacheRedis(cache_instance=redis)
+    redis_db0 = await aioredis.from_url(config.redis_url)
+    redis_db1 = await aioredis.from_url(config.redis_report_url)
+    cache.cache = redis_cache.CacheRedis(cache_instance=redis_db0)
+    cache.report_cache = redis_cache.CacheRedis(cache_instance=redis_db1)
 
 
 @app.on_event("shutdown")
 async def shutdown():
     """"""
     await cache.cache.close()
+    await cache.report_cache.close()
 
 
 app.include_router(router=menu.router, prefix="/api/v1/menus")

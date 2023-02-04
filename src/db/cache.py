@@ -26,8 +26,14 @@ class AbstractCache(ABC):
 
 
 cache: AbstractCache | None = None
+report_cache: AbstractCache | None = None
 
 
 async def get_cache() -> AbstractCache | None:
     """Функция необходима для внедрения зависимостей."""
     return cache
+
+
+async def get_report_cache() -> AbstractCache | None:
+    """Функция необходима для внедрения зависимостей."""
+    return report_cache

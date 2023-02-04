@@ -10,6 +10,6 @@ class ServiceMixin:
     container: AbstractRepositoriesContainer
 
 
-@dataclass
-class Service:
-    container: AbstractRepositoriesContainer
+# @dataclass
+# class Service:
+#     container: AbstractRepositoriesContainer

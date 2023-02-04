@@ -1,4 +1,4 @@
-from src.core import config
+from src.core.config import config
 from src.db.cache import AbstractCache
 
 

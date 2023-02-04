@@ -1,5 +1,5 @@
-import uuid
 import random
+import uuid
 
 from src.api.v1.schemas.base import BaseMenu, BaseSchema
 

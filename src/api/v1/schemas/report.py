@@ -1,6 +1,6 @@
 import uuid
 
-data_schema = {
+put_data_schema = {
     200: {
         "description": "Successful Response",
         "content": {
@@ -12,9 +12,13 @@ data_schema = {
             }
         },
     },
+    400: {
+        "description": "Bad Request",
+        "content": {"application/json": {"example": {"detail": "data has not been added"}}},
+    },
 }
 
-report_schema = {
+create_report_schema = {
     202: {
         "description": "Accepted",
         "content": {
@@ -24,5 +28,12 @@ report_schema = {
                 }
             }
         },
+    },
+}
+
+get_report_schema = {
+    404: {
+        "description": "Not Found",
+        "content": {"application/json": {"example": {"detail": "report not found"}}},
     },
 }

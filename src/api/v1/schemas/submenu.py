@@ -1,5 +1,5 @@
-import uuid
 import random
+import uuid
 
 from src.api.v1.schemas.base import BaseSchema, BaseSubmenu
 
@@ -121,19 +121,19 @@ get_submenus_schema = {
                                 "id": uuid.uuid4(),
                                 "title": "Подменю 1",
                                 "description": "Описание подменю 1",
-                                "dishes_count":  random.randint(0, 10),
+                                "dishes_count": random.randint(0, 10),
                             },
                             {
                                 "id": uuid.uuid4(),
                                 "title": "Подменю 2",
                                 "description": "Описание подменю 2",
-                                "dishes_count":  random.randint(0, 10),
+                                "dishes_count": random.randint(0, 10),
                             },
                             {
                                 "id": uuid.uuid4(),
                                 "title": "Подменю 3",
                                 "description": "Описание подменю 3",
-                                "dishes_count":  random.randint(0, 10),
+                                "dishes_count": random.randint(0, 10),
                             },
                         ],
                     },

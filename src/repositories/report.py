@@ -7,6 +7,8 @@ from src.api.v1.schemas.base import ReportSchema
 from src.models.models import Menu, Submenu
 from src.repositories.base import AbstractReport
 
+__all__ = ("ReportRepository",)
+
 
 class ReportRepository(AbstractReport):
     async def get(self):

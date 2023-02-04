@@ -6,7 +6,7 @@ from sqlalchemy import engine_from_config, pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-from src.core import config as cnfg
+from src.core.config import config as cnfg
 from src.db.db import base
 from src.models.models import Dish, Menu, Submenu  # type : ignore
 
