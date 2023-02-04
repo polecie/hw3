@@ -41,8 +41,10 @@ class ReportService(ServiceMixin):
         if cached_report:
             await self.cache.delete(key=f"{str(report_id)}")  # avoiding broken pipe error
             report_name = AsyncResult(str(report_id), app=save_menu)
-            report: str = report_name.get()
-            return FileResponse(path=f"{report}", filename=report, media_type="multipart/form-data")
+            if report_name.ready():
+                report: str = report_name.get()
+                return FileResponse(path=f"{report}", filename=report, media_type="multipart/form-data")
+            return {"detail": "The report is in progress"}
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="report not found")
 
     async def create(self) -> dict:
@@ -51,7 +53,7 @@ class ReportService(ServiceMixin):
         response: AsyncResult = save_menu.delay(menu)
         if not response:
             pass
-        await self.cache.set(key=f"{str(response.id)}", value="OK")
+        await self.cache.set(key=f"{str(response.id)}", value=f"{response.status}")
         return {"id": response.id}
 
 
