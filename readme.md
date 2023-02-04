@@ -1,6 +1,6 @@
 <div align="center">
 
-![pre-commit](https://github.com/polecie/hw3/actions/workflows/pre-commit.yml/badge.svg)
+![pre-commit](https://github.com/polecie/hw3/actions/workflows/pre-commit.yaml/badge.svg)
 
 `документация доступна по адресу` [`http://0.0.0.0:8000/api/openapi`](http://0.0.0.0:8000/api/openapi)
 
