@@ -84,7 +84,8 @@
 
 *Схема ендпоинтов для меню, подменю и блюда*
 
-![endpoints](https://user-images.githubusercontent.com/68993459/216778448-332cafd0-8ca7-4508-82e8-f930714b5b53.png)
+![endpoints_menu_submenu_dish](https://user-images.githubusercontent.com/68993459/216778866-eeb9a507-2768-4d21-89ae-2d4670283d47.png)
 
 *Схема ендпоинтов для отчета и генерации тестовых данных*
 
+![endpoints_report](https://user-images.githubusercontent.com/68993459/216778946-86d1fc67-d539-40eb-b6ab-d9d9c2849fca.png)
