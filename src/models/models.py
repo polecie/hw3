@@ -6,6 +6,12 @@ from sqlalchemy.orm import relationship
 
 from src.db.db import base
 
+__all__ = (
+    "Menu",
+    "Submenu",
+    "Dish",
+)
+
 
 class Menu(base):
     """Модель меню."""

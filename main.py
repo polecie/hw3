@@ -23,7 +23,7 @@ app = FastAPI(
 )
 
 
-@app.get("/", summary="Тестовая ручка")
+@app.get("/", summary="Тестовая ручка", description="Название и версия проекта")
 async def root():
     """Название и версия проекта."""
     return {
@@ -35,7 +35,7 @@ async def root():
 
 @app.on_event("startup")
 async def startup():
-    """"""
+    """Подключаемся к бд при старте приложения."""
     redis_db0 = await aioredis.from_url(config.redis_url)
     redis_db1 = await aioredis.from_url(config.redis_report_url)
     cache.cache = redis_cache.CacheRedis(cache_instance=redis_db0)
@@ -44,7 +44,7 @@ async def startup():
 
 @app.on_event("shutdown")
 async def shutdown():
-    """"""
+    """Отключаемся от бд при завершении работы приложения."""
     await cache.cache.close()
     await cache.report_cache.close()
 

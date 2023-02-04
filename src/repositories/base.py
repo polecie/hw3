@@ -40,5 +40,5 @@ class AbstractReport(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def add(self):
+    async def add(self, mock_data):
         raise NotImplementedError

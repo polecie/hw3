@@ -73,3 +73,28 @@ class BaseDish(BaseModel):
     price: float
 
     _price = validator("price", allow_reuse=True)(set_price)
+
+
+class Mock(BaseModel):
+    id: uuid.UUID
+    title: str
+    description: str
+
+    class Config:
+        orm_mode = True
+
+
+class MenuMock(Mock):
+    ...
+
+
+class SubmenuMock(Mock):
+    menu_id: uuid.UUID
+
+
+class DishMock(Mock):
+    id: uuid.UUID
+    title: str
+    description: str
+    price: float
+    submenu_id: uuid.UUID

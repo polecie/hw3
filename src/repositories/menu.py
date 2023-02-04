@@ -1,6 +1,7 @@
 import uuid
 
 from sqlalchemy import distinct, func, select
+from sqlalchemy.exc import IntegrityError
 
 from src.api.v1.schemas.menu import MenuSchema
 from src.models.models import Dish, Menu, Submenu
@@ -92,7 +93,7 @@ class MenuRepository(AbstractRepository):
             async with session.begin():
                 try:
                     session.add(menu)
-                except Exception:
+                except IntegrityError:
                     await session.rollback()
                 else:
                     await session.commit()

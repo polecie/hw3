@@ -24,47 +24,47 @@ class Config(BaseSettings):
     redis_port: int = 6379
     cache_expire_in_seconds: int = 60 * 5
 
-    redis_url: str = ""
-    redis_report_url: str = ""
-    redis_db2: str = ""
-    # redis_url: str = f"redis://{redis_host}:{redis_port}/0"
-    # redis_report_url: str = f"redis://{redis_host}:{redis_port}/1"
-    # redis_db2: str = f"redis://{redis_host}:{redis_port}/2"  # кеш для тестов
+    # redis_url: str = ""
+    # redis_report_url: str = ""
+    # redis_db2: str = ""
+    redis_url: str = f"redis://{redis_host}:{redis_port}/0"
+    redis_report_url: str = f"redis://{redis_host}:{redis_port}/1"
+    redis_db2: str = f"redis://{redis_host}:{redis_port}/2"  # кеш для тестов
 
     postgres_host: str = "localhost"
     postgres_port: int = 5432
     postgres_db: str = "postgres"
     postgres_user: str = "postgres"
     postgres_password: str = "postgres"
-    database_url: str = ""
-    # database_url: str = (
-    #     f"postgresql+asyncpg://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}"
-    # )
+    # database_url: str = ""
+    database_url: str = (
+        f"postgresql+asyncpg://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}"
+    )
 
     rabbitmq_host: str = "localhost"
     rabbitmq_port: int = 5672
     rabbitmq_default_user: str = "guest"
     rabbitmq_default_pass: str = "guest"
-    celery_broker_url: str = ""
-    # celery_broker_url: str = f"amqp://
-    # {rabbitmq_default_user}:{rabbitmq_default_pass}
-    # @{rabbitmq_host}:{rabbitmq_port}//"
+    # celery_broker_url: str = ""
+    celery_broker_url: str = f"amqp://{rabbitmq_default_user}:{rabbitmq_default_pass}@{rabbitmq_host}:{rabbitmq_port}//"
 
 
-config = Config(_env_file=config_file, _env_file_encoding="utf-8")  # type: ignore
+config = Config(
+    # _env_file=config_file, _env_file_encoding="utf-8"
+)  # type: ignore
 
-config.redis_url = f"redis://{config.redis_host}:{config.redis_port}/0"
-config.database_url = (
-    f"postgresql+asyncpg://{config.postgres_user}"
-    f":{config.postgres_password}@{config.postgres_host}"
-    f":{config.postgres_port}/{config.postgres_db}"
-)
-config.celery_broker_url = (
-    f"amqp://"
-    f"{config.rabbitmq_default_user}:{config.rabbitmq_default_pass}"
-    f"@{config.rabbitmq_host}:{config.rabbitmq_port}//"
-)
-config.redis_db2 = f"redis://{config.redis_host}:{config.redis_port}/2"  # кеш для тестов
-config.redis_report_url = f"redis://{config.redis_host}:{config.redis_port}/1"
+# config.redis_url = f"redis://{config.redis_host}:{config.redis_port}/0"
+# config.database_url = (
+#     f"postgresql+asyncpg://{config.postgres_user}"
+#     f":{config.postgres_password}@{config.postgres_host}"
+#     f":{config.postgres_port}/{config.postgres_db}"
+# )
+# config.celery_broker_url = (
+#     f"amqp://"
+#     f"{config.rabbitmq_default_user}:{config.rabbitmq_default_pass}"
+#     f"@{config.rabbitmq_host}:{config.rabbitmq_port}//"
+# )
+# config.redis_db2 = f"redis://{config.redis_host}:{config.redis_port}/2"  # кеш для тестов
+# config.redis_report_url = f"redis://{config.redis_host}:{config.redis_port}/1"
 
 BASE_DIR = Path(__file__).resolve().parent

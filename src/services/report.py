@@ -1,3 +1,4 @@
+import dataclasses
 import json
 import uuid
 
@@ -11,6 +12,7 @@ from src.db.cache import AbstractCache, get_report_cache
 from src.db.db import get_async_session
 from src.repositories.container import RepositoriesContainer
 from src.services.mixin import ServiceMixin
+from src.services.mock import AbstractMockData, get_mock_menu_service
 from src.tasks.task import save_menu
 
 __all__ = (
@@ -19,12 +21,18 @@ __all__ = (
 )
 
 
+@dataclasses.dataclass
 class ReportService(ServiceMixin):
+    mock_data: AbstractMockData
+
     async def put(self) -> dict:
         """Заполняет базу данных тестовыми данными."""
-        report_status: bool = await self.container.report_repo.add()
+        mock_menu: list = await self.mock_data.create()
+        report_status: bool = await self.container.report_repo.add(mock_data=mock_menu)
         if report_status is True:
             return {"status": report_status, "message": "The data has been added"}
+        if report_status is False:
+            return {"status": report_status, "message": "Not all data has been added"}
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="data has not been added",
@@ -60,11 +68,13 @@ class ReportService(ServiceMixin):
 async def get_report_service(
     cache: AbstractCache = Depends(get_report_cache),
     session: AsyncSession = Depends(get_async_session),
+    mock_data: AbstractMockData = Depends(get_mock_menu_service),
 ) -> ReportService:
     """Функция для внедрения зависимостей.
 
+    :param mock_data: Сервис для генерации мок-данных.
     :param cache: Кеш.
     :param session: Асинхронная сессия с базой данных.
     """
     container = RepositoriesContainer(session=session)
-    return ReportService(container=container, cache=cache)
+    return ReportService(container=container, cache=cache, mock_data=mock_data)
