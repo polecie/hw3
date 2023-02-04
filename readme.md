@@ -2,7 +2,17 @@
 
 ![pre-commit](https://github.com/polecie/hw3/actions/workflows/pre-commit.yaml/badge.svg)
 
-##
+[`http://0.0.0.0:8000/api/openapi`](http://0.0.0.0:8000/api/openapi)
+
+[`http://0.0.0.0:15672/`](http://0.0.0.0:15672/)
+
+[`http://localhost:5555/`](http://localhost:5555/)
+
+</div>
+
+## Реализация
+
+Используемые технологии
   
 ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -11,13 +21,9 @@
 ![Celery](https://img.shields.io/badge/celery-88CE02?style=for-the-badge&logo=celery&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-[`http://0.0.0.0:8000/api/openapi`](http://0.0.0.0:8000/api/openapi)
+Дополнительно
 
-[`http://0.0.0.0:15672/`](http://0.0.0.0:15672/)
-
-[`http://localhost:5555/`](http://localhost:5555/)
-
-</div>
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 
 ## Запуск приложения
 
@@ -73,9 +79,3 @@
 ### Зависимости
 * У меню есть подменю, которые к нему привязаны
 * У подменю есть блюда
-
-<!--
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
-
-![Gunicorn](https://img.shields.io/badge/gunicorn-%298729.svg?style=for-the-badge&logo=gunicorn&logoColor=white)
--->
