@@ -4,6 +4,7 @@ from fastapi.responses import ORJSONResponse
 from redis import asyncio as aioredis
 
 from src.api.v1.resources import dish, menu, report, submenu
+from src.api.v1.schemas.tags import tags_metadata
 from src.core.config import config
 from src.db import cache, redis_cache
 
@@ -18,6 +19,7 @@ app = FastAPI(
     openapi_url="/api/openapi.json",
     default_response_class=ORJSONResponse,
     debug=config.app_debug,
+    openapi_tags=tags_metadata,
 )
 
 
@@ -47,10 +49,10 @@ async def shutdown():
     await cache.report_cache.close()
 
 
-app.include_router(router=menu.router, prefix="/api/v1/menus")
-app.include_router(router=submenu.router, prefix="/api/v1/menus")
-app.include_router(router=dish.router, prefix="/api/v1/menus")
-app.include_router(router=report.router, prefix="/api/v1/report")
+app.include_router(router=menu.router, prefix="/api/v1/menus", tags=["menus"])
+app.include_router(router=submenu.router, prefix="/api/v1/menus", tags=["submenus"])
+app.include_router(router=dish.router, prefix="/api/v1/menus", tags=["dishes"])
+app.include_router(router=report.router, prefix="/api/v1/reports", tags=["reports"])
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000)

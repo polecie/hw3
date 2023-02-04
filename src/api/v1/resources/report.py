@@ -10,7 +10,7 @@ from src.api.v1.schemas.report import (
 )
 from src.services.report import ReportService, get_report_service
 
-router = APIRouter(tags=["report"])
+router = APIRouter()
 
 
 @router.post(

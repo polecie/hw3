@@ -12,7 +12,7 @@ from src.api.v1.schemas.menu import (
 )
 from src.services.menu import MenuService, get_menu_service
 
-router = APIRouter(tags=["menu"])
+router = APIRouter()
 
 
 @router.get(

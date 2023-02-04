@@ -12,7 +12,7 @@ from src.api.v1.schemas.dish import (
 )
 from src.services.dish import DishService, get_dish_service
 
-router = APIRouter(tags=["dish"])
+router = APIRouter()
 
 
 @router.get(

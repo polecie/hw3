@@ -12,7 +12,7 @@ from src.api.v1.schemas.submenu import (
 )
 from src.services.submenu import SubmenuService, get_submenu_service
 
-router = APIRouter(tags=["submenu"])
+router = APIRouter()
 
 
 @router.get(

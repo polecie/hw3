@@ -8,9 +8,14 @@ env = load_dotenv()
 
 
 class Config(BaseSettings):
-    app_name: str = "test"
+    app_name: str = "REST API for restaurant menu management"
     app_version: str = "0.1.0"
-    app_description: str = "test"
+    app_description: str = (
+        "This api is designed to implement "
+        "all CRUD operations for a restaurant's menu "
+        "by providing a range of endpoints "
+        "to perform those operations on menu items."
+    )
     app_debug: bool = False
 
     redis_host: str = "localhost"
