@@ -36,7 +36,8 @@ async def create_report(
     response_class=FileResponse,
 )
 async def get_report(report_id: uuid.UUID, report_service: ReportService = Depends(get_report_service)):
-    """Возвращает результат задачи в виде ссылки на скачивание excel-файла.
+    """Возвращает результат задачи в виде ссылки на скачивание excel-файла. Название отчета генерируется по формату
+    menu-2023-02-05-22-21-10.xlsx -> menu-(год-месяц-день)-(час-минута)
 
     Отчет можно получить только один раз. При необходимости следует
     сгенерировать отчет еще раз.

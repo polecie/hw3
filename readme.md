@@ -91,3 +91,7 @@
 *Схема ендпоинтов для отчета и генерации тестовых данных*
 
 ![endpoints_report](https://user-images.githubusercontent.com/68993459/216778946-86d1fc67-d539-40eb-b6ab-d9d9c2849fca.png)
+
+*Примеры статусов ответов*
+
+https://user-images.githubusercontent.com/68993459/216850726-207b9592-8bf2-4ae9-b625-a48ae40650d2.mp4

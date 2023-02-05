@@ -36,4 +36,12 @@ get_report_schema = {
         "description": "Not Found",
         "content": {"application/json": {"example": {"detail": "report not found"}}},
     },
+    202: {
+        "description": "Accepted",
+        "content": {"application/json": {"example": {"detail": "the report is not yet ready"}}},
+    },
+    200: {
+        "description": "Successful Response",
+        "content": {"application/json": {"example": {"detail": "the report was received"}}},
+    },
 }
