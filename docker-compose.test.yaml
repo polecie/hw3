@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  hw_test_app:
-    container_name: hw_app_cont_test
+  test_app:
+    container_name: test_app
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,15 +16,15 @@ services:
       pytest -vv -W ignore::DeprecationWarning
       "
     networks:
-      - hw_test_ylab
+      - test_ylab
     depends_on:
-      hw_test_postgres:
+      test_postgres:
         condition: service_healthy
-      hw_test_redis:
+      test_redis:
         condition: service_healthy
 
-  hw_test_redis:
-    container_name: hw_redis_cont_test
+  test_redis:
+    container_name: test_redis
     image: redis:latest
     expose:
       - 6379
@@ -33,15 +33,15 @@ services:
     environment:
       CONFIG_FILE: ".env.test"
     networks:
-      - hw_test_ylab
+      - test_ylab
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 3s
       timeout: 20s
       retries: 10
 
-  hw_test_postgres:
-    container_name: hw_pgdb_cont_test
+  test_postgres:
+    container_name: test_postgres
     image: postgres:15.1-alpine
     env_file:
       - ".env.test"
@@ -50,7 +50,7 @@ services:
     expose:
       - 5432
     networks:
-      - hw_test_ylab
+      - test_ylab
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
       interval: 5s
@@ -58,5 +58,5 @@ services:
       retries: 100
 
 networks:
-  hw_test_ylab:
-    name: hw_test_ylab
+  test_ylab:
+    name: test_ylab

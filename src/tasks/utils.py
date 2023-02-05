@@ -33,6 +33,7 @@ def add_menus_to_sheet(menus):
         cell = ws.cell(row=row, column=column)
         cell.fill = background
 
+    # отрефачить
     row = 1
     for id, item in enumerate(menus, 1):
         for column in range(1, 7):
