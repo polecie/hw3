@@ -94,4 +94,4 @@
 
 *Примеры статусов ответов*
 
-https://user-images.githubusercontent.com/68993459/216850726-207b9592-8bf2-4ae9-b625-a48ae40650d2.mp4
+https://user-images.githubusercontent.com/68993459/216851057-961956cf-4f3b-4df0-a318-b111ba83f5a0.mp4
