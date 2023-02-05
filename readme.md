@@ -2,6 +2,8 @@
 
 ![pre-commit](https://github.com/polecie/hw3/actions/workflows/pre-commit.yaml/badge.svg)
 
+![title](https://user-images.githubusercontent.com/68993459/216849012-b51da8cd-a328-4178-862d-34cf5839b663.png)
+
 [`http://0.0.0.0:8000/api/openapi`](http://0.0.0.0:8000/api/openapi)
 
 [`http://0.0.0.0:15672/`](http://0.0.0.0:15672/)

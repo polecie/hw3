@@ -10,7 +10,7 @@ config_file = os.getenv("CONFIG_FILE", ".env")
 
 
 class Config(BaseSettings):
-    app_name: str = "REST API for restaurant menu management"
+    app_name: str = "rest api for restaurant's menu management"
     app_version: str = "0.1.0"
     app_description: str = (
         "This api is designed to implement "
