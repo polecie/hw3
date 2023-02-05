@@ -47,7 +47,7 @@ class DishService(ServiceMixin):
         submenu_id: uuid.UUID,
         dish_content: DishCreate,
     ) -> DishResponse:
-        """Создает новое блюдо.
+        """Создает новое блюдо в подменю в конкретном меню.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
@@ -66,7 +66,7 @@ class DishService(ServiceMixin):
         dish_id: uuid.UUID,
         dish_content: DishUpdate,
     ) -> DishResponse:
-        """Обновляет блюдо.
+        """Обновляет блюдо в подменю в конкретного меню.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
@@ -87,7 +87,7 @@ class DishService(ServiceMixin):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="dish not found")
 
     async def delete_dish(self, menu_id: uuid.UUID, submenu_id: uuid.UUID, dish_id: uuid.UUID) -> dict:
-        """Удаляет блюдо по его `id`.
+        """Удаляет блюдо по его `id` из подменю конкретного меню.
 
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.

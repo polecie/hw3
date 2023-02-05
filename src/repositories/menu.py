@@ -11,8 +11,6 @@ __all__ = ("MenuRepository",)
 
 
 class MenuRepository(AbstractRepository):
-    """Репозиторий для работы с сущностью меню."""
-
     model: type[Menu] = Menu
 
     async def list(

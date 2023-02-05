@@ -56,7 +56,7 @@ class ReportService(ServiceMixin):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="report not found")
 
     async def create(self) -> dict:
-        """"""
+        """Запускает задачу по генерации отчета в excel-файл."""
         menu: str = await self.__get()
         response: AsyncResult = save_menu.delay(menu)
         if not response:

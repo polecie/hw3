@@ -10,8 +10,6 @@ __all__ = ("SubmenuRepository",)
 
 
 class SubmenuRepository(AbstractRepository):
-    """Репозиторий для работы с сущностью подменю."""
-
     model: type[Submenu] = Submenu
 
     async def list(self, menu_id: uuid.UUID) -> list[Submenu]:

@@ -10,6 +10,7 @@ from .worker import celery
 
 @celery.task
 def save_menu(menus):
+    """Задача celery сохранения меню в excel-файл."""
     menus = json.loads(menus)
     df = pd.DataFrame(columns=["A", "B", "C", "D", "E", "F"])
     for id, item in enumerate(menus, 1):

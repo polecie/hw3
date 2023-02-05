@@ -53,7 +53,9 @@ async def create_menu(
     menu_content: MenuCreate = Body(None, examples=MenuCreate.Config.schema_extra["examples"]),
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
-    """Создает новое меню. В качестве параметров принимает **title** - название меню, **description** - описание меню.
+    """Создает новое меню.
+
+    В качестве параметров принимает **title** - название меню, **description** - описание меню.
     """
     menu: MenuResponse = await menu_service.create_menu(menu_content)
     return menu
@@ -71,7 +73,9 @@ async def patch_menu(
     menu_content: MenuUpdate = Body(None, examples=MenuUpdate.Config.schema_extra["examples"]),
     menu_service: MenuService = Depends(get_menu_service),
 ) -> MenuResponse:
-    """Обновляет меню. Для обновления меню принимает аргументы - **title** (название меню), **description** (описание меню).
+    """Обновляет меню.
+
+    Для обновления меню принимает аргументы - **title** (название меню), **description** (описание меню).
     """
     menu: MenuResponse = await menu_service.update_menu(menu_id, menu_content)
     return menu
@@ -85,7 +89,6 @@ async def patch_menu(
     responses=delete_menu_schema,
 )
 async def delete_menu(menu_id: uuid.UUID, menu_service: MenuService = Depends(get_menu_service)) -> dict:
-    """Каскадно удаляет меню по его **id**.
-    """
+    """Каскадно удаляет меню по его **id**."""
     menu: dict = await menu_service.delete_menu(menu_id)
     return menu

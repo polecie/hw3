@@ -11,10 +11,8 @@ __all__ = ("ReportRepository",)
 
 
 class ReportRepository(AbstractReport):
-    """"""
-
     async def get(self):
-        """"""
+        """Возвращает меню из базы данных."""
         statement = select(Menu).options(joinedload(Menu.submenus).joinedload(Submenu.dishes))
         async with self.session as session:
             async with session.begin():
@@ -23,7 +21,7 @@ class ReportRepository(AbstractReport):
         return menus
 
     async def add(self, mock_data: list) -> bool:
-        """"""
+        """Добавляет мок-данные меню в базу данных."""
         status = False
         mock = (i for i in mock_data)
         while True:

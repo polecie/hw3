@@ -30,6 +30,7 @@ class MockMenuService(AbstractMockData):
     async def create(
         self,
     ) -> list:
+        """Генерирует мок-данные меню."""
         mock = []
         for _ in range(random.randint(1, 5)):
             menu_id = uuid.uuid4()
@@ -65,6 +66,7 @@ class MockMenuService(AbstractMockData):
 
 
 async def get_mock_menu_service() -> MockMenuService:
+    """Функция для внедрения зависимостей."""
     return MockMenuService(
         menu=Menu,
         submenu=Submenu,

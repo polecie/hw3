@@ -31,7 +31,7 @@ class SubmenuService(ServiceMixin):
         return submenus
 
     async def get_submenu(self, submenu_id: uuid.UUID, menu_id: uuid.UUID) -> SubmenuResponse:
-        """Возвращает подменю по его `id`.
+        """Возвращает подменю в меню по его `id`.
 
         :param submenu_id: Идентификатор подменю.
         :param menu_id: Идентификатор меню.
@@ -48,7 +48,7 @@ class SubmenuService(ServiceMixin):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found")
 
     async def create_submenu(self, submenu_content: SubmenuCreate, menu_id: uuid.UUID) -> SubmenuResponse:
-        """Создает новое подменю.
+        """Создает новое подменю в меню.
 
         :param submenu_content: Поля для создания подменю.
         :param menu_id: Идентификатор меню.
@@ -65,7 +65,7 @@ class SubmenuService(ServiceMixin):
         submenu_content: SubmenuUpdate,
         menu_id: uuid.UUID,
     ) -> SubmenuResponse:
-        """Обновляет подменю.
+        """Обновляет подменю в меню.
 
         :param submenu_id: Идентификатор подменю.
         :param submenu_content: Поля для обновления подменю.
@@ -90,7 +90,7 @@ class SubmenuService(ServiceMixin):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found")
 
     async def delete_submenu(self, submenu_id: uuid.UUID, menu_id: uuid.UUID) -> dict:
-        """Удаляет подменю по его `id`.
+        """Удаляет подменю из меню по его `id`.
 
         :param submenu_id: Идентификатор подменю.
         :param menu_id: Идентификатор меню.

@@ -8,8 +8,6 @@ from src.repositories.base import AbstractRepository
 
 
 class DishRepository(AbstractRepository):
-    """Репозиторий для работы с сущностью блюда."""
-
     model: type[Dish] = Dish
 
     async def list(self, submenu_id: uuid.UUID) -> list[Dish]:

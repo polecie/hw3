@@ -27,8 +27,7 @@ async def get_dishes(
     submenu_id: uuid.UUID,
     dish_service: DishService = Depends(get_dish_service),
 ) -> list[DishResponse]:
-    """Возвращает список всех блюд в подменю конкретного меню.
-    """
+    """Возвращает список всех блюд в подменю конкретного меню."""
     dishes: list[DishResponse] = await dish_service.get_dishes(menu_id, submenu_id)
     return dishes
 
@@ -46,8 +45,8 @@ async def get_dish(
     dish_id: uuid.UUID,
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
-    """Возвращает определенное блюдо по его **id** из списка блюд, связанных с конкретными подменю и меню.
-    """
+    """Возвращает определенное блюдо по его **id** из списка блюд, связанных с
+    конкретными подменю и меню."""
     dish: DishResponse = await dish_service.get_dish(menu_id, submenu_id, dish_id)
     return dish
 
@@ -64,7 +63,9 @@ async def create_dish(
     dish_content: DishCreate = Body(None, examples=DishCreate.Config.schema_extra["examples"]),
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
-    """Создает новое блюдо в подменю конкретного меню. В качестве аргументов принимает
+    """Создает новое блюдо в подменю конкретного меню. В качестве аргументов
+    принимает.
+
     **title** (название блюда), **description** (описание блюда) и **price** (цена блюда).
     """
     dish: DishResponse = await dish_service.create_dish(menu_id, submenu_id, dish_content)
@@ -85,7 +86,9 @@ async def patch_dish(
     dish_content: DishUpdate = Body(None, examples=DishUpdate.Config.schema_extra["examples"]),
     dish_service: DishService = Depends(get_dish_service),
 ) -> DishResponse:
-    """Обновляет блюдо в подменю конкретного меню. В качестве аргументов для обновления полей принимает
+    """Обновляет блюдо в подменю конкретного меню. В качестве аргументов для
+    обновления полей принимает.
+
     **title** (название блюда), **description** (описание блюда) и **price** (цена блюда).
     """
     dish: DishResponse = await dish_service.update_dish(menu_id, submenu_id, dish_id, dish_content)
@@ -105,7 +108,6 @@ async def delete_dish(
     dish_id: uuid.UUID,
     dish_service: DishService = Depends(get_dish_service),
 ) -> dict:
-    """Удаляет блюдо из подменю конкретного меню по его **id**.
-    """
+    """Удаляет блюдо из подменю конкретного меню по его **id**."""
     dish: dict = await dish_service.delete_dish(menu_id, submenu_id, dish_id)
     return dish

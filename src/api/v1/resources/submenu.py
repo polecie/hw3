@@ -26,8 +26,7 @@ async def get_submenus(
     menu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> list[SubmenuResponse]:
-    """Возвращает список всех подменю, связанных с меню.
-    """
+    """Возвращает список всех подменю, связанных с меню."""
     submenus: list[SubmenuResponse] = await submenu_service.get_submenus(menu_id)
     return submenus
 
@@ -44,8 +43,7 @@ async def get_submenu(
     submenu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """Возвращает подменю по его **id** в меню.
-    """
+    """Возвращает подменю по его **id** в меню."""
     submenu: SubmenuResponse = await submenu_service.get_submenu(submenu_id, menu_id)
     return submenu
 
@@ -61,7 +59,9 @@ async def create_submenu(
     submenu_content: SubmenuCreate = Body(None, examples=SubmenuCreate.Config.schema_extra["examples"]),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """Создает новое подменю в меню. Принимает аргументы для создания подменю - **title** (название подменю), **description** (описание подменю).
+    """Создает новое подменю в меню.
+
+    Принимает аргументы для создания подменю - **title** (название подменю), **description** (описание подменю).
     """
     submenu: SubmenuResponse = await submenu_service.create_submenu(submenu_content, menu_id)
     return submenu
@@ -80,7 +80,10 @@ async def patch_submenu(
     submenu_content: SubmenuUpdate = Body(None, examples=SubmenuUpdate.Config.schema_extra["examples"]),
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> SubmenuResponse:
-    """Изменяет подменю в меню. В качестве аргументов для изменения принимает **title** (название подменю), **description** (описание подменю).
+    """Изменяет подменю в меню.
+
+    В качестве аргументов для изменения принимает **title** (название
+    подменю), **description** (описание подменю).
     """
     submenu: SubmenuResponse = await submenu_service.update_submenu(submenu_id, submenu_content, menu_id)
     return submenu
@@ -98,7 +101,6 @@ async def delete_submenu(
     submenu_id: uuid.UUID,
     submenu_service: SubmenuService = Depends(get_submenu_service),
 ) -> dict:
-    """Каскадно удаляет подменю в меню по его **id**.
-    """
+    """Каскадно удаляет подменю в меню по его **id**."""
     submenu: dict = await submenu_service.delete_submenu(submenu_id, menu_id)
     return submenu

@@ -13,7 +13,7 @@ services:
     entrypoint: >
       sh -c "
       alembic -c src/alembic.ini upgrade head &&
-      pytest -vv
+      pytest -vv -W ignore::DeprecationWarning
       "
     networks:
       - hw_test_ylab

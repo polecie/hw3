@@ -50,8 +50,9 @@ async def get_report(report_id: uuid.UUID, report_service: ReportService = Depen
 async def create_data(
     report_service: ReportService = Depends(get_report_service),
 ):
-    """
-    Заполняет базу тестовыми данным. Тестовые данные **генерируются рандомно**,
-    с условием, что всегда имеется одно меню, для того чтобы excel-отчет не был пустым.
+    """Заполняет базу тестовыми данным.
+
+    Тестовые данные **генерируются рандомно**, с условием, что всегда
+    имеется одно меню, для того чтобы excel-отчет не был пустым.
     """
     return await report_service.put()
