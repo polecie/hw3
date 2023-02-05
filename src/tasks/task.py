@@ -1,44 +1,12 @@
-import datetime
 import json
-from pathlib import Path
 
-import pandas as pd
-
+from .utils import add_menus_to_sheet
 from .worker import celery
 
 
 @celery.task
 def save_menu(menus):
-    """Задача celery сохранения меню в excel-файл."""
+    """Задача celery - сохранение меню в excel-файл."""
     menus = json.loads(menus)
-    df = pd.DataFrame(columns=["A", "B", "C", "D", "E", "F"])
-    for id, item in enumerate(menus, 1):
-        df = df.append(
-            {"A": id, "B": item["title"], "C": item["description"]},
-            ignore_index=True,
-        )
-        for id_sub, sub_item in enumerate(item["submenus"], 1):
-            df = df.append(
-                {
-                    "B": id_sub,
-                    "C": sub_item["title"],
-                    "D": sub_item["description"],
-                },
-                ignore_index=True,
-            )
-            for id_dishes, descript in enumerate(sub_item["dishes"], 1):
-                df = df.append(
-                    {
-                        "C": id_dishes,
-                        "D": descript["title"],
-                        "E": descript["description"],
-                        "F": descript["price"],
-                    },
-                    ignore_index=True,
-                )
-    date = datetime.datetime.utcnow()
-    name = "menu" + "-" + str(date.date()) + "-" + str(date.time()) + ".xlsx"
-    output_dir = Path("/var/lib/data/menus")
-    output_dir.mkdir(parents=True, exist_ok=True)
-    df.to_excel(output_dir / name, header=False, index=False)
-    return f"{output_dir}/{name}"
+    filename: str = add_menus_to_sheet(menus)
+    return filename

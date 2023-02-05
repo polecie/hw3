@@ -16,5 +16,5 @@ exec-postgres: ## execute postgres container in bash > psql
 	docker exec -it postgres bash -c 'psql -U $(POSTGRES_USER)'
 exec-rabbit: ## execute rabbit container in bash
 	docker exec -it rabbit bash
-test: ##
+test: ## start docker test containers
 	docker compose -f docker-compose.test.yaml up --build
