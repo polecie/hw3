@@ -57,7 +57,8 @@ class ReportService(ServiceMixin):
                 await self.cache.set(
                     key=f"{str(report_id)}", value=f"{report_name.status}", expire=config.report_cache_expire
                 )
-                return FileResponse(path=f"{report}", filename=report, media_type="multipart/form-data")
+                filename = "menu-" + report.split("/")[-1]
+                return FileResponse(path=f"{report}", filename=filename, media_type="multipart/form-data")
             await self.cache.set(
                 key=f"{str(report_id)}", value=f"{report_name.status}", expire=config.report_cache_expire
             )

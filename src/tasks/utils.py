@@ -1,4 +1,5 @@
 import datetime
+from pathlib import Path
 
 from openpyxl import Workbook, styles
 
@@ -52,5 +53,10 @@ def add_menus_to_sheet(menus) -> str:
                 row += 1
 
     date = datetime.datetime.utcnow().strftime("%Y-%m-%d-%H-%M-%S")
-    wb.save(f"{date}.xlsx")
-    return f"{date}.xlsx"
+    filename = date + ".xlsx"
+    path = "/var/lib/data/menus"
+    output_path = Path(path)
+    output_path.mkdir(parents=True, exist_ok=True)
+    wb.save(f"{path}/{filename}")
+    wb.close()
+    return f"{path}/{filename}"

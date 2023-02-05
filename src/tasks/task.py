@@ -8,5 +8,5 @@ from .worker import celery
 def save_menu(menus) -> str:
     """Задача celery - сохранение меню в excel-файл."""
     menus = json.loads(menus)
-    filename: str = add_menus_to_sheet(menus)
-    return filename
+    path: str = add_menus_to_sheet(menus)
+    return path

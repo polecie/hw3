@@ -35,6 +35,7 @@ class Config(BaseSettings):
     redis_url: str = ""
     redis_report_url: str = ""
     redis_db2: str = ""
+
     celery_backend_url = "rpc://"
 
     rabbitmq_host: str = "localhost"
@@ -45,7 +46,10 @@ class Config(BaseSettings):
     report_cache_expire: int = 60 * 60 * 24 * 30
 
 
-config = Config(_env_file=config_file, _env_file_encoding="utf-8")
+config = Config(
+    _env_file=config_file,  # type: ignore
+    _env_file_encoding="utf-8",  # type: ignore
+)
 
 config.redis_url = f"redis://{config.redis_host}:{config.redis_port}/0"
 config.database_url = (

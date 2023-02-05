@@ -16,16 +16,16 @@ class AbstractMockData(ABC):
 
 @dataclasses.dataclass
 class MockMenuService(AbstractMockData):
-    menu: type[Menu] = Menu
-    submenu: type[Submenu] = Submenu
-    dish: type[Dish] = Dish
+    menu: type[Menu]
+    submenu: type[Submenu]
+    dish: type[Dish]
 
-    menu_schema: type[MenuMock] = MenuMock
-    submenu_schema: type[SubmenuMock] = SubmenuMock
-    dish_schema: type[DishMock] = DishMock
+    menu_schema: type[MenuMock]
+    submenu_schema: type[SubmenuMock]
+    dish_schema: type[DishMock]
 
-    titles: list = titles
-    descriptions: list = descriptions
+    titles: list
+    descriptions: list
 
     async def create(
         self,
@@ -67,4 +67,13 @@ class MockMenuService(AbstractMockData):
 
 async def get_mock_menu_service() -> MockMenuService:
     """Функция для внедрения зависимостей."""
-    return MockMenuService()
+    return MockMenuService(
+        menu=Menu,
+        submenu=Submenu,
+        dish=Dish,
+        menu_schema=MenuMock,
+        submenu_schema=SubmenuMock,
+        dish_schema=DishMock,
+        titles=titles,
+        descriptions=descriptions,
+    )
