@@ -1,11 +1,10 @@
 import datetime
 import json
+from pathlib import Path
 
 import pandas as pd
 
 from .worker import celery
-
-# from pathlib import Path
 
 
 @celery.task
@@ -37,13 +36,9 @@ def save_menu(menus):
                     },
                     ignore_index=True,
                 )
-    # date = datetime.datetime.utcnow()
-    # name = "menu" + "-" + str(date.date()) + "-" + str(date.time()) + ".xlsx"
-    # output_dir = Path("/var/lib/data/menus")
-    # output_dir.mkdir(parents=True, exist_ok=True)
-    # df.to_excel(output_dir / name, header=False, index=False)
-    # return f"{output_dir}/{name}"
     date = datetime.datetime.utcnow()
-    name = "menu" + "-" + str(date.date()) + "-" + str(date.time())
-    df.to_excel(f"{name}.xlsx", header=False, index=False)
-    return f"{name}.xlsx"
+    name = "menu" + "-" + str(date.date()) + "-" + str(date.time()) + ".xlsx"
+    output_dir = Path("/var/lib/data/menus")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    df.to_excel(output_dir / name, header=False, index=False)
+    return f"{output_dir}/{name}"
