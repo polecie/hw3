@@ -5,7 +5,7 @@ from .worker import celery
 
 
 @celery.task
-def save_menu(menus):
+def save_menu(menus) -> str:
     """Задача celery - сохранение меню в excel-файл."""
     menus = json.loads(menus)
     filename: str = add_menus_to_sheet(menus)

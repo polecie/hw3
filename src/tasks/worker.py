@@ -5,6 +5,6 @@ from src.core.config import config
 celery = Celery(
     "tasks",
     broker=config.celery_broker_url,
-    backend="rpc://",
+    backend=config.celery_backend_url,
     include=["src.tasks.task"],
 )

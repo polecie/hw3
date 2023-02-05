@@ -36,7 +36,8 @@ async def create_report(
     response_class=FileResponse,
 )
 async def get_report(report_id: uuid.UUID, report_service: ReportService = Depends(get_report_service)):
-    """Возвращает результат задачи в виде ссылки на скачивание excel-файла."""
+    """Возвращает результат задачи в виде ссылки на скачивание excel-файла. Отчет можно получить только один раз.
+    При необходимости следует сгенерировать отчет еще раз."""
     return await report_service.get(report_id)
 
 

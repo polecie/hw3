@@ -8,6 +8,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.responses import FileResponse
 
+from src.core.config import config
 from src.db.cache import AbstractCache, get_report_cache
 from src.db.db import get_async_session
 from src.repositories.container import RepositoriesContainer
@@ -47,12 +48,20 @@ class ReportService(ServiceMixin):
         """Возвращает список меню из базы данных для формирования отчета."""
         cached_report = await self.cache.get(f"{str(report_id)}")
         if cached_report:
+            if cached_report.decode("utf-8") == "SUCCESS":
+                raise HTTPException(status_code=status.HTTP_200_OK, detail="the report was received")
             await self.cache.delete(key=f"{str(report_id)}")  # avoiding broken pipe error
             report_name = AsyncResult(str(report_id), app=save_menu)
             if report_name.ready():
                 report: str = report_name.get()
+                await self.cache.set(
+                    key=f"{str(report_id)}", value=f"{report_name.status}", expire=config.report_cache_expire
+                )
                 return FileResponse(path=f"{report}", filename=report, media_type="multipart/form-data")
-            return {"detail": "The report is in progress"}
+            await self.cache.set(
+                key=f"{str(report_id)}", value=f"{report_name.status}", expire=config.report_cache_expire
+            )
+            raise HTTPException(status_code=status.HTTP_202_ACCEPTED, detail="the report is not yet ready")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="report not found")
 
     async def create(self) -> dict:
@@ -61,7 +70,7 @@ class ReportService(ServiceMixin):
         response: AsyncResult = save_menu.delay(menu)
         if not response:
             pass
-        await self.cache.set(key=f"{str(response.id)}", value=f"{response.status}")
+        await self.cache.set(key=f"{str(response.id)}", value=f"{response.status}", expire=config.report_cache_expire)
         return {"id": response.id}
 
 

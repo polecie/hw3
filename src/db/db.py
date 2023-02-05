@@ -5,7 +5,7 @@ from src.core.config import config
 
 base = declarative_base()
 
-async_engine = create_async_engine(config.database_url, future=True, echo=True)
+async_engine = create_async_engine(config.database_url, future=True, echo=False)
 
 
 async def get_async_session():
