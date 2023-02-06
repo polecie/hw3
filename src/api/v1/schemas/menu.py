@@ -6,6 +6,8 @@ from src.api.v1.schemas.base import BaseMenu, BaseSchema
 
 class MenuSchema(BaseSchema):
     """Схема меню для обновления данных."""
+    # class Config:
+    #     orm_mode = True
 
 
 class MenuResponse(BaseMenu):
