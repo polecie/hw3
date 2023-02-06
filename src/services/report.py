@@ -49,7 +49,7 @@ class ReportService(ServiceMixin):
         cached_report = await self.cache.get(f"{str(report_id)}")
         if cached_report:
             if cached_report.decode("utf-8") == "SUCCESS":
-                raise HTTPException(status_code=status.HTTP_200_OK, detail="the report was received")
+                raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="the report was received")
             await self.cache.delete(key=f"{str(report_id)}")  # avoiding broken pipe error
             report_name = AsyncResult(str(report_id), app=save_menu)
             if report_name.ready():
@@ -58,11 +58,18 @@ class ReportService(ServiceMixin):
                     key=f"{str(report_id)}", value=f"{report_name.status}", expire=config.report_cache_expire
                 )
                 filename = "menu-" + report.split("/")[-1]
-                return FileResponse(path=f"{report}", filename=filename, media_type="multipart/form-data")
+                return FileResponse(
+                    path=f"{report}",
+                    filename=filename,
+                    media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
             await self.cache.set(
                 key=f"{str(report_id)}", value=f"{report_name.status}", expire=config.report_cache_expire
             )
-            raise HTTPException(status_code=status.HTTP_202_ACCEPTED, detail="the report is not yet ready")
+            raise HTTPException(
+                status_code=status.HTTP_204_NO_CONTENT,
+                detail=f"the report is not yet ready, state is {report_name.status}",
+            )
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="report not found")
 
     async def create(self) -> dict:
@@ -72,7 +79,7 @@ class ReportService(ServiceMixin):
         if not response:
             pass
         await self.cache.set(key=f"{str(response.id)}", value=f"{response.status}", expire=config.report_cache_expire)
-        return {"id": response.id}
+        return {"status": True, "message": f"The report {response.id} is processing"}
 
 
 async def get_report_service(

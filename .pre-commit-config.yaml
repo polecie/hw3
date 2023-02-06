@@ -41,7 +41,7 @@ repos:
     rev: 6.0.0
     hooks:
     -   id: flake8
-        args: ["--ignore=E501", "--ignore=F821", "--max-line-length=120" ]
+        args: ["--ignore=F821", "--max-line-length=120" ]
         exclude: src/migrations
 
 # Форматирует docstring
