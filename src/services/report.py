@@ -52,7 +52,7 @@ class ReportService(ServiceMixin):
         cached_report = await self.cache.get(f"{str(report_id)}")
         if cached_report:
             if cached_report.decode("utf-8") == "SUCCESS":
-                raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail="the report was received")
+                raise HTTPException(status_code=status.HTTP_200_OK, detail="the report was received")
             await self.cache.delete(key=f"{str(report_id)}")  # avoiding broken pipe error
             report_name = AsyncResult(str(report_id), app=save_menu)
             if report_name.ready():
@@ -70,7 +70,7 @@ class ReportService(ServiceMixin):
                 key=f"{str(report_id)}", value=f"{report_name.status}", expire=config.report_cache_expire
             )
             raise HTTPException(
-                status_code=status.HTTP_204_NO_CONTENT,
+                status_code=status.HTTP_200_OK,
                 detail=f"the report is not yet ready, state is {report_name.status}",
             )
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="report not found")

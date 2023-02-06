@@ -32,7 +32,7 @@ get_report_schema = {
         "description": "Not Found",
         "content": {"application/json": {"example": {"detail": "report not found"}}},
     },
-    204: {
+    200: {
         "description": "No Content",
         "content": {
             "application/json": {

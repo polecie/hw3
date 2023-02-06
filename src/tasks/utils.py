@@ -41,15 +41,15 @@ def add_menus_to_sheet(menus) -> str:
         cell.fill = background
 
     row = 1
-    for id, item in enumerate(menus, 1):
+    for _, menu in enumerate(menus, 1):
         for column in range(1, 7):
             _format_background(row, column)
         row += 1
-        for id_sub, sub_item in enumerate(item["submenus"], 1):
+        for _, submenu in enumerate(menu["submenus"], 1):
             for column in range(2, 7):
                 _format_background(row, column, color="00C0C0C0")
             row += 1
-            for id_dishes, descript in enumerate(sub_item["dishes"], 1):
+            for _ in enumerate(submenu["dishes"], 1):
                 row += 1
 
     date = datetime.datetime.utcnow().strftime("%Y-%m-%d-%H-%M-%S")

@@ -91,7 +91,7 @@ services:
     networks:
       - ylab
     healthcheck:
-      test: [ "CMD", "sh -c 'rabbitmq-diagnostics -q ping'"]
+      test: [ "CMD-SHELL", "sh -c 'rabbitmq-diagnostics -q ping'"]
       interval: 5s
       timeout: 30s
       retries: 3
