@@ -11,6 +11,7 @@ exec-app: ## execute app container in bash
 	docker exec -it app bash
 exec-redis: ## execute redis container in bash
 	docker exec -it redis bash
+# основной кеш находится в 0 базе данных редиса, кеш для ручек с отчетом в 1, кеш для тестов во 2
 include .env
 exec-postgres: ## execute postgres container in bash > psql
 	docker exec -it postgres bash -c 'psql -U $(POSTGRES_USER)'

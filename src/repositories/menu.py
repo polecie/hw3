@@ -2,11 +2,11 @@ import uuid
 
 from sqlalchemy import distinct, func, select
 from sqlalchemy.exc import IntegrityError
-
-from src.api.v1.schemas.menu import MenuSchema, MenuResponse
-from src.models.models import Dish, Menu, Submenu
-from src.repositories.base import AbstractRepository
 from sqlalchemy.orm import joinedload
+
+from src.api.v1.schemas.menu import MenuSchema
+from src.models.models import Menu, Submenu
+from src.repositories.base import AbstractRepository
 
 __all__ = ("MenuRepository",)
 
@@ -15,7 +15,7 @@ class MenuRepository(AbstractRepository):
     model: type[Menu] = Menu
 
     async def list(
-            self,
+        self,
     ) -> list:
         """Возвращает записи всех меню, содержащиеся в базе данных."""
         # statement = (
@@ -47,10 +47,11 @@ class MenuRepository(AbstractRepository):
                 "title": menu.title,
                 "description": menu.description,
                 "submenus_count": len(menu.submenus),
-                "dishes_count": __count_dishes(menu)}
+                "dishes_count": __count_dishes(menu),
+            }
 
         def __count_dishes(menu: Menu):
-            """ Посчитать количество блюд в подменю определенного меню"""
+            """Посчитать количество блюд в подменю определенного меню."""
             submenus = menu.submenus
             to_count = submenus
             output = 0

@@ -19,11 +19,11 @@ class DishService(ServiceMixin):
         :param menu_id: Идентификатор меню.
         :param submenu_id: Идентификатор подменю.
         """
-        # if cached_dishes := await self.cache.get(key="dishes"):
-        #     return json.loads(cached_dishes)  # type: ignore
+        if cached_dishes := await self.cache.get(key="dishes"):
+            return json.loads(cached_dishes)  # type: ignore
         dishes: list = await self.container.dish_repo.list(submenu_id=submenu_id)
         dishes = [DishResponse.from_orm(dish) for dish in dishes]
-        # await self.cache.set(key="dishes", value=json.dumps(jsonable_encoder(dishes)))
+        await self.cache.set(key="dishes", value=json.dumps(jsonable_encoder(dishes)))
         return dishes
 
     async def get_dish(self, menu_id: uuid.UUID, submenu_id: uuid.UUID, dish_id: uuid.UUID) -> DishResponse:
@@ -53,9 +53,9 @@ class DishService(ServiceMixin):
         :param submenu_id: Идентификатор подменю.
         :param dish_content: Поля для создания блюда.
         """
-        # cached_dishes = await self.cache.get(key="dishes")
-        # if cached_dishes:
-        #     await self.cache.delete(key="dishes")
+        cached_dishes = await self.cache.get(key="dishes")
+        if cached_dishes:
+            await self.cache.delete(key="dishes")
         dish = await self.container.dish_repo.add(dish_content=dish_content, submenu_id=submenu_id)
         return DishResponse.from_orm(dish)
 
@@ -75,9 +75,9 @@ class DishService(ServiceMixin):
         """
         dish_status: bool = await self.container.dish_repo.update(dish_id=dish_id, dish_content=dish_content)
         if dish_status is True:
-            # cached_dishes = await self.cache.get(key="dishes")
-            # if cached_dishes:
-            #     await self.cache.delete(key="dishes")
+            cached_dishes = await self.cache.get(key="dishes")
+            if cached_dishes:
+                await self.cache.delete(key="dishes")
             if await self.cache.get(key=f"{dish_id}"):
                 await self.cache.delete(f"{dish_id}")
             dish = await self.container.dish_repo.get(dish_id)

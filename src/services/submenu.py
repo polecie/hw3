@@ -23,11 +23,11 @@ class SubmenuService(ServiceMixin):
 
         :param menu_id: Идентификатор меню.
         """
-        # if cached_submenus := await self.cache.get(key="submenus"):
-        #     return json.loads(cached_submenus)  # type: ignore
+        if cached_submenus := await self.cache.get(key="submenus"):
+            return json.loads(cached_submenus)  # type: ignore
         submenus: list = await self.container.submenu_repo.list(menu_id=menu_id)
-        # cache = [SubmenuResponse.from_orm(submenu) for submenu in submenus]
-        # await self.cache.set(key="submenus", value=json.dumps(jsonable_encoder(cache)))
+        cache = [SubmenuResponse.from_orm(submenu) for submenu in submenus]
+        await self.cache.set(key="submenus", value=json.dumps(jsonable_encoder(cache)))
         return submenus
 
     async def get_submenu(self, submenu_id: uuid.UUID, menu_id: uuid.UUID) -> SubmenuResponse:
@@ -53,9 +53,9 @@ class SubmenuService(ServiceMixin):
         :param submenu_content: Поля для создания подменю.
         :param menu_id: Идентификатор меню.
         """
-        # cached_submenus = await self.cache.get(key="submenus")
-        # if cached_submenus:
-        #     await self.cache.delete(key="submenus")
+        cached_submenus = await self.cache.get(key="submenus")
+        if cached_submenus:
+            await self.cache.delete(key="submenus")
         submenu = await self.container.submenu_repo.add(submenu_content=submenu_content, menu_id=menu_id)
         return SubmenuResponse.from_orm(submenu)
 
@@ -75,9 +75,9 @@ class SubmenuService(ServiceMixin):
             submenu_id=submenu_id, submenu_content=submenu_content
         )
         if submenu_status is True:
-            # cached_submenus = await self.cache.get(key="submenus")
-            # if cached_submenus:
-            #     await self.cache.delete(key="submenus")
+            cached_submenus = await self.cache.get(key="submenus")
+            if cached_submenus:
+                await self.cache.delete(key="submenus")
             submenu = await self.container.submenu_repo.get(submenu_id)
             if await self.cache.get(key=f"{submenu_id}"):
                 await self.cache.delete(f"{submenu_id}")
