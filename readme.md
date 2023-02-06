@@ -2,7 +2,13 @@
 
 ![pre-commit](https://github.com/polecie/hw3/actions/workflows/pre-commit.yaml/badge.svg)
 
-![title](https://user-images.githubusercontent.com/68993459/216849012-b51da8cd-a328-4178-862d-34cf5839b663.png)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://github.com/pre-commit/pre-commit)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Flake8](https://img.shields.io/badge/flake8-checked-yellow.svg?style=flat)](https://flake8.pycqa.org/en/latest/)
+[![Code syntax: pyupgrade](https://img.shields.io/badge/pyupgrade-checked-orange.svg)](https://github.com/psf/black)
+[![Autopep8](https://img.shields.io/badge/autopep8-checked-red.svg?style=flat)](https://github.com/pre-commit/mirrors-autopep8)
 
 </div>
 

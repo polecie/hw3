@@ -22,7 +22,7 @@ create_report_schema = {
     202: {
         "description": "Accepted",
         "content": {
-            "application/json": {"example": {{"status": True, "message": f"The report {uuid.uuid4()} is processing"}}}
+            "application/json": {"example": {"status": True, "message": f"The report {uuid.uuid4()} is processing"}}
         },
     },
 }

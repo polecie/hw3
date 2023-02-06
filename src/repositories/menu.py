@@ -1,4 +1,5 @@
 import uuid
+from typing import Any
 
 from sqlalchemy import distinct, func, select
 from sqlalchemy.exc import IntegrityError
@@ -16,29 +17,15 @@ class MenuRepository(AbstractRepository):
 
     async def list(
         self,
-    ) -> list:
+    ) -> list[dict[str, int | Any]]:
         """Возвращает записи всех меню, содержащиеся в базе данных."""
-        # statement = (
-        #     select(
-        #         self.model.id,
-        #         self.model.title,
-        #         self.model.description,
-        #         func.count(distinct(self.model.submenus)).label("submenus_count"),
-        #         func.count(Submenu.dishes).label("dishes_count"),
-        #     )
-        #     .outerjoin(
-        #         self.model.submenus,
-        #     )
-        #     .outerjoin(
-        #         Dish,
-        #         Dish.submenu_id == Submenu.id,  # type: ignore
-        #     )
-        #     .group_by(self.model.id)
-        # )
         statement = select(self.model).options(joinedload(self.model.submenus).joinedload(Submenu.dishes))
         async with self.session as session:
             async with session.begin():
-                response = (await session.execute(statement)).scalars()
+                try:
+                    response = (await session.execute(statement)).scalars()
+                except Exception:
+                    pass
         menus = [menu for menu in response.unique()]
 
         def __build(menu: Menu):

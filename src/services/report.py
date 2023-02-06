@@ -33,7 +33,10 @@ class ReportService(ServiceMixin):
         if report_status is True:
             return {"status": report_status, "message": "The data has been added"}
         if report_status is False:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Not all data has been added")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="not all data has been added or data has already been added",
+            )
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="data has not been added",

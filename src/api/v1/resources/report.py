@@ -35,7 +35,7 @@ async def create_report(
     responses=get_report_schema,
     response_class=FileResponse,
 )
-async def get_report(report_id: uuid.UUID, report_service: ReportService = Depends(get_report_service)):
+async def get_report(report_id: uuid.UUID, report_service: ReportService = Depends(get_report_service)) -> FileResponse:
     """Возвращает результат задачи в виде ссылки на скачивание excel-файла.
     Название отчета генерируется по формату menu-2023-02-05-22-21-10.xlsx ->
     menu-(год-месяц-день)-(час-минута)
